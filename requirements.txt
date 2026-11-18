@@ -1,0 +1,5 @@
+PySide6>=6.6
+requests>=2.31
+pytest>=8.0
+fonttools>=4.50  # tests and tools/make_pixel_extras.py only
+pillow>=10.0  # tests and tools/make_icon.py only

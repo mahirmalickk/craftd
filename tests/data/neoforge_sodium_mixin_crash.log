@@ -1,0 +1,852 @@
+Prism Launcher version: 11.1.1 (official)
+
+Launched instance in online mode
+
+login.microsoftonline.com resolves to:
+  20.190.135.18, 40.126.28.12, 40.126.28.13, 40.126.28.20, 20.190.135.17, 40.126.28.21, 20.190.135.6, 40.126.28.18
+
+session.minecraft.net resolves to:
+  150.171.109.117
+
+textures.minecraft.net resolves to:
+  150.171.109.117
+
+api.mojang.com resolves to:
+  150.171.109.117
+
+Minecraft folder is:
+  C:/Users/********/AppData/Roaming/PrismLauncher/instances/26.3(1)/minecraft
+
+Java path is:
+  C:/Users/********/AppData/Roaming/PrismLauncher/java/java-runtime-epsilon/bin/javaw.exe
+Java is version 25.0.1, using 64 (amd64) architecture, from Microsoft
+
+OS: Windows 11 Version 26H2 | winnt | 10.0.26300
+CPU: Intel(R) Core(TM) i7-14700F
+RAM: 32603 MiB (available: 22380 MiB)
+GPU: NVIDIA GeForce RTX 5070
+GPU: Microsoft Basic Render Driver
+
+Components:
+  1) LWJGL 3 (org.lwjgl3) 3.4.3
+  2) Minecraft (net.minecraft) 26.3
+  3) NeoForge (net.neoforged) 26.3.0.109
+
+Launcher: standard
+Main class: io.github.zekerzhayard.forgewrapper.installer.Main
+
+Mods:
+  [✔] cloth-config-neoforge-26.3.159
+  [✔] dynamic-fps-3.11.10+minecraft-26.3.0-neoforge
+  [✔] entityculling-neoforge-1.12.1-mc26.3
+  [✔] ferritecore-9.0.0-neoforge
+  [✔] freecam-neoforge-1.5.1+mc26.3
+  [✔] iris-neoforge-1.11.7+mc26.3
+  [✔] Jade-mc26.3-NeoForge-26.3.5
+  [✔] KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge
+  [✔] lambdynamiclights-4.13.0+26.3
+  [✔] libjf-26.3.1+forge
+  [✔] lithium-neoforge-0.26.3+mc26.3
+  [✔] polytone-26.3-6.8.7-neoforge
+  [✔] simplefog-neoforge-26.1-2.0.15
+  [✔] sodium-neoforge-0.9.2+mc26.3
+  [✔] worldedit-mod-7.4.6
+  [✔] yet_another_config_lib_v3-3.9.7+26.3-neoforge
+  [✔] zoomify-2.17.0+mc26.3-universal
+
+Traits:
+  FirstThreadOnMacOS
+  XR:Initial
+  feature:is_quick_play_multiplayer
+  feature:is_quick_play_singleplayer
+
+Libraries:
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-freetype-natives-windows-x86/3.4.3/lwjgl-freetype-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-freetype-natives-windows/3.4.3/lwjgl-freetype-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-freetype/3.4.3/lwjgl-freetype-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-jemalloc-natives-windows-x86/3.4.3/lwjgl-jemalloc-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-jemalloc-natives-windows/3.4.3/lwjgl-jemalloc-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-jemalloc/3.4.3/lwjgl-jemalloc-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-natives-windows-x86/3.4.3/lwjgl-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-natives-windows/3.4.3/lwjgl-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-openal-natives-windows-x86/3.4.3/lwjgl-openal-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-openal-natives-windows/3.4.3/lwjgl-openal-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-openal/3.4.3/lwjgl-openal-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-opengl-natives-windows-x86/3.4.3/lwjgl-opengl-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-opengl-natives-windows/3.4.3/lwjgl-opengl-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-opengl/3.4.3/lwjgl-opengl-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-sdl-natives-windows-x86/3.4.3/lwjgl-sdl-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-sdl-natives-windows/3.4.3/lwjgl-sdl-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-sdl/3.4.3/lwjgl-sdl-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-shaderc-natives-windows-x86/3.4.3/lwjgl-shaderc-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-shaderc-natives-windows/3.4.3/lwjgl-shaderc-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-shaderc/3.4.3/lwjgl-shaderc-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-spng-natives-windows-x86/3.4.3/lwjgl-spng-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-spng-natives-windows/3.4.3/lwjgl-spng-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-spng/3.4.3/lwjgl-spng-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-spvc-natives-windows-x86/3.4.3/lwjgl-spvc-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-spvc-natives-windows/3.4.3/lwjgl-spvc-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-spvc/3.4.3/lwjgl-spvc-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-stb-natives-windows-x86/3.4.3/lwjgl-stb-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-stb-natives-windows/3.4.3/lwjgl-stb-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-stb/3.4.3/lwjgl-stb-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-vma-natives-windows-x86/3.4.3/lwjgl-vma-natives-windows-x86-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-vma-natives-windows/3.4.3/lwjgl-vma-natives-windows-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-vma/3.4.3/lwjgl-vma-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl-vulkan/3.4.3/lwjgl-vulkan-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl/3.4.3/lwjgl-3.4.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/at/yawk/lz4/lz4-java/1.10.1/lz4-java-1.10.1.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/azure/azure-json/1.4.0/azure-json-1.4.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/github/oshi/oshi-core/6.9.0/oshi-core-6.9.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/google/code/gson/gson/2.14.0/gson-2.14.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/google/guava/guava/33.6.0-jre/guava-33.6.0-jre.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/ibm/icu/icu4j/78.3/icu4j-78.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/microsoft/azure/msal4j/1.24.1/msal4j-1.24.1.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/authlib/10.0.77/authlib-10.0.77.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/blocklist/1.0.10/blocklist-1.0.10.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/brigadier/1.3.11/brigadier-1.3.11.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/datafixerupper/10.0.21/datafixerupper-10.0.21.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/jtracy/1.14.38/jtracy-1.14.38.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/jtracy-natives-windows/1.14.38/jtracy-natives-windows-1.14.38.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/logging/1.7.12/logging-1.7.12.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/patchy/2.2.10/patchy-2.2.10.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/text2speech/1.19.12/text2speech-1.19.12.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/commons-codec/commons-codec/1.22.0/commons-codec-1.22.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/commons-io/commons-io/2.20.0/commons-io-2.20.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-buffer/4.2.16.Final/netty-buffer-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-codec-base/4.2.16.Final/netty-codec-base-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-codec-compression/4.2.16.Final/netty-codec-compression-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-codec-http/4.2.16.Final/netty-codec-http-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-common/4.2.16.Final/netty-common-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-handler/4.2.16.Final/netty-handler-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-resolver/4.2.16.Final/netty-resolver-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-transport-classes-epoll/4.2.16.Final/netty-transport-classes-epoll-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-transport-classes-kqueue/4.2.16.Final/netty-transport-classes-kqueue-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-transport-native-unix-common/4.2.16.Final/netty-transport-native-unix-common-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/netty/netty-transport/4.2.16.Final/netty-transport-4.2.16.Final.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/it/unimi/dsi/fastutil/8.5.18/fastutil-8.5.18.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/java/dev/jna/jna-platform/5.17.0/jna-platform-5.17.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/apache/commons/commons-compress/1.28.0/commons-compress-1.28.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/apache/logging/log4j/log4j-api/2.26.0/log4j-api-2.26.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/apache/logging/log4j/log4j-core/2.26.0/log4j-core-2.26.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/apache/logging/log4j/log4j-slf4j2-impl/2.26.0/log4j-slf4j2-impl-2.26.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/jcraft/jorbis/0.0.17/jorbis-0.0.17.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/joml/joml/1.10.9/joml-1.10.9.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/jspecify/jspecify/1.0.1/jspecify-1.0.1.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/github/zekerzhayard/ForgeWrapper/prism-2026-08-01/ForgeWrapper-prism-2026-08-01.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/fancymodloader/earlydisplay/12.0.12/earlydisplay-12.0.12.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/fancymodloader/loader/12.0.12/loader-12.0.12.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/accesstransformers/11.0.2/accesstransformers-11.0.2.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/ow2/asm/asm-commons/9.11/asm-commons-9.11.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/mergetool/2.0.7/mergetool-2.0.7-api.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/ow2/asm/asm-util/9.11/asm-util-9.11.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/ow2/asm/asm-analysis/9.11/asm-analysis-9.11.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/ow2/asm/asm-tree/9.11/asm-tree-9.11.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/bus/8.0.5/bus-8.0.5.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/ow2/asm/asm/9.11/asm-9.11.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/electronwill/night-config/toml/3.9.0/toml-3.9.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/electronwill/night-config/core/3.9.0/core-3.9.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/JarJarSelector/0.5.3/JarJarSelector-0.5.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/JarJarMetadata/0.5.3/JarJarMetadata-0.5.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/apache/maven/maven-artifact/3.10.0/maven-artifact-3.10.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/jodah/typetools/0.6.3/typetools-0.6.3.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/minecrell/terminalconsoleappender/1.3.0/terminalconsoleappender-1.3.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/accesstransformers/at-parser/11.0.2/at-parser-11.0.2.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/srgutils/1.0.10/srgutils-1.0.10.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/codehaus/plexus/plexus-utils/3.6.2/plexus-utils-3.6.2.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/jline/jline-reader/3.20.0/jline-reader-3.20.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/google/errorprone/error_prone_annotations/2.48.0/error_prone_annotations-2.48.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/google/j2objc/j2objc-annotations/3.1/j2objc-annotations-3.1.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/jline/jline-terminal/3.20.0/jline-terminal-3.20.0.jar
+  C:/Users/********/AppData/Roaming/PrismLauncher/libraries/com/mojang/minecraft/26.3/minecraft-26.3-client.jar
+
+Native libraries:
+
+Natives path:
+  C:/Users/********/AppData/Roaming/PrismLauncher/instances/26.3(1)/natives
+
+Minecraft arguments:
+  --username  --version 26.3 --gameDir C:/Users/********/AppData/Roaming/PrismLauncher/instances/26.3(1)/minecraft --assetsDir C:/Users/********/AppData/Roaming/PrismLauncher/assets --assetIndex 34 --uuid  --accessToken  --userType  --versionType release --fml.neoForgeVersion 26.3.0.109 --fml.mcVersion 26.3 --fml.neoFormVersion 1
+
+Window size: 854 x 480
+
+Java arguments:
+  -Duser.language=en -XX:StackShadowPages=32 -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xms512m -Xmx4096m
+
+Minecraft process ID: 2320
+
+
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by io.github.zekerzhayard.forgewrapper.installer.util.ModuleUtil (file:/C:/Users/********/AppData/Roaming/PrismLauncher/libraries/io/github/zekerzhayard/ForgeWrapper/prism-2026-08-01/ForgeWrapper-prism-2026-08-01.jar)
+WARNING: Please consider reporting this to the maintainers of class io.github.zekerzhayard.forgewrapper.installer.util.ModuleUtil
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+JVM info: Microsoft - 25.0.1 - 25.0.1+8-LTS
+java.net.preferIPv4Stack=true
+Current Time: 17/11/2026 04:23:31
+Created Temporary Directory: C:\Users\********\AppData\Local\Temp\neoforge_installer4432143777493959222
+  Extracting: /data/client.lzma
+Building Processor
+===============================================================================
+Processor: net.neoforged.installertools:installertools -> PROCESS_MINECRAFT_JAR
+  MainClass: net.neoforged.installertools.ConsoleTool
+  Classpath:
+    C:\Users\********\AppData\Roaming\PrismLauncher\libraries\net\neoforged\installertools\installertools\4.0.17\installertools-4.0.17-fatjar.jar
+    C:\Users\********\AppData\Roaming\PrismLauncher\libraries\net\neoforged\installertools\installertools\4.0.17\installertools-4.0.17-fatjar.jar
+  Args: --task, PROCESS_MINECRAFT_JAR, --no-mod-manifest, --input, C:\Users\********\AppData\Roaming\PrismLauncher\libraries\com\mojang\minecraft\26.3\minecraft-26.3-client.jar, --output, C:\Users\********\AppData\Roaming\PrismLauncher\libraries\net\neoforged\minecraft-client-patched\26.3.0.109\minecraft-client-patched-26.3.0.109.jar, --extract-libraries-to, C:\Users\********\AppData\Roaming\PrismLauncher/libraries/, --apply-patches, C:\Users\********\AppData\Local\Temp\neoforge_installer4432143777493959222\data\client.lzma
+Task: PROCESS_MINECRAFT_JAR
+Using common thread-pool with parallelism 27
+load patch bundle [239ms]
+load input zip [465ms]
+applying patches [143ms]
+write output file [1477ms]
+overall work [2095ms]
+2026-11-17T09:23:34.034204200Z main WARN Advanced terminal features are not available in this environment
+[04:23:34] [main/INFO] [ne.ne.fm.st.Entrypoint/]: JVM Uptime at startup: 2457ms
+[04:23:34] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Starting FancyModLoader version 12.0.12 (CLIENT in PROD)
+[04:23:34] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Game directory: C:\Users\********\AppData\Roaming\PrismLauncher\instances\26.3(1)\minecraft
+[04:23:34] [main/INFO] [ne.ne.fm.lo.EarlyServiceDiscovery/]: Found 3 early service jars (out of 122) in 32ms
+[04:23:34] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Loading FML Early Services:
+[04:23:34] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/fancymodloader/loader/12.0.12/loader-12.0.12.jar
+[04:23:34] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/sodium-neoforge-0.9.2+mc26.3.jar
+[04:23:34] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/neoforged/fancymodloader/earlydisplay/12.0.12/earlydisplay-12.0.12.jar
+[04:23:34] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: Running graphics bootstrap plugin sodium
+[04:23:34] [main/INFO] [Sodium-GraphicsAdapterProbe/]: Searching for graphics cards...
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.lwjgl.system.Library$$Lambda/0x000000009028f8c0 in an unnamed module (file:/C:/Users/********/AppData/Roaming/PrismLauncher/libraries/org/lwjgl/lwjgl/3.4.3/lwjgl-3.4.3.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+[04:23:34] [main/INFO] [Sodium-GraphicsAdapterProbe/]: Found graphics adapter: AdapterInfo{vendor=NVIDIA, description='NVIDIA GeForce RTX 5070', adapterType=0x0000031B, openglIcdFilePath='C:\Windows\System32\DriverStore\FileRepository\nv_dispi.inf_amd64_0373d825005116d0\nvoglv64.dll', openglIcdVersion=32.0.16.1088}
+[04:23:34] [main/WARN] [Sodium-Workarounds/]: Sodium has applied one or more workarounds to prevent crashes or other issues on your system: [NVIDIA_THREADED_OPTIMIZATIONS_BROKEN]
+[04:23:34] [main/WARN] [Sodium-Workarounds/]: This is not necessarily an issue, but it may result in certain features or optimizations being disabled. You can sometimes fix these issues by upgrading your graphics driver.
+[04:23:34] [main/INFO] [Sodium-NvidiaWorkarounds/]: Modifying process environment to apply workarounds for the NVIDIA graphics driver...
+[04:23:34] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[04:23:34] [main/INFO] [ne.ne.fm.ea.re.ba.op.GlRenderer/]: GL info: NVIDIA GeForce RTX 5070/PCIe/SSE2 GL version 3.3.0 NVIDIA 610.88, NVIDIA Corporation
+[04:23:34] [ForkJoinPool.commonPool-worker-2/INFO] [ne.ne.fm.lo.mo.lo.GameLocator/]: Marking unmodified client jar as claimed to prevent loading: C:\Users\********\AppData\Roaming\PrismLauncher\libraries\com\mojang\minecraft\26.3\minecraft-26.3-client.jar
+[04:23:34] [ForkJoinPool.commonPool-worker-2/INFO] [ne.ne.fm.lo.mo.lo.GameLocator/]: Failed to find common Minecraft classes and resources on the classpath. Assuming we're launching production.
+[04:23:35] [ForkJoinPool.commonPool-worker-2/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: cloth_config. Using jar(mods/cloth-config-neoforge-26.3.159.jar)
+[04:23:35] [ForkJoinPool.commonPool-worker-2/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 54 dependencies adding them to mods collection
+[04:23:35] [ForkJoinPool.commonPool-worker-2/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+		Cloth Config v26.3 API 26.3.159 (cloth_config)
+		CodecUI 26.3-1.4.7 (codecui)
+		Dynamic FPS 3.11.10 (dynamic_fps)
+		Dynamic FPS Common 3.11.10 (dynamic_fps_common)
+		EntityCulling 1.12.1 (entityculling)
+		Ferrite Core 9.0.0 (ferritecore)
+		Freecam 1.5.1 (freecam)
+		Iris 1.11.7+mc26.3 (iris)
+		Jade 26.3.5+neoforge (jade)
+		KotlinLangForge 2.20.0-k2.4.21-3.1+neoforge (klf)
+		LambDynamicLights 4.13.0+26.3 (lambdynlights)
+		LambDynamicLights (API) 4.13.0+26.3 (lambdynlights_api)
+		LibJF 26.3.1+forge (libjf)
+		LibJF Base 26.3.1+forge (libjf_base)
+		LibJF Config Commands 26.3.1+forge (libjf_config_commands)
+		LibJF Config Core 26.3.1+forge (libjf_config_core_v2)
+		LibJF Config UI: Tiny 26.3.1+forge (libjf_config_ui_tiny)
+		LibJF Config: Network 26.3.1+forge (libjf_config_network_v0)
+		LibJF Data 26.3.1+forge (libjf_data_v0)
+		LibJF Data Manipulation 26.3.1+forge (libjf_data_manipulation_v0)
+		LibJF MainHTTP 26.3.1+forge (libjf_mainhttp_v0)
+		LibJF Resource Pack Entry Widgets 26.3.1+forge (libjf_resource_pack_entry_widgets_v0)
+		LibJF Translate 26.3.1+forge (libjf_translate_v1)
+		LibJF Unsafe 26.3.1+forge (libjf_unsafe_v0)
+		LibJF Web 26.3.1+forge (libjf_web_v1)
+		Lithium 0.26.3 (lithium)
+		Minecraft 26.3 (minecraft)
+		NeoForge 26.3.0.109 (neoforge)
+		Polytone 26.3-6.8.7 (polytone)
+		Pride Lib 1.8.0+26.3 (pride)
+		Simple Fog Control 2.0.15 (simplefog)
+		Sodium 0.9.2+mc26.3 (sodium)
+		SpruceUI 12.0.0+26.3 (spruceui)
+		TRansition 1.0.28 (transition)
+		TRender 1.0.17 (trender)
+		WorldEdit 7.4.6+7648-00664b0 (worldedit)
+		WorldEditCUI Protocol (NeoForge) 4.0.3 (worldeditcui_protocol)
+		YetAnotherConfigLib 3.9.7+26.3-neoforge (yet_another_config_lib_v3)
+		Yumi Minecraft Libraries: Foundation 1.1.3+26.2 (yumi_mc_core)
+		Zoomify 2.17.0+mc26.3 (zoomify)
+[04:23:35] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/********/AppData/Roaming/PrismLauncher/libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar Service=FML Env=CLIENT
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Loading FML Plugins:
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > json-0.2.1.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-serialization-core-jvm-1.13.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-coroutines-jdk8-1.11.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > imageio-webp-3.12.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/dynamic-fps-3.11.10+minecraft-26.3.0-neoforge.jar > battery-2.1.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-io-bytestring-jvm-0.9.3.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/iris-neoforge-1.11.7+mc26.3.jar > antlr4-runtime-4.13.1.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-io-core-jvm-0.9.3.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > common-lang-3.12.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-coroutines-core-jvm-1.11.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > imageio-metadata-3.12.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/iris-neoforge-1.11.7+mc26.3.jar > jcpp-1.4.14.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > common-image-3.12.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-serialization-json-jvm-1.13.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > atomicfu-jvm-0.33.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/polytone-26.3-6.8.7-neoforge.jar > exp4j-0.4.8.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > imageio-core-3.12.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-datetime-jvm-0.8.0-0.6.x-compat.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/iris-neoforge-1.11.7+mc26.3.jar > glsl-transformer-3.0.0-pre3.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/polytone-26.3-6.8.7-neoforge.jar > nexp-1.2.1.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlinx-serialization-cbor-jvm-1.13.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlin-stdlib-2.4.21.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > common-io-3.12.0.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar > gson-0.2.1.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlin-reflect-2.4.21.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - ~libraries/net/neoforged/neoforge/26.3.0.109/neoforge-26.3.0.109-universal.jar > net.neoforged.neoforge-coremods-26.3.0.109.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlin-stdlib-jdk8-2.4.21.jar
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - mods/KotlinLangForge-2.20.0-k2.4.21-3.1+neoforge.jar > kotlin-stdlib-jdk7-2.4.21.jar
+[04:23:35] [main/WARN] [ne.ne.fm.lo.LanguageProviderLoader/]: Mod jar(mods/libjf-26.3.1+forge.jar) > jar(mods/libjf-26.3.1+forge.jar > libjf-data-manipulation-v0-26.3.1+forge.jar) is using the deprecated 'lowcodefml' language loader. This warning can be fixed by simply removing the modLoader and loaderVersion settings from neoforge.mods.toml.
+[04:23:35] [main/WARN] [ne.ne.fm.lo.LanguageProviderLoader/]: Mod jar(mods/libjf-26.3.1+forge.jar) is using the deprecated 'lowcodefml' language loader. This warning can be fixed by simply removing the modLoader and loaderVersion settings from neoforge.mods.toml.
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Building game content classloader:
+ - cloth_config (jar(mods/cloth-config-neoforge-26.3.159.jar))
+ - codecui (jar(mods/polytone-26.3-6.8.7-neoforge.jar > codecui-neoforge-26.3-1.4.7.jar))
+ - dev.yumi.commons.collections (jar(mods/lambdynamiclights-4.13.0+26.3.jar > lambdynamiclights-api-4.13.0+26.3.jar > yumi-commons-collections-2.0.0.jar))
+ - dev.yumi.commons.core (jar(mods/lambdynamiclights-4.13.0+26.3.jar > lambdynamiclights-api-4.13.0+26.3.jar > yumi-commons-core-2.0.0.jar))
+ - dev.yumi.commons.event (jar(mods/lambdynamiclights-4.13.0+26.3.jar > lambdynamiclights-api-4.13.0+26.3.jar > yumi-commons-event-2.0.0.jar))
+ - dynamic_fps (jar(mods/dynamic-fps-3.11.10+minecraft-26.3.0-neoforge.jar))
+ - dynamic_fps_common (jar(mods/dynamic-fps-3.11.10+minecraft-26.3.0-neoforge.jar > net.lostluma.dynamic-fps-3.11.10+minecraft-26.3.0-common.jar))
+ - entityculling (jar(mods/entityculling-neoforge-1.12.1-mc26.3.jar))
+ - ferritecore (jar(mods/ferritecore-9.0.0-neoforge.jar))
+ - freecam (jar(mods/freecam-neoforge-1.5.1+mc26.3.jar))
+ - iris (jar(mods/iris-neoforge-1.11.7+mc26.3.jar))
+ - jade (jar(mods/Jade-mc26.3-NeoForge-26.3.5.jar))
+ - lambdynlights (jar(mods/lambdynamiclights-4.13.0+26.3.jar))
+ - lambdynlights_api (jar(mods/lambdynamiclights-4.13.0+26.3.jar > lambdynamiclights-api-4.13.0+26.3.jar))
+ - libjf (jar(mods/libjf-26.3.1+forge.jar))
+ - libjf_base (jar(mods/libjf-26.3.1+forge.jar > libjf-base-26.3.1+forge.jar))
+ - libjf_config_commands (jar(mods/libjf-26.3.1+forge.jar > libjf-config-commands-26.3.1+forge.jar))
+ - libjf_config_core_v2 (jar(mods/libjf-26.3.1+forge.jar > libjf-config-core-v2-26.3.1+forge.jar))
+ - libjf_config_network_v0 (jar(mods/libjf-26.3.1+forge.jar > libjf-config-network-v0-26.3.1+forge.jar))
+ - libjf_config_ui_tiny (jar(mods/libjf-26.3.1+forge.jar > libjf-config-ui-tiny-26.3.1+forge.jar))
+ - libjf_data_manipulation_v0 (jar(mods/libjf-26.3.1+forge.jar > libjf-data-manipulation-v0-26.3.1+forge.jar))
+ - libjf_data_v0 (jar(mods/libjf-26.3.1+forge.jar > libjf-data-v0-26.3.1+forge.jar))
+ - libjf_mainhttp_v0 (jar(mods/libjf-26.3.1+forge.jar > libjf-mainhttp-v0-26.3.1+forge.jar))
+ - libjf_resource_pack_entry_widgets_v0 (jar(mods/libjf-26.3.1+forge.jar > libjf-resource-pack-entry-widgets-v0-26.3.1+forge.jar))
+ - libjf_translate_v1 (jar(mods/libjf-26.3.1+forge.jar > libjf-translate-v1-26.3.1+forge.jar))
+ - libjf_unsafe_v0 (jar(mods/libjf-26.3.1+forge.jar > libjf-unsafe-v0-26.3.1+forge.jar))
+ - libjf_web_v1 (jar(mods/libjf-26.3.1+forge.jar > libjf-web-v1-26.3.1+forge.jar))
+ - lithium (jar(mods/lithium-neoforge-0.26.3+mc26.3.jar))
+ - minecraft (jar(~libraries/net/neoforged/minecraft-client-patched/26.3.0.109/minecraft-client-patched-26.3.0.109.jar))
+ - mixinextras.neoforge (jar(mods/freecam-neoforge-1.5.1+mc26.3.jar > mixinextras-neoforge-0.5.5.jar))
+ - neoforge (jar(~libraries/net/neoforged/neoforge/26.3.0.109/neoforge-26.3.0.109-universal.jar))
+ - net.neoforged.fml.generated (empty(VirtualJar/net.neoforged.fml.generated))
+ - polytone (jar(mods/polytone-26.3-6.8.7-neoforge.jar))
+ - pride (jar(mods/lambdynamiclights-4.13.0+26.3.jar > pridelib-1.8.0+26.3.jar))
+ - simplefog (jar(mods/simplefog-neoforge-26.1-2.0.15.jar))
+ - sodium (jar(mods/sodium-neoforge-0.9.2+mc26.3.jar > net.caffeinemc.sodium-neoforge-0.9.2+mc26.3-mod.jar))
+ - spruceui (jar(mods/lambdynamiclights-4.13.0+26.3.jar > spruceui-12.0.0+26.3.jar))
+ - transition (jar(mods/entityculling-neoforge-1.12.1-mc26.3.jar > TRansition-1.0.28-26.3-neoforge-SNAPSHOT.jar))
+ - trender (jar(mods/entityculling-neoforge-1.12.1-mc26.3.jar > TRender-1.0.17-26.3-neoforge-SNAPSHOT.jar))
+ - worldedit (jar(mods/worldedit-mod-7.4.6.jar))
+ - worldeditcui_protocol (jar(mods/worldedit-mod-7.4.6.jar > worldeditcui-protocol-neoforge-mc26.3-4.0.3.jar))
+ - yet_another_config_lib_v3 (jar(mods/yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar))
+ - yumi_mc_core (jar(mods/lambdynamiclights-4.13.0+26.3.jar > yumi-mc-foundation-1.1.3+26.2.jar))
+ - zoomify (jar(mods/zoomify-2.17.0+mc26.3-universal.jar))
+[04:23:35] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Built game content classloader in 30ms
+[04:23:35] [main/INFO] [ne.ne.fm.lo.mi.MixinFacade/]: Mixin config sodium-frapi.mixins.json from jar(mods/sodium-neoforge-0.9.2+mc26.3.jar) > jar(mods/sodium-neoforge-0.9.2+mc26.3.jar > net.caffeinemc.sodium-neoforge-0.9.2+mc26.3-mod.jar) not applied as required mod 'fabric_renderer_api_v1' is missing
+[04:23:35] [main/INFO] [Lithium/]: Loaded configuration file for Lithium: 170 options available, 0 override(s) found.
+Nov 17, 2026 4:23:35 AM dev.jfronny.libjf.unsafe.asm.AsmTransformer lambda$init$0
+INFO: Discovered LibJF ASM plugin: libjf_data_manipulation_v0
+[04:23:35] [main/WARN] [mixin/]: Reference map 'entityculling.refmap.mixins.json' for entityculling.mixins.json could not be read. If this is a development environment you can ignore this message
+[04:23:35] [main/WARN] [mixin/]: Reference map 'iris.refmap.json' for mixins.iris.json could not be read. If this is a development environment you can ignore this message
+[04:23:35] [main/WARN] [mixin/]: Reference map 'iris.refmap.json' for mixins.iris.vertexformat.json could not be read. If this is a development environment you can ignore this message
+[04:23:35] [main/WARN] [mixin/]: Reference map 'iris.refmap.json' for mixins.iris.compat.sodium.json could not be read. If this is a development environment you can ignore this message
+[04:23:35] [main/WARN] [mixin/]: Reference map 'yet_another_config_lib_v3.refmap.json' for yacl.mixins.json could not be read. If this is a development environment you can ignore this message
+[04:23:35] [main/INFO] [Sodium/]: Loaded configuration file for Sodium: 37 options available, 1 override(s) found
+[04:23:35] [main/WARN] [mixin/]: Error loading class: com/portingdeadmods/cable_facades/events/GameClientEvents$2 (java.lang.ClassNotFoundException: com.portingdeadmods.cable_facades.events.GameClientEvents$2)
+[04:23:35] [main/WARN] [mixin/]: Error loading class: com/direwolf20/justdirethings/client/renderers/OurRenderTypes (java.lang.ClassNotFoundException: com.direwolf20.justdirethings.client.renderers.OurRenderTypes)
+[04:23:35] [main/WARN] [mixin/]: Error loading class: mekanism/client/render/lib/effect/BillboardingEffectRenderer (java.lang.ClassNotFoundException: mekanism.client.render.lib.effect.BillboardingEffectRenderer)
+[04:23:35] [main/WARN] [mixin/]: Error loading class: blusunrize/immersiveengineering/client/utils/IEGLShaders (java.lang.ClassNotFoundException: blusunrize.immersiveengineering.client.utils.IEGLShaders)
+[04:23:35] [main/WARN] [Sodium/]: Force-disabling mixin 'features.render.world.sky.LevelRendererMixin' as rule 'mixin.features.render.world.sky' (added by mods [iris]) disables it and children
+[04:23:36] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[04:23:36] [Datafixer Bootstrap #0/INFO] [mojang/DataFixerBuilder]: 310 Datafixer optimizations took 187 milliseconds
+[04:23:40] [pool-30-thread-1/INFO] [de.yu.mc.co.im.YumiFoundationMod/]: Initializing mods (entrypoint yumi:init)...
+[04:23:40] [modloading-worker-0/INFO] [CodecUI/]: Codec construction mixins inactive (Codec, MapCodec, RecordCodecBuilder) - expected on NeoForge; using reflective schema inference (numeric ranges recovered, optional-field defaults not).
+[04:23:40] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 26.3.0.109, for MC 26.3
+[04:23:40] [modloading-worker-0/INFO] [minecraft/LoggedPrintStream]: [STDOUT]: [TRender] Initializing Client...
+[04:23:40] [modloading-worker-0/INFO] [YetAnotherConfigLib/]: Deserializing YACLConfig from 'C:\Users\********\AppData\Roaming\PrismLauncher\instances\26.3(1)\minecraft\config\yacl.json5'
+[04:23:40] [modloading-worker-0/INFO] [libjf/]: Registering config for libjf_config_core_v2
+[04:23:40] [modloading-worker-0/INFO] [libjf/]: Registering config for libjf_web_v1
+[04:23:40] [modloading-worker-0/INFO] [libjf/]: Registering config for libjf_translate_v1
+[04:23:40] [modloading-worker-0/WARN] [Iris/]: Found fine program match for neoforge:pipeline/entity_unlit_translucent: ENTITIES_TRANSLUCENT
+[04:23:41] [main/INFO] [minecraft/Main]: Completely ignored arguments: [--userType, msa]
+[04:23:41] [Render thread/INFO] [mojang/MinecraftServicesDiscoveryService]: Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[04:23:41] [Render thread/INFO] [minecraft/Minecraft]: Setting user: Player
+[04:23:41] [Render thread/INFO] [LambDynamicLights/]: [LambDynLights] Initializing LambDynamicLights...
+[04:23:41] [Render thread/INFO] [LambDynamicLights|Config/]: [LambDynLights] Configuration loaded.
+[04:23:41] [Render thread/INFO] [ne.xo.fr.co.gu.ConfigScreenProvider/]: Using Cloth Config Freecam GUI
+[04:23:41] [Render thread/INFO] [minecraft/Minecraft]: Backend library: LWJGL version 3.4.3+4
+[04:23:41] [Render thread/WARN] [minecraft/Minecraft]: Detected unexpected shutdown during last game startup: resetting fullscreen mode
+[04:23:41] [ToggleableConfigWatchService/INFO] [libjf/]: Created config watch service
+[04:23:42] [Render thread/WARN] [minecraft/Minecraft]: Detected unexpected shutdown during last game startup: forcing preferred graphics API to OpenGL
+[04:23:42] [Render thread/INFO] [Sodium-NvidiaWorkarounds/]: Modifying process environment to apply workarounds for the NVIDIA graphics driver...
+[04:23:42] [ForkJoinPool.commonPool-worker-16/WARN] [Iris/]: [Iris Update Check] This version doesn't have an update index, skipping.
+[04:23:42] [Render thread/INFO] [Sodium-NvidiaWorkarounds/]: Modifying process environment to apply workarounds for the NVIDIA graphics driver...
+[04:23:42] [Render thread/INFO] [Iris/]: Debug functionality is disabled.
+[04:23:42] [Render thread/INFO] [Iris/]: ARB_direct_state_access detected, enabling DSA.
+[04:23:42] [Render thread/INFO] [Iris/]: Shaders are disabled because no valid shaderpack is selected
+[04:23:42] [Render thread/INFO] [minecraft/Minecraft]: Using graphics backend OpenGL, using drivers: 3.3.0 NVIDIA 610.88
+[04:23:42] [Render thread/INFO] [minecraft/Minecraft]: Using graphics device: NVIDIA GeForce RTX 5070/PCIe/SSE2 (NVIDIA Corporation)
+[04:23:42] [Render thread/INFO] [minecraft/Minecraft]: Using graphics device extensions: GL_ARB_multi_draw_indirect, GL_ARB_shader_draw_parameters, GL_ARB_base_instance, GL_KHR_debug, GL_ARB_draw_indirect, GL_ARB_clip_control, GL_ARB_vertex_attrib_binding, GL_ARB_direct_state_access, GL_EXT_texture_filter_anisotropic
+[04:23:42] [Render thread/INFO] [Sodium-NvidiaWorkarounds/]: Modifying process environment to apply workarounds for the NVIDIA graphics driver...
+[04:23:42] [Render thread/INFO] [mojang/Window]: Created window using SDL video driver: windows
+[04:23:42] [Render thread/INFO] [Sodium-GlSurface/]: Thread[#3,Render thread,5,main]
+[04:23:42] [Render thread/INFO] [Sodium-GlSurface/]: OpenGL Vendor: NVIDIA Corporation
+[04:23:42] [Render thread/INFO] [Sodium-GlSurface/]: OpenGL Renderer: NVIDIA GeForce RTX 5070/PCIe/SSE2
+[04:23:42] [Render thread/INFO] [Sodium-GlSurface/]: OpenGL Version: 3.3.0 NVIDIA 610.88
+[04:23:42] [Render thread/INFO] [Sodium-NvidiaWorkarounds/]: Modifying OpenGL context to apply workarounds for the NVIDIA graphics driver...
+[04:23:42] [Render thread/INFO] [Sodium-NvidiaWorkarounds/]: Enabling GL_DEBUG_OUTPUT_SYNCHRONOUS to force the NVIDIA driver to disable threaded command submission
+[04:23:42] [Render thread/FATAL] [mixin/]: Mixin apply for mod sodium failed sodium-neoforge.mixins.json:platform.neoforge.LevelExtractorMixin from mod sodium -> net.minecraft.client.renderer.extract.LevelExtractor: org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException Critical injection failure: @Inject annotation on extractVisibleBlockEntities$neoForge could not find any targets matching 'extractVisibleBlockEntities(Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/culling/Frustum;)V' in net/minecraft/client/renderer/extract/LevelExtractor. No refMap loaded. [INJECT_PREPARE Applicator Phase -> sodium-neoforge.mixins.json:platform.neoforge.LevelExtractorMixin from mod sodium -> Prepare Injections -> handler$bml000$sodium$extractVisibleBlockEntities$neoForge(Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/culling/Frustum;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V -> Parse ->  -> Validate Targets]
+org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException: Critical injection failure: @Inject annotation on extractVisibleBlockEntities$neoForge could not find any targets matching 'extractVisibleBlockEntities(Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/culling/Frustum;)V' in net/minecraft/client/renderer/extract/LevelExtractor. No refMap loaded. [INJECT_PREPARE Applicator Phase -> sodium-neoforge.mixins.json:platform.neoforge.LevelExtractorMixin from mod sodium -> Prepare Injections -> handler$bml000$sodium$extractVisibleBlockEntities$neoForge(Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/culling/Frustum;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V -> Parse ->  -> Validate Targets]
+	at org.spongepowered.asm.mixin.injection.selectors.TargetSelectors.validate(TargetSelectors.java:326) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.readAnnotation(InjectionInfo.java:364) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:340) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:331) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.CallbackInjectionInfo.<init>(CallbackInjectionInfo.java:48) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[?:?] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo$InjectorEntry.create(InjectionInfo.java:196) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.parse(InjectionInfo.java:659) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTargetContext.prepareInjections(MixinTargetContext.java:1386) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.prepareInjections(MixinApplicatorStandard.java:811) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.lambda$runApplicatorPass$1(MixinApplicatorStandard.java:303) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.processMixins(MixinApplicatorStandard.java:381) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.runApplicatorPass(MixinApplicatorStandard.java:300) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.apply(MixinApplicatorStandard.java:240) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.apply(TargetClassContext.java:437) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.applyMixins(TargetClassContext.java:418) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:351) [sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:253) [sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at TRANSFORMER/libjf_unsafe_v0@26.3.1+forge/dev.jfronny.libjf.unsafe.asm.AsmTransformer.transformClass(AsmTransformer.java:190) [libjf-unsafe-v0-26.3.1+forge.jar:?] {}
+	at net.neoforged.fml.loading.mixin.FMLMixinClassProcessor.processClass(FMLMixinClassProcessor.java:86) [loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.ClassTransformer.transform(ClassTransformer.java:96) [loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.TransformingClassLoader.maybeTransformClassBytes(TransformingClassLoader.java:47) [loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.readerToClass(ModuleClassLoader.java:224) [loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.loadClass(ModuleClassLoader.java:245) [loader-12.0.12.jar:12.0] {}
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) [?:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Options.lambda$new$17(Options.java:202) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:dynamic_fps.common.mixins.json:OptionsMixin from mod dynamic_fps_common,APP:freecam-common.mixins.json:OptionsMixin from mod freecam,APP:lambdynlights.mixins.json:OptionsMixin from mod lambdynlights,APP:sodium-common.mixins.json:features.gui.OptionsAccessor from mod sodium,APP:polytone-common.mixins.json:OptionsMixin from mod polytone,APP:mixins.iris.json:sky.MixinOptions_CloudsOverride from mod iris]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.OptionInstance.set(OptionInstance.java:159) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:yacl.mixins.json:OptionInstanceAccessor from mod yet_another_config_lib_v3],neoforge:access_transformer}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.GraphicsPreset.set(GraphicsPreset.java:113) [minecraft-client-patched-26.3.0.109.jar:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.GraphicsPreset.apply(GraphicsPreset.java:76) [minecraft-client-patched-26.3.0.109.jar:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Options.applyGraphicsPreset(Options.java:1068) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:dynamic_fps.common.mixins.json:OptionsMixin from mod dynamic_fps_common,APP:freecam-common.mixins.json:OptionsMixin from mod freecam,APP:lambdynlights.mixins.json:OptionsMixin from mod lambdynlights,APP:sodium-common.mixins.json:features.gui.OptionsAccessor from mod sodium,APP:polytone-common.mixins.json:OptionsMixin from mod polytone,APP:mixins.iris.json:sky.MixinOptions_CloudsOverride from mod iris]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Minecraft.<init>(Minecraft.java:576) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.main.Main.main(Main.java:282) [minecraft-client-patched-26.3.0.109.jar:?] {}
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-12.0.12.jar:12.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at io.github.zekerzhayard.forgewrapper.installer.Main.main(Main.java:67) [ForgeWrapper-prism-2026-08-01.jar:prism-2026-08-01] {}
+	at org.prismlauncher.launcher.impl.StandardLauncher.launch(StandardLauncher.java:115) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.listen(EntryPoint.java:129) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.main(EntryPoint.java:70) [NewLaunch.jar:?] {}
+[04:23:42] [Render thread/FATAL] [ne.ne.ne.co.NeoForgeMod/]: Preparing crash report with UUID d38b6d7e-d351-4f3d-bb0b-791633585e28
+---- Minecraft Crash Report ----
+// My bad.
+Time: 2026-11-17 04:23:42
+Description: Initializing game
+org.spongepowered.asm.mixin.transformer.throwables.MixinTransformerError: An unexpected critical error was encountered
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:380) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:253) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at TRANSFORMER/libjf_unsafe_v0@26.3.1+forge/dev.jfronny.libjf.unsafe.asm.AsmTransformer.transformClass(AsmTransformer.java:190) ~[libjf-unsafe-v0-26.3.1+forge.jar:?] {}
+	at net.neoforged.fml.loading.mixin.FMLMixinClassProcessor.processClass(FMLMixinClassProcessor.java:86) ~[loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.ClassTransformer.transform(ClassTransformer.java:96) ~[loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.TransformingClassLoader.maybeTransformClassBytes(TransformingClassLoader.java:47) ~[loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.readerToClass(ModuleClassLoader.java:224) ~[loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.loadClass(ModuleClassLoader.java:245) ~[loader-12.0.12.jar:12.0] {}
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) ~[?:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Options.lambda$new$17(Options.java:202) ~[minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:dynamic_fps.common.mixins.json:OptionsMixin from mod dynamic_fps_common,APP:freecam-common.mixins.json:OptionsMixin from mod freecam,APP:lambdynlights.mixins.json:OptionsMixin from mod lambdynlights,APP:sodium-common.mixins.json:features.gui.OptionsAccessor from mod sodium,APP:polytone-common.mixins.json:OptionsMixin from mod polytone,APP:mixins.iris.json:sky.MixinOptions_CloudsOverride from mod iris]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.OptionInstance.set(OptionInstance.java:159) ~[minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:yacl.mixins.json:OptionInstanceAccessor from mod yet_another_config_lib_v3],neoforge:access_transformer}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.GraphicsPreset.set(GraphicsPreset.java:113) ~[minecraft-client-patched-26.3.0.109.jar:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.GraphicsPreset.apply(GraphicsPreset.java:76) ~[minecraft-client-patched-26.3.0.109.jar:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Options.applyGraphicsPreset(Options.java:1068) ~[minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:dynamic_fps.common.mixins.json:OptionsMixin from mod dynamic_fps_common,APP:freecam-common.mixins.json:OptionsMixin from mod freecam,APP:lambdynlights.mixins.json:OptionsMixin from mod lambdynlights,APP:sodium-common.mixins.json:features.gui.OptionsAccessor from mod sodium,APP:polytone-common.mixins.json:OptionsMixin from mod polytone,APP:mixins.iris.json:sky.MixinOptions_CloudsOverride from mod iris]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Minecraft.<init>(Minecraft.java:576) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.main.Main.main(Main.java:282) [minecraft-client-patched-26.3.0.109.jar:?] {}
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-12.0.12.jar:12.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at io.github.zekerzhayard.forgewrapper.installer.Main.main(Main.java:67) [ForgeWrapper-prism-2026-08-01.jar:prism-2026-08-01] {}
+	at org.prismlauncher.launcher.impl.StandardLauncher.launch(StandardLauncher.java:115) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.listen(EntryPoint.java:129) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.main(EntryPoint.java:70) [NewLaunch.jar:?] {}
+Caused by: org.spongepowered.asm.mixin.throwables.MixinApplyError: Mixin [sodium-neoforge.mixins.json:platform.neoforge.LevelExtractorMixin from mod sodium] from phase [DEFAULT] in config [sodium-neoforge.mixins.json] FAILED during APPLY
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.handleMixinError(MixinProcessor.java:685) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.handleMixinApplyError(MixinProcessor.java:636) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:367) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	... 22 more
+Caused by: org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException: Critical injection failure: @Inject annotation on extractVisibleBlockEntities$neoForge could not find any targets matching 'extractVisibleBlockEntities(Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/culling/Frustum;)V' in net/minecraft/client/renderer/extract/LevelExtractor. No refMap loaded. [INJECT_PREPARE Applicator Phase -> sodium-neoforge.mixins.json:platform.neoforge.LevelExtractorMixin from mod sodium -> Prepare Injections -> handler$bml000$sodium$extractVisibleBlockEntities$neoForge(Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/state/level/LevelRenderState;Lnet/minecraft/client/renderer/culling/Frustum;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V -> Parse ->  -> Validate Targets]
+	at org.spongepowered.asm.mixin.injection.selectors.TargetSelectors.validate(TargetSelectors.java:326) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.readAnnotation(InjectionInfo.java:364) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:340) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:331) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.CallbackInjectionInfo.<init>(CallbackInjectionInfo.java:48) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[?:?] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo$InjectorEntry.create(InjectionInfo.java:196) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.parse(InjectionInfo.java:659) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTargetContext.prepareInjections(MixinTargetContext.java:1386) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.prepareInjections(MixinApplicatorStandard.java:811) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.lambda$runApplicatorPass$1(MixinApplicatorStandard.java:303) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.processMixins(MixinApplicatorStandard.java:381) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.runApplicatorPass(MixinApplicatorStandard.java:300) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.apply(MixinApplicatorStandard.java:240) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.apply(TargetClassContext.java:437) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.applyMixins(TargetClassContext.java:418) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:351) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	... 22 more
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+-- Head --
+Thread: Render thread
+Stacktrace:
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:380) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:253) ~[sponge-mixin-0.17.4+mixin.0.8.7.jar:0.17.4+mixin.0.8.7] {}
+	at TRANSFORMER/libjf_unsafe_v0@26.3.1+forge/dev.jfronny.libjf.unsafe.asm.AsmTransformer.transformClass(AsmTransformer.java:190) ~[libjf-unsafe-v0-26.3.1+forge.jar:?] {}
+	at net.neoforged.fml.loading.mixin.FMLMixinClassProcessor.processClass(FMLMixinClassProcessor.java:86) ~[loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.ClassTransformer.transform(ClassTransformer.java:96) ~[loader-12.0.12.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.TransformingClassLoader.maybeTransformClassBytes(TransformingClassLoader.java:47) ~[loader-12.0.12.jar:12.0] {}
+-- Initialization --
+Details:
+	Modules: 
+		ADVAPI32.dll:Advanced Windows 32 Base API:10.0.26100.3624 (WinBuild.160101.0800):Microsoft Corporation
+		AVRT.dll:Multimedia Realtime Runtime:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		COMCTL32.dll:User Experience Controls Library:6.10 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPT32.dll:Crypto API32:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPTBASE.dll:Base cryptographic API DLL:10.0.26100.9711 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPTSP.dll:Cryptographic Service Provider API:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		CoreMessaging.dll:Microsoft CoreMessaging Dll:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		CoreUIComponents.dll:Microsoft Core UI Components Dll:10.0.26100.9818:Microsoft Corporation
+		DBGHELP.DLL:Windows Image Helper:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		DEVOBJ.dll:Device Information Set DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		DNSAPI.dll:DNS Client API DLL:10.0.26100.9278 (WinBuild.160101.0800):Microsoft Corporation
+		DSPARSE.dll:Active Directory Domain Services API:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		DWMAPI.DLL:Microsoft Desktop Window Manager API:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		DWrite.dll:Microsoft DirectX Typography Services:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		DXGI.DLL:DirectX Graphics Infrastructure:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		GDI32.dll:GDI Client DLL:10.0.26100.8328 (WinBuild.160101.0800):Microsoft Corporation
+		GLU32.dll:OpenGL Utility Library DLL:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		IMM32.DLL:Multi-User Windows IMM32 API Client DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		IPHLPAPI.DLL:IP Helper API:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		KERNEL32.DLL:Windows NT BASE API Client DLL:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		KERNELBASE.dll:Windows NT BASE API Client DLL:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		MSASN1.dll:ASN.1 Runtime APIs:10.0.26100.9711 (WinBuild.160101.0800):Microsoft Corporation
+		MSCTF.dll:MSCTF Server DLL:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		MpOav.dll:IOfficeAntiVirus Module:4.18.26100.4 (79b015c6fabb20b1ccd067f376e490f0bac19809):Microsoft Corporation
+		NSI.dll:NSI User-mode interface DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		NTASN1.dll:Microsoft ASN.1 API:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		OLEAUT32.dll:OLEAUT32.DLL:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		OPENGL32.DLL:OpenGL Client DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		Oleacc.dll:Active Accessibility Core Component:7.2.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		OpenAL.dll:Main implementation library:1.25.2:
+		POWRPROF.dll:Power Profile Helper DLL:10.0.26100.8117 (WinBuild.160101.0800):Microsoft Corporation
+		PSAPI.DLL:Process Status Helper:10.0.26100.8521 (WinBuild.160101.0800):Microsoft Corporation
+		RPCRT4.dll:Remote Procedure Call Runtime:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		SDL3.dll:SDL:3, 4, 14, 0:
+		SETUPAPI.dll:Windows Setup API:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		SHCORE.dll:SHCORE:10.0.26100.8117 (WinBuild.160101.0800):Microsoft Corporation
+		SHELL32.dll:Windows Shell Common Dll:10.0.26100.9549 (WinBuild.160101.0800):Microsoft Corporation
+		SspiCli.dll:Security Support Provider Interface:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		UMPDC.dll:User Mode Power Dependency Coordinator:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		USER32.dll:Multi-User Windows USER API Client DLL:10.0.26100.8117 (WinBuild.160101.0800):Microsoft Corporation
+		USERENV.dll:Userenv:10.0.26100.7920 (WinBuild.160101.0800):Microsoft Corporation
+		USP10.dll:Uniscribe Unicode script processor:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		VCRUNTIME140.dll:Microsoft� C Runtime Library:14.44.35208.0:Microsoft Corporation
+		VERSION.dll:Version Checking and File Installation Libraries:10.0.26100.1150 (WinBuild.160101.0800):Microsoft Corporation
+		WINMM.dll:MCI API DLL:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		WINSTA.dll:Winstation Library:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		WINTRUST.dll:Microsoft Trust Verification APIs:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		WS2_32.dll:Windows Socket 2.0 32-Bit DLL:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		WTSAPI32.dll:Windows Remote Desktop Session Host Server SDK APIs:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		amsi.dll:Anti-Malware Scan Interface:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		bcrypt.dll:Windows Cryptographic Primitives Library:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		bcryptPrimitives.dll:Windows Cryptographic Primitives Library:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		cfgmgr32.DLL:Configuration Manager DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		clbcatq.dll:COM+ Configuration Catalog:2001.12.10941.16384 (WinBuild.160101.0800):Microsoft Corporation
+		combase.dll:Microsoft COM for Windows:10.0.26100.7705 (WinBuild.160101.0800):Microsoft Corporation
+		cryptnet.dll:Crypto Network Related API:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		dataexchange.dll:Data exchange:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		dbgcore.DLL:Windows Core Debugging Helpers:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		directxdatabasehelper.dll:DirectXDatabaseHelper:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		drvstore.dll:Driver Store API:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		dxcore.dll:DXCore:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		extnet.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		fastprox.dll:WMI Custom Marshaller:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		freetype.dll:Font Rendering Library:2.14.3:The FreeType Project
+		fwpuclnt.dll:FWP/IPsec User-Mode API:10.0.26100.3915 (WinBuild.160101.0800):Microsoft Corporation
+		gdi32full.dll:GDI Client DLL:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		hid.dll:Hid User Library:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		imagehlp.dll:Windows NT Image Helper:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		java.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		javaw.exe:OpenJDK Platform binary:25.0.1.0:Microsoft
+		jemalloc.dll
+		jimage.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		jli.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		jna17407218283537799482.dll:JNA native library:7.0.2:Java(TM) Native Access (JNA)
+		jvm.dll:OpenJDK 64-Bit server VM:25.0.1.0:Microsoft
+		kernel.appcore.dll:AppModel API Host:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		lwjgl.dll
+		lwjgl_opengl.dll
+		lwjgl_stb.dll
+		lwjgl_vma.dll
+		management.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		management_ext.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		mscms.dll:Microsoft Color Matching System DLL:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		msvcp140.dll:Microsoft� C Runtime Library:14.44.35208.0:Microsoft Corporation
+		msvcp_win.dll:Microsoft� C Runtime Library:10.0.26100.9711 (WinBuild.160101.0800):Microsoft Corporation
+		msvcrt.dll:Windows NT CRT DLL:7.0.26100.9711 (WinBuild.160101.0800):Microsoft Corporation
+		mswsock.dll:Microsoft Windows Sockets 2.0 Service Provider:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		napinsp.dll:E-mail Naming Shim Provider:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		ncrypt.dll:Windows NCrypt Router:10.0.26100.1591 (WinBuild.160101.0800):Microsoft Corporation
+		net.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		nio.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		nlansp_c.dll:NLA Namespace Service Provider DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		ntdll.dll:NT Layer DLL:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		ntmarta.dll:Windows NT MARTA provider:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		nvgpucomp64.dll:NVIDIA GPU Compiler Driver, Version 610.88 :32.0.16.1088:NVIDIA Corporation
+		nvoglv64.dll:NVIDIA Compatible OpenGL ICD:32.0.16.1088:NVIDIA Corporation
+		nvspcap64.dll:NVIDIA Game Proxy\x008\x16\x01FileVersion\x00\x001:11.0.8.299\x00\x008\x16\x01Produc:NVIDIA Corporation\x00\x00L$\x01FileDescriptio
+		ole32.dll:Microsoft OLE for Windows:10.0.26100.6725 (WinBuild.160101.0800):Microsoft Corporation
+		pdh.dll:Windows Performance Data Helper DLL:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		perfos.dll:Windows System Performance Objects DLL:10.0.26100.7705 (WinBuild.160101.0800):Microsoft Corporation
+		perfproc.dll:Windows System Process Performance Objects DLL:10.0.26100.7705 (WinBuild.160101.0800):Microsoft Corporation
+		pfclient.dll:SysMain Client:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		profapi.dll:User Profile Basic API:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		rasadhlp.dll:Remote Access AutoDial Helper:10.0.26100.9711 (WinBuild.160101.0800):Microsoft Corporation
+		rsaenh.dll:Microsoft Enhanced Cryptographic Provider:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		sechost.dll:Host for SCM/SDDL/LSA Lookup APIs:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		shaderc.dll
+		shlwapi.dll:Shell Light-weight Utility Library:10.0.26100.8117 (WinBuild.160101.0800):Microsoft Corporation
+		spirv-cross.dll
+		sunmscapi.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		syslookup.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		textinputframework.dll:"TextInputFramework.DYNLINK":10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		twinapi.appcore.dll:twinapi.appcore:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		ucrtbase.dll:Microsoft� C Runtime Library:10.0.26100.9711 (WinBuild.160101.0800):Microsoft Corporation
+		uxtheme.dll:Microsoft UxTheme Library:10.0.26100.7019 (WinBuild.160101.0800):Microsoft Corporation
+		vcruntime140_1.dll:Microsoft� C Runtime Library:14.44.35208.0:Microsoft Corporation
+		verify.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+		vulkan-1.dll:Vulkan Loader:1.4.341.0:
+		wbemcomn.dll:WMI:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		wbemprox.dll:WMI:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		wbemsvc.dll:WMI:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		win32u.dll:Win32u:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		windows.staterepositorycore.dll:Windows StateRepository API Core:10.0.26100.9974 (WinBuild.160101.0800):Microsoft Corporation
+		windows.storage.dll:Microsoft WinRT Storage API:10.0.26100.9278 (WinBuild.160101.0800):Microsoft Corporation
+		winrnr.dll:LDAP RnR Provider DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		wintypes.dll:Windows Base Types DLL:10.0.26100.7705 (WinBuild.160101.0800):Microsoft Corporation
+		wldp.dll:Windows Lockdown Policy:10.0.26100.8521 (WinBuild.160101.0800):Microsoft Corporation
+		wshbth.dll:Windows Sockets Helper DLL:10.0.26100.9818 (WinBuild.160101.0800):Microsoft Corporation
+		zip.dll:OpenJDK Platform binary:25.0.1.0:Microsoft
+Stacktrace:
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.main.Main.main(Main.java:282) [minecraft-client-patched-26.3.0.109.jar:?] {}
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-12.0.12.jar:12.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at io.github.zekerzhayard.forgewrapper.installer.Main.main(Main.java:67) [ForgeWrapper-prism-2026-08-01.jar:prism-2026-08-01] {}
+	at org.prismlauncher.launcher.impl.StandardLauncher.launch(StandardLauncher.java:115) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.listen(EntryPoint.java:129) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.main(EntryPoint.java:70) [NewLaunch.jar:?] {}
+-- Dynamic Lighting --
+Details:
+	Description: This section contains information related to dynamic lighting, this may not be related to your crash.
+	Mode: fancy
+	Dynamic Light Sources: 0
+	Spatial Hash Occupancy: 0 / 1024
+Stacktrace:
+	at TRANSFORMER/lambdynlights@4.13.0+26.3/dev.lambdaurora.lambdynlights.LambDynLights.lambda$onInitializeClient$0(LambDynLights.java:131) ~[lambdynamiclights-4.13.0+26.3.jar:?] {}
+	at TRANSFORMER/yumi_mc_core@1.1.3+26.2/dev.yumi.mc.core.api.CrashReportEvents.lambda$static$1(CrashReportEvents.java:43) ~[yumi-mc-foundation-1.1.3+26.2.jar:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.CrashReport.handler$bac000$yumi_mc_core$yumi$onCrashReportCreate(CrashReport.java:538) ~[minecraft-client-patched-26.3.0.109.jar:?] {neoforge:mixin[APP:yumi_mc_core.mixins.json:crash.CrashReportMixin from mod yumi_mc_core]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.CrashReport.getDetails(CrashReport.java) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:mixin[APP:yumi_mc_core.mixins.json:crash.CrashReportMixin from mod yumi_mc_core]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.CrashReport.getFriendlyReport(CrashReport.java:131) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:mixin[APP:yumi_mc_core.mixins.json:crash.CrashReportMixin from mod yumi_mc_core]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.CrashReport.getFriendlyReport(CrashReport.java:136) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:mixin[APP:yumi_mc_core.mixins.json:crash.CrashReportMixin from mod yumi_mc_core]}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Minecraft.saveReport(Minecraft.java:998) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Minecraft.saveReportAndShutdownSoundManager(Minecraft.java:1027) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Minecraft.crash(Minecraft.java:1022) [minecraft-client-patched-26.3.0.109.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.main.Main.main(Main.java:292) [minecraft-client-patched-26.3.0.109.jar:?] {}
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-12.0.12.jar:12.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at io.github.zekerzhayard.forgewrapper.installer.Main.main(Main.java:67) [ForgeWrapper-prism-2026-08-01.jar:prism-2026-08-01] {}
+	at org.prismlauncher.launcher.impl.StandardLauncher.launch(StandardLauncher.java:115) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.listen(EntryPoint.java:129) [NewLaunch.jar:?] {}
+	at org.prismlauncher.EntryPoint.main(EntryPoint.java:70) [NewLaunch.jar:?] {}
+-- System Details --
+Details:
+	Minecraft Version: 26.3
+	Minecraft Version ID: 26.3
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 25.0.1, Microsoft
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Microsoft
+	Memory: 85546720 bytes (81 MiB) / 555745280 bytes (530 MiB) up to 4294967296 bytes (4096 MiB)
+	Memory (heap): init: 512MiB, used: 447MiB, committed: 530MiB, max: 4096MiB
+	Memory (non-heap): init: 007MiB, used: 184MiB, committed: 187MiB, max: 000MiB
+	CPUs: 28
+	Processor Vendor: GenuineIntel
+	Processor Name: Intel(R) Core(TM) i7-14700F
+	Identifier: Intel64 Family 6 Model 183 Stepping 1
+	Microarchitecture: Raptor Lake
+	Frequency (GHz): 2.11
+	Number of physical packages: 1
+	Number of physical CPUs: 20
+	Number of logical CPUs: 28
+	Graphics card #0 name: NVIDIA GeForce RTX 5070
+	Graphics card #0 vendor: NVIDIA
+	Graphics card #0 VRAM (MiB): 12227.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 32.0.16.1088
+	Memory slot #0 capacity (MiB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 6.00
+	Memory slot #0 type: DDR5
+	Memory slot #1 capacity (MiB): 16384.00
+	Memory slot #1 clockSpeed (GHz): 6.00
+	Memory slot #1 type: DDR5
+	Virtual memory max (MiB): 34651.46
+	Virtual memory used (MiB): 15509.47
+	Swap memory total (MiB): 2048.00
+	Swap memory used (MiB): 61.67
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 482789.81, total: 952852.00
+	Space in storage for workdir (MiB): available: 482789.81, total: 952852.00
+	Operating System Version: Microsoft Windows 11 (Home) build 26300
+	Process Elevated: false
+	Process Loads: Uptime: 11s, user: 36s (320.07%), kernel: 5s (40.39%), total: 40s (360.46%)
+	Process Virtual Size (MiB): 3496.40
+	Process Resident Size (MiB): 972.04
+	JVM Flags: 4 total; -XX:StackShadowPages=32 -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xms512m -Xmx4096m
+	Debug Flags: 0 total; 
+	Yumi MC Core: 1.1.3+26.2
+	Mods: 
+		cloth_config: Cloth Config v26.3 API v26.3.159
+		codecui: CodecUI v26.3-1.4.7
+		dynamic_fps: Dynamic FPS v3.11.10
+		dynamic_fps_common: Dynamic FPS Common v3.11.10
+		entityculling: EntityCulling v1.12.1
+		ferritecore: Ferrite Core v9.0.0
+		freecam: Freecam v1.5.1
+		iris: Iris v1.11.7+mc26.3
+		jade: Jade v26.3.5+neoforge
+		lambdynlights: LambDynamicLights v4.13.0+26.3
+		lambdynlights_api: LambDynamicLights (API) v4.13.0+26.3
+		libjf: LibJF v26.3.1+forge
+		libjf_base: LibJF Base v26.3.1+forge
+		libjf_config_commands: LibJF Config Commands v26.3.1+forge
+		libjf_config_core_v2: LibJF Config Core v26.3.1+forge
+		libjf_config_network_v0: LibJF Config: Network v26.3.1+forge
+		libjf_config_ui_tiny: LibJF Config UI: Tiny v26.3.1+forge
+		libjf_data_manipulation_v0: LibJF Data Manipulation v26.3.1+forge
+		libjf_data_v0: LibJF Data v26.3.1+forge
+		libjf_mainhttp_v0: LibJF MainHTTP v26.3.1+forge
+		libjf_resource_pack_entry_widgets_v0: LibJF Resource Pack Entry Widgets v26.3.1+forge
+		libjf_translate_v1: LibJF Translate v26.3.1+forge
+		libjf_unsafe_v0: LibJF Unsafe v26.3.1+forge
+		libjf_web_v1: LibJF Web v26.3.1+forge
+		lithium: Lithium v0.26.3
+		minecraft: Minecraft v26.3
+		neoforge: NeoForge v26.3.0.109
+		polytone: Polytone v26.3-6.8.7
+		pride: Pride Lib v1.8.0+26.3
+		simplefog: Simple Fog Control v2.0.15
+		sodium: Sodium v0.9.2+mc26.3
+		spruceui: SpruceUI v12.0.0+26.3
+		transition: TRansition v1.0.28
+		trender: TRender v1.0.17
+		worldedit: WorldEdit v7.4.6+7648-00664b0
+		worldeditcui_protocol: WorldEditCUI Protocol (NeoForge) v4.0.3
+		yet_another_config_lib_v3: YetAnotherConfigLib v3.9.7+26.3-neoforge
+		yumi_mc_core: Yumi Minecraft Libraries: Foundation v1.1.3+26.2
+		zoomify: Zoomify v2.17.0+mc26.3
+	Loaded Shaderpack: (off)
+	Launched Version: 26.3
+	Launcher name: PrismLauncher
+	Backend library: LWJGL version 3.4.3+4
+	Window size: <not initialized>
+	Surface Info: <no surface>
+	SDL Platform: Windows
+	Graphics Device: NVIDIA GeForce RTX 5070/PCIe/SSE2
+	Graphics Backend: OpenGL
+	Graphics Vendor: NVIDIA Corporation
+	Graphics Drivers: 3.3.0 NVIDIA 610.88
+	Graphics Device Extensions: GL_ARB_multi_draw_indirect, GL_ARB_shader_draw_parameters, GL_ARB_base_instance, GL_KHR_debug, GL_ARB_draw_indirect, GL_ARB_clip_control, GL_ARB_vertex_attrib_binding, GL_ARB_direct_state_access, GL_EXT_texture_filter_anisotropic
+	Graphics Device Type: OTHER
+	Graphics Device Features: DeviceFeatures[wireframeFillMode=true, shaderDrawParameters=true, multiDrawDirectInterleaved=false, multiDrawDirectSeparate=true, multiDrawIndirect=true, drawIndirect=true, nonZeroFirstInstance=true, persistentMapping=false]
+	GL debug messages: 
+	Is Modded: Definitely; Client brand changed to 'neoforge'
+	Universe: 404
+	Type: Client
+	Locale: en_US
+	System encoding: Cp1252
+	File encoding: UTF-8
+	CPU: 28x Intel(R) Core(TM) i7-14700F
+	Class Processors: 
+		05.46%: neoforge:access_transformer
+		00.01%: neoforge:mixin_frame_context
+		00.00%: neoforge:computing_frames (marker)
+		00.00%: neoforge:runtime_enum_extender
+		98.47%: neoforge:mixin
+		00.00%: neoforge:simple_processors_default (marker)
+		00.01%: neoforge.coremods:field_to_getter.net.minecraft.world.entity.entity
+		00.01%: neoforge.coremods:field_to_getter.net.minecraft.world.level.biome.biome
+		00.01%: neoforge.coremods:field_to_getter.net.minecraft.world.level.block.entity.blockentity
+		00.01%: neoforge.coremods:field_to_getter.net.minecraft.world.level.block.flowerpotblock
+		00.01%: neoforge.coremods:field_to_getter.net.minecraft.world.level.levelgen.structure.structure
+		00.24%: neoforge.coremods:method_redirector
+	Mod List: 
+		cloth-config-neoforge-26.3.159.jar                |Cloth Config v26.3 API        |cloth_config                  |26.3.159            |Manifest: 24adcf323c6a439226aced11d2cd4f8e6e629b82de6f1c7d71a7b9ba37ebf81d
+		codecui-neoforge-26.3-1.4.7.jar                   |CodecUI                       |codecui                       |26.3-1.4.7          |Manifest: 559175b0c2c0d6e8a91e0890c9bdd248dcd1770cf176893ec4e1bb97a3cea108
+		dynamic-fps-3.11.10+minecraft-26.3.0-neoforge.jar |Dynamic FPS                   |dynamic_fps                   |3.11.10             |Manifest: 71af4f7839096fa17f24d758682786cead49c71182decb0d3dc5a228be2fe077
+		net.lostluma.dynamic-fps-3.11.10+minecraft-26.3.0-|Dynamic FPS Common            |dynamic_fps_common            |3.11.10             |Manifest: 11fc178ac1114946b05a0ae01795b13ecff262725fdd48e8784331d2996a5b29
+		entityculling-neoforge-1.12.1-mc26.3.jar          |EntityCulling                 |entityculling                 |1.12.1              |Manifest: 054b156acd78b8cb257874b89f35cb8503b10a79f8eccfb223a4df4b233bc4be
+		ferritecore-9.0.0-neoforge.jar                    |Ferrite Core                  |ferritecore                   |9.0.0               |Manifest: a3292dadb1caf7ad220d3a4b68abff2ad58592ddd372160f9cf66c57d159b539
+		freecam-neoforge-1.5.1+mc26.3.jar                 |Freecam                       |freecam                       |1.5.1               |Manifest: 7481c82a76f1ebee5c3b959ba0a3cc6683c836d0e4a137cfe41fbe2ea2794cc4
+		iris-neoforge-1.11.7+mc26.3.jar                   |Iris                          |iris                          |1.11.7+mc26.3       |Manifest: 2260506334a17ac566ea30169ab491201208f55c1c7212bb987bc0c7c59a8d93
+		Jade-mc26.3-NeoForge-26.3.5.jar                   |Jade                          |jade                          |26.3.5+neoforge     |Manifest: c981ed9ad46613d0805dd10a435190d92e6850a61df3c5f4f6d653e24ef0b712
+		lambdynamiclights-4.13.0+26.3.jar                 |LambDynamicLights             |lambdynlights                 |4.13.0+26.3         |Manifest: b7550288423affed86370acd80d064876d7e256f5489461b7ff7941627552ab2
+		lambdynamiclights-api-4.13.0+26.3.jar             |LambDynamicLights (API)       |lambdynlights_api             |4.13.0+26.3         |Manifest: bbcfe5a57e5ab93d6be3d4e8a69b47f466a1259de9927956461f08a7811a24ec
+		libjf-26.3.1+forge.jar                            |LibJF                         |libjf                         |26.3.1+forge        |Manifest: 724e6b7d13bb7b63d5c39828fbe59b79d48049721ac81f7c80685c95378372e5
+		libjf-base-26.3.1+forge.jar                       |LibJF Base                    |libjf_base                    |26.3.1+forge        |Manifest: c5049847d08f9595375cb03b20e7106c22368bf1399500c90dc8a2ffbab3f18e
+		libjf-config-commands-26.3.1+forge.jar            |LibJF Config Commands         |libjf_config_commands         |26.3.1+forge        |Manifest: 77284b94afad48fc25354129c58a5c191cb2e4e844693cb901152a843efe5d61
+		libjf-config-core-v2-26.3.1+forge.jar             |LibJF Config Core             |libjf_config_core_v2          |26.3.1+forge        |Manifest: d2961e7093c972da0e8fd045c98a63fc4a1d643bb4308ad0547d9bbc12d3cafd
+		libjf-config-ui-tiny-26.3.1+forge.jar             |LibJF Config UI: Tiny         |libjf_config_ui_tiny          |26.3.1+forge        |Manifest: 16b38e3ba5f7cfa8dd22a1bd8399a6d4076f38ea1e37de1613fa98aa54465176
+		libjf-config-network-v0-26.3.1+forge.jar          |LibJF Config: Network         |libjf_config_network_v0       |26.3.1+forge        |Manifest: a513d7f3b0cf98ac28656c1dd03b8c7d0ef3fd0aa5e02c7c96a4f150aec20222
+		libjf-data-v0-26.3.1+forge.jar                    |LibJF Data                    |libjf_data_v0                 |26.3.1+forge        |Manifest: e96332ba181972e1f7299ca9176ed179d0246c252b8c1c10ae624bd300f42420
+		libjf-data-manipulation-v0-26.3.1+forge.jar       |LibJF Data Manipulation       |libjf_data_manipulation_v0    |26.3.1+forge        |Manifest: d17c36ccceb76c68c756a2da3ed3346574da9ef577ee9d5d9de44b54d713dd59
+		libjf-mainhttp-v0-26.3.1+forge.jar                |LibJF MainHTTP                |libjf_mainhttp_v0             |26.3.1+forge        |Manifest: d36e28546ee0e5b3efa5abccea4ac0160676695bf63076981e406cb5d6560c18
+		libjf-resource-pack-entry-widgets-v0-26.3.1+forge.|LibJF Resource Pack Entry Widg|libjf_resource_pack_entry_widg|26.3.1+forge        |Manifest: bba5f3e082bb2858fe5fc127b0e8c244a49ef69f50e226d4bc08c1056c56328e
+		libjf-translate-v1-26.3.1+forge.jar               |LibJF Translate               |libjf_translate_v1            |26.3.1+forge        |Manifest: 43bfa6daff03c9fa247d00943961885b515289f0fc40362e7f92775c184f01d9
+		libjf-unsafe-v0-26.3.1+forge.jar                  |LibJF Unsafe                  |libjf_unsafe_v0               |26.3.1+forge        |Manifest: ecfefef87a27fb40c63dab86a7811c208fdd52dbec18216b97482b304e0d331f
+		libjf-web-v1-26.3.1+forge.jar                     |LibJF Web                     |libjf_web_v1                  |26.3.1+forge        |Manifest: 9b653fba5a6996ba3b871b448e845e8f4918fb04b9637f4ec74ef27ac1255226
+		lithium-neoforge-0.26.3+mc26.3.jar                |Lithium                       |lithium                       |0.26.3              |Manifest: 03eae4f0908f1ff9705143e54efbe92b4da4634b0a0f601fa86b7f3bd704dda4
+		minecraft-client-patched-26.3.0.109.jar           |Minecraft                     |minecraft                     |26.3                |Manifest: 96f2035b3cbc5f15e603351e50732199ce700841c9dbaafd88c7c30dd5132dce
+		neoforge-26.3.0.109-universal.jar                 |NeoForge                      |neoforge                      |26.3.0.109          |Manifest: f686cc384737aa29df9441fe79d18eb2df31ac2381f022221ee2d7b4f8aab7e3
+		polytone-26.3-6.8.7-neoforge.jar                  |Polytone                      |polytone                      |26.3-6.8.7          |Manifest: 14762f431a9bc4b76aac332cbaebf78703c2543dfef028e9e6f154a11d23beec
+		pridelib-1.8.0+26.3.jar                           |Pride Lib                     |pride                         |1.8.0+26.3          |Manifest: 5b4a57ab5cf88af242529b65556969d69fb0b5ff2ab598f9c420f23b6ef9aaf5
+		simplefog-neoforge-26.1-2.0.15.jar                |Simple Fog Control            |simplefog                     |2.0.15              |Manifest: d41e9a244a2ef3efbc7d89024dc4296161a7e6f0bca81a12bd79f651fa172211
+		net.caffeinemc.sodium-neoforge-0.9.2+mc26.3-mod.ja|Sodium                        |sodium                        |0.9.2+mc26.3        |Manifest: ef68651bdc8d3bee153d22047b2e23ad89142ec1b7e52b41c964444714c40fa1
+		spruceui-12.0.0+26.3.jar                          |SpruceUI                      |spruceui                      |12.0.0+26.3         |Manifest: c27cada96e9dd98f13f38926b87e29d693cc75649677375388991781675e7408
+		TRansition-1.0.28-26.3-neoforge-SNAPSHOT.jar      |TRansition                    |transition                    |1.0.28              |Manifest: b8ef00ab30b8cc3e365761550ab5a16369ba8e8a26999fe524e3ded55c1314c7
+		TRender-1.0.17-26.3-neoforge-SNAPSHOT.jar         |TRender                       |trender                       |1.0.17              |Manifest: 77422e898594c441354f0e0e9160423b3134d476f18ac0132ff54183058e8a82
+		worldedit-mod-7.4.6.jar                           |WorldEdit                     |worldedit                     |7.4.6+7648-00664b0  |Manifest: 24f2338ac9d5e7205f15cdb4a118924c5d9cbd48ab0cabf8ba36b07b7d64c22b
+		worldeditcui-protocol-neoforge-mc26.3-4.0.3.jar   |WorldEditCUI Protocol (NeoForg|worldeditcui_protocol         |4.0.3               |Manifest: 51f0115f48792a25cec7116896774c4a2bd2692b106b95b536a6531a62b36f97
+		yet_another_config_lib_v3-3.9.7+26.3-neoforge.jar |YetAnotherConfigLib           |yet_another_config_lib_v3     |3.9.7+26.3-neoforge |Manifest: 6f7ab07ed3ad69636e15b4ec838cecd961513349b1d7f33604316ee82a8b020c
+		yumi-mc-foundation-1.1.3+26.2.jar                 |Yumi Minecraft Libraries: Foun|yumi_mc_core                  |1.1.3+26.2          |Manifest: deee01ea90aac18fe8d61abcee0d0a528420fa6327abb9bd1034c1785278743e
+		zoomify-2.17.0+mc26.3-universal.jar               |Zoomify                       |zoomify                       |2.17.0+mc26.3       |Manifest: 134edcc2992d2f6c3793746101dec1aba3ef02f046024fd280afb09094593027
+	Crash Report UUID: d38b6d7e-d351-4f3d-bb0b-791633585e28
+	FML: 12.0.12
+	NeoForge: 26.3.0.109
+[04:23:42] [Render thread/FATAL] [ne.ne.ne.co.NeoForgeMod/]: Preparing crash report with UUID 91c4cf9b-9eca-44b1-97d4-e6e2a972ed09
+#@!@# Game crashed! Crash report saved to: #@!@# C:\Users\********\AppData\Roaming\PrismLauncher\instances\26.3(1)\minecraft\crash-reports\crash-2026-11-17_04.23.42-client.txt
+Process exited with code -1.
+Clipboard copy at: 17 Nov 2026 04:23:46 -0500
