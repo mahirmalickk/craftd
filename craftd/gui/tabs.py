@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QColor
+import subprocess
+import sys
+
+from PySide6.QtCore import QEvent, QObject, Qt, QUrl, Signal
+from PySide6.QtGui import QColor, QDesktopServices, QGuiApplication
 from PySide6.QtWidgets import (
-    QAbstractItemView, QCheckBox, QComboBox, QFrame, QHBoxLayout, QHeaderView, QLabel, QMessageBox,
-    QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
+    QAbstractItemView, QCheckBox, QComboBox, QFileDialog, QFrame, QHBoxLayout, QHeaderView, QLabel, QMenu,
+    QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
 )
 
 from ..core import Craftd
@@ -64,6 +67,47 @@ def _text_item(text: str, role: str | None = None, tooltip: str | None = None, m
     return item
 
 
+def show_in_folder(path) -> None:
+    """Open the folder with the file highlighted (Explorer / Finder), or just the folder elsewhere."""
+    try:
+        if sys.platform.startswith("win"):
+            subprocess.Popen(f'explorer /select,"{path}"')  # one string: Explorer parses this switch itself
+            return
+        if sys.platform == "darwin":
+            subprocess.Popen(["open", "-R", str(path)])
+            return
+    except OSError:
+        pass
+    QDesktopServices.openUrl(QUrl.fromLocalFile(str(path.parent)))
+
+
+class _JarDrop(QObject):
+    """Accept .jar files dropped onto the mods list."""
+
+    def __init__(self, tab: "ModsTab"):
+        super().__init__(tab)
+        self.tab = tab
+
+    @staticmethod
+    def _jars(event) -> list[str]:
+        urls = event.mimeData().urls() if event.mimeData().hasUrls() else []
+        return [u.toLocalFile() for u in urls if u.isLocalFile() and u.toLocalFile().lower().endswith(".jar")]
+
+    def eventFilter(self, obj, event) -> bool:
+        kind = event.type()
+        if kind in (QEvent.Type.DragEnter, QEvent.Type.DragMove):
+            if self.tab.inst and self.tab.add_btn.isEnabled() and self._jars(event):
+                event.acceptProposedAction()
+                return True
+        elif kind == QEvent.Type.Drop:
+            jars = self._jars(event)
+            if jars:
+                event.acceptProposedAction()
+                self.tab.add_files(jars)
+                return True
+        return False
+
+
 # =======================================================================================
 class ModsTab(QWidget):
     mods_changed = Signal()
@@ -77,10 +121,19 @@ class ModsTab(QWidget):
 
         self.table = _table(["On", "Mod", "Version", "File", "Source"], stretch_cols=(1, 3))
         self.table.itemChanged.connect(self._item_changed)
+        self.table.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.table.customContextMenuRequested.connect(self._mod_menu)
+        self.table.viewport().setAcceptDrops(True)
+        self._drop = _JarDrop(self)
+        self.table.viewport().installEventFilter(self._drop)
 
         self.add_btn = QPushButton("Add from Modrinth…")
         self.add_btn.setProperty("primary", True)
         self.add_btn.clicked.connect(self._browse)
+        self.file_btn = QPushButton("Add File…")
+        self.file_btn.setToolTip("Add .jar files from your computer, e.g. a mod from CurseForge. "
+                                 "You can also drag them onto the list.")
+        self.file_btn.clicked.connect(self._add_file)
         self.check_btn = QPushButton("Check for Updates")
         self.check_btn.clicked.connect(self._check_updates)
         self.update_btn = QPushButton("Update All")
@@ -94,7 +147,7 @@ class ModsTab(QWidget):
         self.count.setObjectName("Muted")
 
         buttons = QHBoxLayout()
-        buttons.addWidget(flow_row(self.add_btn, self.check_btn, self.update_btn, self.remove_btn,
+        buttons.addWidget(flow_row(self.add_btn, self.file_btn, self.check_btn, self.update_btn, self.remove_btn,
                                    self.refresh_btn), 1)
         buttons.addWidget(self.count, 0, Qt.AlignmentFlag.AlignTop)
 
@@ -125,7 +178,7 @@ class ModsTab(QWidget):
         self.update_btn.hide()
         self.table.setRowCount(0)
         enabled = bool(inst and inst.loader != "vanilla")
-        for b in (self.add_btn, self.check_btn, self.remove_btn, self.refresh_btn):
+        for b in (self.add_btn, self.file_btn, self.check_btn, self.remove_btn, self.refresh_btn):
             b.setEnabled(enabled)
         if inst:
             self.reload()
@@ -221,6 +274,121 @@ class ModsTab(QWidget):
         if dialog.changed:
             self.reload()
             self.mods_changed.emit()
+
+    # ---- Add File / drag and drop ---------------------------------------------------------------
+    def _add_file(self) -> None:
+        if not self.inst:
+            return
+        from pathlib import Path
+        paths, _ = QFileDialog.getOpenFileNames(self, f"Add mods to {self.inst.name}", str(Path.home() / "Downloads"),
+                                                "Minecraft mods (*.jar)")
+        if paths:
+            self.add_files(paths)
+
+    def add_files(self, paths) -> None:
+        if not self.inst:
+            return
+        try:
+            added, skipped = self.app.installer.add_files(self.inst, paths)
+        except OSError as exc:
+            QMessageBox.warning(self, "Craftd", f"Couldn't add the files: {exc}")
+            return
+        if skipped:
+            QMessageBox.information(self, "Craftd", ("Added: " + ", ".join(added) + "\n\n" if added else "")
+                                    + "Skipped: " + "; ".join(skipped))
+        if added:
+            self.runner.status(f"Added {len(added)} mod(s) to {self.inst.name}")
+            self.reload()
+            self.mods_changed.emit()
+
+    # ---- right-click menu ---------------------------------------------------------------------------
+    def mod_menu(self, mods: list[LocalMod]) -> QMenu:
+        menu = QMenu(self)
+        header = menu.addAction(mods[0].title if len(mods) == 1 else f"{len(mods)} mods selected")
+        header.setEnabled(False)
+        menu.addSeparator()
+        one = mods[0] if len(mods) == 1 else None
+        if any(not m.enabled for m in mods):
+            menu.addAction("Enable", lambda: self.set_enabled(mods, True))
+        if any(m.enabled for m in mods):
+            menu.addAction("Disable", lambda: self.set_enabled(mods, False))
+        with_update = [m for m in mods if m.sha1 in self.updates]
+        if with_update:
+            label = (f"Update to {self.updates[one.sha1].get('version_number')}" if one
+                     else f"Update {len(with_update)} mod(s)")
+            menu.addAction(label, lambda: self.update_mods(with_update))
+        if one and one.on_modrinth:
+            menu.addAction("Change Version…", lambda: self.change_version(one))
+            menu.addAction("View on Modrinth ↗", lambda: self.view_on_modrinth(one))
+        if one:
+            menu.addAction("Show in Folder", lambda: show_in_folder(one.path))
+        menu.addAction("Copy Name" if one else "Copy Names", lambda: QGuiApplication.clipboard().setText(
+            "\n".join(m.title for m in mods)))
+        menu.addSeparator()
+        menu.addAction("Remove…", self._remove)
+        return menu
+
+    def _mod_menu(self, pos) -> None:
+        row = self.table.indexAt(pos).row()
+        if row < 0 or row >= len(self.mods):
+            return
+        if row not in {i.row() for i in self.table.selectedIndexes()}:
+            self.table.selectRow(row)
+        mods = self._selected()
+        if mods:
+            self.mod_menu(mods).exec(self.table.viewport().mapToGlobal(pos))
+
+    def set_enabled(self, mods: list[LocalMod], on: bool) -> None:
+        for m in mods:
+            try:
+                self.app.installer.set_enabled(m, on)
+            except OSError as exc:
+                QMessageBox.warning(self, "Craftd", f"Couldn't rename {m.filename}: {exc}")
+        self.reload()
+        self.mods_changed.emit()
+
+    def view_on_modrinth(self, mod: LocalMod) -> None:
+        slug = self.app.cache.projects.get(mod.project_id, {}).get("slug") or mod.project_id
+        QDesktopServices.openUrl(QUrl(f"https://modrinth.com/mod/{slug}"))
+
+    def change_version(self, mod: LocalMod) -> None:
+        from .dialogs import ChangeVersionDialog
+        inst = self.inst
+        dialog = ChangeVersionDialog(self.app, self.runner, inst, mod, self)
+        if not dialog.exec() or not dialog.chosen_version:
+            return
+        version = dialog.chosen_version
+
+        def done(text):
+            self.updates.pop(mod.sha1, None)
+            self.runner.status(text)
+            self.reload()
+            self.mods_changed.emit()
+
+        self.runner.run(lambda p: self.app.installer.update(inst, mod, version), on_done=done,
+                        on_error=lambda msg: QMessageBox.warning(self, "Craftd", f"Couldn't change the version: {msg}"))
+
+    def update_mods(self, mods: list[LocalMod]) -> None:
+        inst = self.inst
+        todo = [(m, self.updates[m.sha1]) for m in mods if m.sha1 in self.updates]
+
+        def work(progress):
+            out = []
+            for mod, version in todo:
+                progress(f"Updating {mod.title}…")
+                out.append(self.app.installer.update(inst, mod, version))
+            return out
+
+        def finished(done):
+            for m, _v in todo:
+                self.updates.pop(m.sha1, None)
+            self.update_btn.setText(f"Update All ({len(self.updates)})")
+            self.update_btn.setVisible(bool(self.updates))
+            self.reload()
+            self.mods_changed.emit()
+            self.runner.status("Updated: " + ", ".join(done))
+
+        self.runner.run(work, on_done=finished)
 
     def _remove(self) -> None:
         mods = self._selected()
@@ -358,13 +526,22 @@ class CarryOverTab(QWidget):
                                   "(e.g. config.craftd-backup-<date>).")
         self.choose_packs = QPushButton("Choose Packs…")
         self.choose_packs.clicked.connect(self._choose_packs)
+        # worlds: never ticked for you, and only ones from the same or an older Minecraft version
+        self.world_list: list = []
+        self.world_choice: set = set()
+        self.x_worlds = QCheckBox("Worlds")
+        self.x_worlds.setToolTip("Copies worlds (the originals stay in the old instance). Only to the same or a "
+                                 "newer Minecraft version, so they can't get corrupted.")
+        self.x_worlds.clicked.connect(self._worlds_clicked)
+        self.choose_worlds = QPushButton("Choose Worlds…")
+        self.choose_worlds.clicked.connect(self._choose_worlds)
         self.source.currentIndexChanged.connect(lambda _: self._source_changed())
 
         layout.addWidget(self.table, 1)
         layout.addWidget(flow_row(self.show_installed, self.copy_local, spacing=18))
         layout.addWidget(self.extras_title)
         layout.addWidget(flow_row(self.x_packs, self.choose_packs, self.x_config, self.x_options, self.x_servers,
-                                  self.x_replace, spacing=14))
+                                  self.x_worlds, self.choose_worlds, self.x_replace, spacing=14))
         layout.addWidget(self.waitlist_label)
         layout.addWidget(self.summary)
         layout.addLayout(bottom)
@@ -417,7 +594,8 @@ class CarryOverTab(QWidget):
 
     def _set_enabled(self, on: bool) -> None:
         for w in (self.source, self.detect_btn, self.select_ready, self.carry_btn, self.copy_local, self.show_installed,
-                  self.x_packs, self.x_config, self.x_options, self.x_servers, self.x_replace, self.choose_packs):
+                  self.x_packs, self.x_config, self.x_options, self.x_servers, self.x_replace, self.choose_packs,
+                  self.x_worlds, self.choose_worlds):
             w.setEnabled(on)
 
     # ---- packs & settings -------------------------------------------------------------------------
@@ -428,9 +606,62 @@ class CarryOverTab(QWidget):
         # with "All my other instances", take packs/settings from the newest one
         return max(sources, key=lambda s: self.app.order.key(s.game_version))
 
+    def _load_worlds(self, src: Instance | None) -> None:
+        from .. import worlds
+        inst = self.inst
+        self.world_list = worlds.scan(src) if (inst and src) else []
+        self.world_choice = set()
+        ok = [w for w in self.world_list if not worlds.why_not(w, inst, self.app.order)]
+        self.x_worlds.setChecked(False)
+        if not self.world_list:
+            self.x_worlds.setText("Worlds (none)")
+        elif len(ok) == len(self.world_list):
+            self.x_worlds.setText(f"Worlds ({len(ok)})")
+        else:
+            self.x_worlds.setText(f"Worlds ({len(ok)} of {len(self.world_list)} can come)")
+        self.x_worlds.setEnabled(bool(ok))
+        self.choose_worlds.setEnabled(bool(self.world_list))
+
+    def missing_mods(self) -> list[str]:
+        """Mods the old instance has that this one won't have after carrying over (for the worlds warning)."""
+        chosen = {c.key for c in self._checked()} if self.shown else set()
+        out = []
+        for c in self.cands:
+            if c.status == Status.INSTALLED:
+                continue
+            coming = c.key in chosen and (c.status == Status.AVAILABLE or
+                                          (c.status == Status.LOCAL and self.copy_local.isChecked()))
+            if not coming:
+                out.append(c.title)
+        return out
+
+    def _choose_worlds(self) -> None:
+        from .dialogs import ChooseWorldsDialog
+        if not self.world_list or not self.inst:
+            return
+        dlg = ChooseWorldsDialog(self.world_list, self.inst, self.app.order, self.world_choice, self,
+                                 missing_mods=self.missing_mods())
+        if dlg.exec():
+            self.world_choice = dlg.chosen()
+            n = len(self.world_choice)
+            self.x_worlds.setChecked(n > 0)
+            if n:
+                self.x_worlds.setText(f"Worlds ({n} picked)")
+
+    def _worlds_clicked(self, checked: bool) -> None:
+        if checked and not self.world_choice:  # ticking it means "let me pick which ones"
+            self._choose_worlds()
+            self.x_worlds.setChecked(bool(self.world_choice))
+
+    def chosen_worlds(self) -> list:
+        if not self.x_worlds.isChecked():
+            return []
+        return [w for w in self.world_list if w.path in self.world_choice]
+
     def _load_extras(self) -> None:
         from .. import extras
         inst, src = self.inst, self._extras_source()
+        self._load_worlds(src)
         self.extras_scan = extras.scan(src) if (inst and src) else None
         found = self.extras_scan
         boxes = (self.x_packs, self.x_config, self.x_options, self.x_servers)
@@ -607,8 +838,9 @@ class CarryOverTab(QWidget):
     def _carry(self) -> None:
         inst, chosen = self.inst, self._checked()
         x_choice, x_found = self.extras_choice(), self.extras_scan
-        if not inst or not (chosen or x_choice):
-            self.summary.setText("Tick the mods, packs or settings you want first.")
+        worlds_chosen = self.chosen_worlds()
+        if not inst or not (chosen or x_choice or worlds_chosen):
+            self.summary.setText("Tick the mods, packs, settings or worlds you want first.")
             return
         ready = sum(1 for c in chosen if c.status == Status.AVAILABLE)
         waiting = sum(1 for c in chosen if c.status == Status.UNAVAILABLE)
@@ -633,6 +865,14 @@ class CarryOverTab(QWidget):
                 lines.append("• Replace settings it already has (backed up first)")
             else:
                 lines.append("• Keep any settings it already has")
+        if worlds_chosen:
+            lines.append(f"• Copy {len(worlds_chosen)} world(s): {', '.join(w.name for w in worlds_chosen)} "
+                         "(the originals stay where they are)")
+            missing = self.missing_mods()
+            if missing:
+                names = ", ".join(missing[:5]) + ("…" if len(missing) > 5 else "")
+                lines.append(f"\n⚠ {len(missing)} mod(s) from the old instance won't be in this one ({names}). "
+                             "Their blocks and items disappear from the copied worlds when you open them.")
         if QMessageBox.question(self, "Carry over", f"For {inst.name}:\n\n" + "\n".join(lines)) \
                 != QMessageBox.StandardButton.Yes:
             return
@@ -659,6 +899,9 @@ class CarryOverTab(QWidget):
                 texts.append(self.app.carry.carry(inst, chosen, progress, copy_local=copy_local).summary())
             if x_choice:
                 texts.append(extras.apply(x_found, inst, x_choice, progress).summary())
+            if worlds_chosen:
+                from .. import worlds
+                texts.append(worlds.copy_worlds(worlds_chosen, inst, self.app.order, progress).summary())
             return "\n".join(t for t in texts if t) or "Nothing to do."
 
         def done_text(text):

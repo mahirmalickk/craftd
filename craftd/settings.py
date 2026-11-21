@@ -27,7 +27,8 @@ class Settings:
     # General
     check_waitlist_on_start: bool = True
     prism_folder: str = ""  # "" = find Prism's instances folder automatically
-    multimc_folder: str = ""  # MultiMC is portable, so this is set by the user (Settings or Import from MultiMC)
+    multimc_folder: str = ""  # MultiMC is portable, so this is set by the user (Settings or Import from)
+    last_launcher: str = "prism"  # where + New Instance and modpacks create instances: "prism" or "multimc"
     # Mods
     stable_first: bool = True  # pick full releases over betas when both exist
     auto_dependencies: bool = True
@@ -66,6 +67,8 @@ class Settings:
         if s.theme not in THEMES:
             s.theme = "system"
         s.text_scale = 1.5 if s.text_scale >= 1.15 else 1.0  # older versions had more steps
+        if s.last_launcher not in ("prism", "multimc"):
+            s.last_launcher = "prism"
         if s.proxy not in PROXY_MODES:
             s.proxy = "system"
         s.proxy_port = min(max(s.proxy_port, 1), 65535)

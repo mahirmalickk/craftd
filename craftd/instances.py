@@ -4,8 +4,10 @@ Craftd instance layout (inside the Craftd data folder):
     instances/<id>/craftd-instance.json
     instances/<id>/minecraft/mods/*.jar
 
-Prism instances are never copied or modified except for their mods folder, and
-unlinking one from Craftd never deletes it.
+Prism and MultiMC instances are linked in place (they stay in the launcher's folder). Craftd only
+changes their files when you ask it to (carrying over, Edit Instance, Rename, Delete), and unlinking one
+from Craftd never deletes it. Since 1.1, + New Instance creates instances inside Prism or MultiMC;
+Craftd-only instances from older versions still work and can be moved there.
 """
 
 from __future__ import annotations
@@ -100,8 +102,17 @@ class Instance:
         }
 
 
-def read_prism_instance(path: Path) -> dict | None:
-    """Read name / Minecraft version / loader from a Prism instance folder."""
+def _cfg_value(raw: str) -> str:
+    """A value from instance.cfg. Prism (Qt's ini format) quotes values with commas and escapes some characters."""
+    raw = raw.strip()
+    if len(raw) >= 2 and raw[0] == raw[-1] == '"':
+        raw = raw[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+    return raw
+
+
+def read_prism_instance(path: Path, launcher: str = "prism") -> dict | None:
+    """Read name / Minecraft version / loader from a Prism or MultiMC instance folder."""
+    from .launchers import game_dir
     pack = path / "mmc-pack.json"
     if not pack.is_file():
         return None
@@ -125,14 +136,11 @@ def read_prism_instance(path: Path) -> dict | None:
     if cfg.is_file():
         for line in cfg.read_text(encoding="utf-8", errors="replace").splitlines():
             if line.startswith("name="):
-                name = line.split("=", 1)[1].strip() or name
+                name = _cfg_value(line.split("=", 1)[1]) or name
                 break
 
-    game_dir = path / ".minecraft"
-    if not game_dir.is_dir():
-        game_dir = path / "minecraft"
     return {"name": name, "game_version": game_version, "loader": loader, "loader_version": loader_version,
-            "game_dir": game_dir}
+            "game_dir": game_dir(path, launcher)}
 
 
 class InstanceManager:
@@ -164,7 +172,7 @@ class InstanceManager:
             )
         for entry in self._linked():
             path = Path(entry["path"])
-            info = read_prism_instance(path)
+            info = read_prism_instance(path, entry.get("launcher", "prism"))
             if not info:
                 continue  # folder moved or deleted in Prism; skip quietly
             out.append(
@@ -220,22 +228,22 @@ class InstanceManager:
     def _save_linked(self, entries: list[dict]) -> None:
         self.linked_file.write_text(json.dumps(entries, indent=2), encoding="utf-8")
 
-    def discover_prism(self, instances_dir: Path) -> list[tuple[Path, dict]]:
-        """Prism instances in a folder that aren't linked yet."""
+    def discover_prism(self, instances_dir: Path, launcher: str = "prism") -> list[tuple[Path, dict]]:
+        """Prism (or MultiMC) instances in a folder that aren't linked yet."""
         linked = {str(Path(e["path"]).resolve()) for e in self._linked()}
         found = []
         if not instances_dir.is_dir():
             return found
         for d in sorted(instances_dir.iterdir()):
             if d.is_dir() and str(d.resolve()) not in linked:
-                info = read_prism_instance(d)
+                info = read_prism_instance(d, launcher)
                 if info:
                     found.append((d, info))
         return found
 
     def link_prism(self, path: Path, launcher: str = "prism") -> Instance:
         """Link a Prism or MultiMC instance in place (both launchers use the same instance format)."""
-        info = read_prism_instance(path)
+        info = read_prism_instance(path, launcher)
         if not info:
             name = LAUNCHER_LABELS.get(launcher, "Prism")
             raise ValueError(f"{path} doesn't look like a {name} instance (no usable mmc-pack.json)")
@@ -278,14 +286,80 @@ class InstanceManager:
         tmp.write_text(json.dumps(data, indent=4), encoding="utf-8")
         tmp.replace(pack_file)  # all or nothing: never a half-written file
 
-        cfg = inst.root / "instance.cfg"
-        if cfg.is_file() and name != inst.name:
-            lines = cfg.read_text(encoding="utf-8").splitlines()
-            lines = [f"name={name}" if line.startswith("name=") else line for line in lines]
-            if not any(line.startswith("name=") for line in lines):
-                lines.append(f"name={name}")
-            cfg.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        if name != inst.name:
+            from .launchers import write_cfg_name
+            write_cfg_name(inst.root / "instance.cfg", name)
         return self.get(inst.id) or inst
+
+    # ---- right-click actions ------------------------------------------------------------------------
+    def rename(self, inst: Instance, name: str) -> Instance:
+        """Change only the name: instance.cfg for linked instances (the folder keeps its name, like in
+        Prism and MultiMC), Craftd's own record otherwise."""
+        from .launchers import write_cfg_name
+        name = name.strip()
+        if not name:
+            raise ValueError("The name can't be empty")
+        if inst.kind == "prism":
+            write_cfg_name(inst.root / "instance.cfg", name)
+        else:
+            inst.name = name
+            (inst.root / INSTANCE_FILE).write_text(json.dumps(inst.to_json(), indent=2), encoding="utf-8")
+        return self.get(inst.id) or inst
+
+    def copy(self, inst: Instance, name: str) -> Instance:
+        """Copy an instance with everything in it. A linked one is copied inside its launcher and linked."""
+        from .launchers import copy_instance
+        if inst.kind == "prism":
+            return self.link_prism(copy_instance(inst.root, name), inst.launcher or "prism")
+        new = self.create(name, inst.game_version, inst.loader)
+        shutil.rmtree(new.root / "minecraft", ignore_errors=True)
+        if inst.game_dir.is_dir():
+            shutil.copytree(inst.game_dir, new.root / "minecraft")
+        new.loader_version = inst.loader_version
+        (new.root / INSTANCE_FILE).write_text(json.dumps(new.to_json(), indent=2), encoding="utf-8")
+        return self.get(new.id) or new
+
+    def delete(self, inst: Instance, remove_folder=None) -> None:
+        """Delete an instance's files for good (linked ones too: they disappear from the launcher).
+
+        remove_folder(path) can send the folder to the Recycle Bin instead; it returns True when done."""
+        if not (remove_folder and remove_folder(inst.root)):
+            shutil.rmtree(inst.root)
+        if inst.kind == "prism":
+            self._save_linked([e for e in self._linked() if e["id"] != inst.id])
+        (self.meta_dir / f"{inst.id}.json").unlink(missing_ok=True)
+
+    def create_in_launcher(self, launcher: str, parent: Path, name: str, game_version: str, loader: str,
+                           loader_version: str | None) -> Instance:
+        """Make a new instance inside Prism or MultiMC and link it."""
+        from .launchers import create_instance
+        if loader not in LOADERS:
+            raise ValueError(f"Unknown loader: {loader}")
+        root = create_instance(parent, name.strip() or f"{LOADER_LABELS[loader]} {game_version}", game_version,
+                               loader, loader_version, launcher)
+        return self.link_prism(root, launcher)
+
+    def move_to_launcher(self, inst: Instance, launcher: str, parent: Path, loader_version: str | None) -> Instance:
+        """Turn a Craftd-only instance (made before 1.1) into a Prism/MultiMC one: same name, version and
+        loader, with everything in its game folder moved over and its waitlist kept."""
+        if inst.kind == "prism":
+            raise ValueError(f"{inst.name} is already in {inst.launcher_label}")
+        new = self.create_in_launcher(launcher, parent, inst.name, inst.game_version, inst.loader,
+                                      loader_version or inst.loader_version)
+        new.game_dir.mkdir(parents=True, exist_ok=True)
+        if inst.game_dir.is_dir():
+            for item in inst.game_dir.iterdir():
+                dest = new.game_dir / item.name
+                if dest.is_dir() and item.is_dir():  # e.g. the empty mods folder the new instance starts with
+                    for child in item.iterdir():
+                        shutil.move(str(child), str(dest / child.name))
+                elif not dest.exists():
+                    shutil.move(str(item), str(dest))
+        meta = self.meta_dir / f"{inst.id}.json"
+        if meta.is_file():
+            meta.replace(self.meta_dir / f"{new.id}.json")
+        shutil.rmtree(inst.root, ignore_errors=True)
+        return self.get(new.id) or new
 
     # ---- per-instance Craftd metadata (waitlist etc.) -------------------------------
     def load_meta(self, inst: Instance) -> dict:

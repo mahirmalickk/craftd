@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-import traceback
 from typing import Any, Callable
 
 from PySide6.QtCore import QObject, QRunnable, QThreadPool, Signal
+
+from ..log import log
 
 
 class _Signals(QObject):
@@ -25,7 +26,8 @@ class _Task(QRunnable):
         try:
             result = self.fn(self.signals.progress.emit, *self.args)
         except Exception as exc:  # report every failure to the UI instead of crashing
-            traceback.print_exc()
+            # into craftd.log, not the console: Craftd.exe has none (printing there could even fail)
+            log.exception("Background task failed: %s", getattr(self.fn, "__qualname__", self.fn))
             self.signals.failed.emit(str(exc) or exc.__class__.__name__)
         else:
             self.signals.done.emit(result)

@@ -11,6 +11,18 @@ from fake_modrinth import FakeModrinth, make_jar  # noqa: E402
 from craftd.core import Craftd  # noqa: E402
 
 
+@pytest.fixture(autouse=True)
+def no_real_launchers(tmp_path_factory, monkeypatch):
+    """Tests must never see (or create instances in) the Prism Launcher installed on this computer.
+
+    Prism's folder is found through APPDATA (Windows) or the home folder, so both point at an empty temp
+    folder during tests. A test that wants a launcher sets one up itself."""
+    fake_home = tmp_path_factory.mktemp("fake-user-home")
+    for var in ("APPDATA", "LOCALAPPDATA", "USERPROFILE", "HOME", "XDG_DATA_HOME"):
+        monkeypatch.setenv(var, str(fake_home))
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: fake_home))
+
+
 @pytest.fixture
 def fake():
     """A catalogue that mirrors the 26.2 -> 26.3 example."""

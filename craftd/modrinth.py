@@ -113,9 +113,14 @@ class ModrinthClient:
     def version(self, version_id: str) -> dict | None:
         return self._request("GET", f"/version/{version_id}")
 
-    def project_versions(self, project_id: str, loaders: list[str], game_versions: list[str]) -> list[dict]:
-        """Versions of a project for a target, newest first."""
-        params = {"loaders": json.dumps(loaders), "game_versions": json.dumps(game_versions)}
+    def project_versions(self, project_id: str, loaders: list[str] | None = None,
+                         game_versions: list[str] | None = None) -> list[dict]:
+        """Versions of a project for a target (or all of them), newest first."""
+        params = {}
+        if loaders:
+            params["loaders"] = json.dumps(loaders)
+        if game_versions:
+            params["game_versions"] = json.dumps(game_versions)
         data = self._request("GET", f"/project/{project_id}/version", params=params) or []
         return sorted(data, key=lambda v: v.get("date_published", ""), reverse=True)
 
@@ -123,10 +128,12 @@ class ModrinthClient:
         """Full project page: body (markdown), gallery, links, loaders..."""
         return self._request("GET", f"/project/{project_id}")
 
-    def search(self, query: str, loaders: list[str], game_version: str, limit: int = 30, offset: int = 0,
-               index: str | None = None, category: str | None = None) -> dict:
-        """index: relevance, downloads, follows, newest or updated."""
-        facets = [["project_type:mod"], [f"versions:{game_version}"]]
+    def search(self, query: str, loaders: list[str], game_version: str | None, limit: int = 30, offset: int = 0,
+               index: str | None = None, category: str | None = None, project_type: str = "mod") -> dict:
+        """index: relevance, downloads, follows, newest or updated. project_type: mod or modpack."""
+        facets = [[f"project_type:{project_type}"]]
+        if game_version:
+            facets.append([f"versions:{game_version}"])
         if loaders:
             facets.append([f"categories:{l}" for l in loaders])
         if category:

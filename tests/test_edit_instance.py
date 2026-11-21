@@ -107,7 +107,9 @@ def test_right_click_edit_in_window(qapp, app, tmp_path, monkeypatch):
     win = MainWindow(app)
     win.refresh_instances(select_id=inst.id)
     menu = win.instance_menu(win.current())
-    assert [a.text() for a in menu.actions() if a.text()] == ["26.3", "Edit Instance…"]
+    assert [a.text() for a in menu.actions() if a.text()] == ["26.3", "Edit Instance…", "Rename…", "Open Folder",
+                                                              "Copy Instance…", "Share Instance…",
+                                                              "Unlink from Craftd", "Delete…"]
 
     dlg = EditInstanceDialog(app, win.current(), win.runner, win)
     assert dlg.loader_version.isEnabled() is False and dlg.save_btn.isEnabled()  # vanilla: nothing to load

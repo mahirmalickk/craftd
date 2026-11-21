@@ -5,17 +5,22 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from PySide6.QtCore import Qt, QUrl
+from PySide6.QtCore import QFile, Qt, QUrl
 from PySide6.QtGui import QDesktopServices, QIcon
 from PySide6.QtWidgets import (
-    QApplication, QHBoxLayout, QLabel, QListView, QListWidget, QListWidgetItem, QMainWindow, QMenu, QMessageBox,
-    QPushButton, QSplitter, QStackedWidget, QTabWidget, QVBoxLayout, QWidget,
+    QApplication, QFileDialog, QFrame, QHBoxLayout, QInputDialog, QLabel, QLineEdit, QListView, QListWidget,
+    QListWidgetItem, QMainWindow, QMenu, QMessageBox, QPushButton, QSplitter, QStackedWidget, QTabWidget,
+    QVBoxLayout, QWidget,
 )
 
 from .. import __version__
 from ..core import Craftd
 from ..instances import Instance
-from .dialogs import EditInstanceDialog, ImportPrismDialog, NewInstanceDialog, SettingsDialog
+from ..launchers import LAUNCHERS, available
+from .dialogs import (
+    EditInstanceDialog, ImportDialog, ImportPrismDialog, InstallPackDialog, NewInstanceDialog, SettingsDialog,
+    ShareDialog,
+)
 from .tabs import CarryOverTab, CrashTab, ModsTab
 from .theme import ThemeManager
 from .widgets import BADGE_ROLE, KIND_ROLE, NAME_ROLE, SUMMARY_ROLE, ElidedLabel, InstanceDelegate
@@ -71,10 +76,10 @@ class MainWindow(QMainWindow):
         new_btn = QPushButton("+ New Instance")
         new_btn.setProperty("primary", True)
         new_btn.clicked.connect(self.new_instance)
-        import_btn = QPushButton("Import from Prism…")
-        import_btn.clicked.connect(lambda: self.import_prism("prism"))
-        import_mmc_btn = QPushButton("Import from MultiMC…")
-        import_mmc_btn.clicked.connect(lambda: self.import_multimc())
+        packs_btn = QPushButton("Browse Modpacks")
+        packs_btn.clicked.connect(self.browse_modpacks)
+        import_btn = QPushButton("Import from")
+        import_btn.clicked.connect(self.import_from)
         side = QVBoxLayout(sidebar)
         side.setContentsMargins(12, 12, 12, 12)
         settings_btn = QPushButton("⚙  Settings")
@@ -83,8 +88,8 @@ class MainWindow(QMainWindow):
         side.addWidget(section)
         side.addWidget(self.list, 1)
         side.addWidget(new_btn)
+        side.addWidget(packs_btn)
         side.addWidget(import_btn)
-        side.addWidget(import_mmc_btn)
         side.addWidget(settings_btn)
 
         # ---- detail -----------------------------------------------------------------------------
@@ -118,14 +123,29 @@ class MainWindow(QMainWindow):
         self.carry_tab.mods_changed.connect(self.mods_tab.reload)
         self.carry_tab.mods_changed.connect(self._recount_ready)
 
+        # Craftd-only instances (made before 1.1) can't be launched yet: offer to move them
+        self.legacy = QFrame()
+        self.legacy.setObjectName("LegacyBanner")
+        self.legacy_label = QLabel()
+        self.legacy_label.setWordWrap(True)
+        self.legacy_btn = QPushButton()
+        self.legacy_btn.setProperty("primary", True)
+        self.legacy_btn.clicked.connect(lambda: self.move_to_launcher(self.legacy_btn.property("launcher")))
+        lb = QHBoxLayout(self.legacy)
+        lb.setContentsMargins(10, 6, 10, 6)
+        lb.addWidget(self.legacy_label, 1)
+        lb.addWidget(self.legacy_btn)
+        self.legacy.hide()
+
         detail = QWidget()
         dl = QVBoxLayout(detail)
         dl.setContentsMargins(20, 16, 20, 12)
         dl.addLayout(header)
+        dl.addWidget(self.legacy)
         dl.addWidget(self.tabs, 1)
 
-        empty = QLabel("No instances yet.\n\nClick “+ New Instance” to make one, or “Import from Prism…” "
-                       "to bring in the instances you already have.")
+        empty = QLabel("No instances yet.\n\nClick “+ New Instance” to make one, “Browse Modpacks” for a ready-made "
+                       "set of mods, or “Import from” to bring in the instances you already have.")
         empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
         empty.setWordWrap(True)
         empty.setMargin(24)
@@ -176,9 +196,10 @@ class MainWindow(QMainWindow):
         self.stack.setCurrentIndex(1 if inst else 0)
         if inst:
             self.title.setText(inst.name)
-            kind = f"Linked {inst.launcher_label} instance" if inst.kind == "prism" else "Craftd instance"
+            kind = f"Linked {inst.launcher_label} instance" if inst.kind == "prism" else "Craftd-only instance"
             self.subtitle.setText(f"Minecraft {inst.game_version} · {inst.loader_text} · {kind} · {inst.game_dir}")
             self.remove_btn.setText("Unlink" if inst.kind == "prism" else "Delete")
+        self._update_legacy(inst)
         self.mods_tab.set_instance(inst)
         self.carry_tab.set_instance(inst)
         self.crash_tab.set_instance(inst)
@@ -204,18 +225,36 @@ class MainWindow(QMainWindow):
         if not dialog.exec():
             return
         name, version, loader, sources = dialog.values()
-        try:
-            inst = self.app.manager.create(name, version, loader)
-        except (OSError, ValueError) as exc:
-            self._error(str(exc))
+        launcher = dialog.launcher_key()
+        if not launcher:
             return
-        self.refresh_instances(select_id=inst.id)
-        if sources:
-            # The headline feature: jump straight to the carry-over review for the new instance
-            self.carry_tab.set_source(sources)
-            self.tabs.setCurrentWidget(self.carry_tab)
-            self.carry_tab.detected_for = None
-            self.carry_tab.ensure_detected()
+        self.app.settings.last_launcher = launcher
+        self.app.settings.save(self.app.home)
+
+        def done(inst):
+            self.refresh_instances(select_id=inst.id)
+            self.statusBar().showMessage(f"Created {inst.name} in {inst.launcher_label}: it shows up there, "
+                                         "ready to launch", 15000)
+            if sources:
+                # The headline feature: jump straight to the carry-over review for the new instance
+                self.carry_tab.set_source(sources)
+                self.tabs.setCurrentWidget(self.carry_tab)
+                self.carry_tab.detected_for = None
+                self.carry_tab.ensure_detected()
+
+        self.statusBar().showMessage(f"Creating {name} in {LAUNCHERS[launcher]}…")
+        self.runner.run(lambda p: self.app.new_instance(launcher, name, version, loader), on_done=done,
+                        on_error=lambda msg: self._error(f"Couldn't create the instance: {msg}"))
+
+    def import_from(self) -> None:
+        """One Import from button: pick the launcher (or a modpack file) first, then what to import."""
+        dialog = ImportDialog(self.app, self)
+        if not dialog.exec() or not dialog.choice:
+            return
+        if dialog.choice == "mrpack":
+            self.import_mrpack()
+        else:
+            self.import_prism(dialog.choice)
 
     def import_prism(self, launcher: str = "prism") -> None:
         dialog = ImportPrismDialog(self.app, self, launcher=launcher)
@@ -223,13 +262,69 @@ class MainWindow(QMainWindow):
             self.refresh_instances(select_id=dialog.linked[-1].id)
             self.statusBar().showMessage(f"Linked {len(dialog.linked)} {dialog.launcher_name} instance(s)")
 
+    def import_multimc(self) -> None:
+        self.import_prism("multimc")
+
+    def import_mrpack(self, path: str | None = None) -> None:
+        from .. import mrpack
+        from ..launchers import instances_dir
+        if path is None:
+            path, _ = QFileDialog.getOpenFileName(self, "Open a modpack file", str(Path.home()),
+                                                  "Modrinth modpack (*.mrpack)")
+            if not path:
+                return
+        try:
+            index = mrpack.read_index(Path(path))
+        except mrpack.PackError as exc:
+            self._error(str(exc))
+            return
+        dialog = InstallPackDialog(self.app, index, self)
+        if not dialog.exec():
+            return
+        name, launcher = dialog.values()
+        parent = instances_dir(self.app.settings, launcher)
+        if not parent:
+            return
+        self.app.settings.last_launcher = launcher
+        self.app.settings.save(self.app.home)
+
+        def done(inst):
+            self.refresh_instances(select_id=inst.id)
+            QMessageBox.information(self, "Craftd", f"Installed {inst.name} in {inst.launcher_label}. "
+                                    f"Open {inst.launcher_label} to play it.")
+
+        self.runner.run(lambda p: mrpack.install(self.app.manager, self.app.client, Path(path), launcher, parent,
+                                                 name or None, p),
+                        on_done=done, on_error=lambda msg: self._error(f"Couldn't install the modpack: {msg}"))
+
+    def browse_modpacks(self) -> None:
+        from .modpacks import ModpacksDialog
+        dialog = ModpacksDialog(self.app, self.runner, self)
+        dialog.exec()
+        if dialog.installed:
+            self.refresh_instances(select_id=dialog.installed.id)
+
     def instance_menu(self, inst: Instance) -> QMenu:
-        """The right-click menu for an instance. More options will be added here over time."""
+        """The right-click menu for an instance, like Prism's and MultiMC's."""
         menu = QMenu(self)
         header = menu.addAction(inst.name)
         header.setEnabled(False)
         menu.addSeparator()
         menu.addAction("Edit Instance…", self.edit_instance)
+        menu.addAction("Rename…", self.rename_instance)
+        menu.addAction("Open Folder", self.open_folder)
+        menu.addAction("Copy Instance…", self.copy_instance)
+        menu.addAction("Share Instance…", self.share_instance)
+        menu.addSeparator()
+        if inst.kind != "prism":
+            places = available(self.app.settings)
+            for key, label in LAUNCHERS.items():
+                action = menu.addAction(f"Move to {label}…", lambda k=key: self.move_to_launcher(k))
+                action.setEnabled(key in places)
+            menu.addSeparator()
+        else:
+            menu.addAction("Unlink from Craftd", self.unlink_instance)
+        menu.addAction("Delete…", self.delete_instance)
         return menu
 
     def _instance_menu(self, pos) -> None:
@@ -251,20 +346,117 @@ class MainWindow(QMainWindow):
             self.refresh_instances(select_id=new.id)
             self.statusBar().showMessage(f"Saved {new.name}: Minecraft {new.game_version} · {new.loader_text}")
 
-    def import_multimc(self) -> None:
-        self.import_prism("multimc")
+    def _launcher_closed(self, inst: Instance, doing: str) -> bool:
+        """Prism/MultiMC can overwrite an instance's files while open: ask to close it first."""
+        from ..loaders import launcher_running
+        if inst.kind != "prism":
+            return True
+        while launcher_running(inst.launcher):
+            answer = QMessageBox.warning(
+                self, "Close " + inst.launcher_label,
+                f"{inst.launcher_label} is open. Close it before you {doing}, then click Retry.",
+                QMessageBox.StandardButton.Retry | QMessageBox.StandardButton.Cancel)
+            if answer != QMessageBox.StandardButton.Retry:
+                return False
+        return True
+
+    def rename_instance(self) -> None:
+        inst = self.current()
+        if not inst:
+            return
+        name, ok = QInputDialog.getText(self, "Rename", f"New name for {inst.name}:", QLineEdit.EchoMode.Normal,
+                                        inst.name)
+        if not ok or not name.strip() or name.strip() == inst.name or not self._launcher_closed(inst, "rename it"):
+            return
+        try:
+            new = self.app.manager.rename(inst, name)
+        except (OSError, ValueError) as exc:
+            self._error(f"Couldn't rename it: {exc}")
+            return
+        self.refresh_instances(select_id=new.id)
+
+    def copy_instance(self) -> None:
+        inst = self.current()
+        if not inst:
+            return
+        name, ok = QInputDialog.getText(self, "Copy Instance", "Name of the copy:", QLineEdit.EchoMode.Normal,
+                                        f"{inst.name} (Copy)")
+        if not ok or not name.strip():
+            return
+        self.runner.run(lambda p: (p(f"Copying {inst.name}…"), self.app.manager.copy(inst, name.strip()))[1],
+                        on_done=lambda new: self.refresh_instances(select_id=new.id),
+                        on_error=lambda msg: self._error(f"Couldn't copy it: {msg}"))
+
+    def share_instance(self) -> None:
+        inst = self.current()
+        if inst:
+            ShareDialog(self.app, inst, self.runner, self).exec()
+
+    def move_to_launcher(self, launcher: str) -> None:
+        inst = self.current()
+        if not inst or inst.kind == "prism":
+            return
+        label = LAUNCHERS[launcher]
+        if QMessageBox.question(
+                self, f"Move to {label}",
+                f"Move {inst.name} into {label}?\n\nCraftd makes the same instance there (Minecraft "
+                f"{inst.game_version}, {inst.loader_label}) and moves its mods, settings and worlds into it, so "
+                f"you can launch it from {label}.") != QMessageBox.StandardButton.Yes:
+            return
+
+        def done(new):
+            self.refresh_instances(select_id=new.id)
+            self.statusBar().showMessage(f"Moved {new.name} to {new.launcher_label}: open it there to play", 15000)
+
+        self.runner.run(lambda p: self.app.move_to_launcher(inst, launcher), on_done=done,
+                        on_error=lambda msg: self._error(f"Couldn't move it: {msg}"))
+
+    def _update_legacy(self, inst: Instance | None) -> None:
+        places = available(self.app.settings)
+        if not inst or inst.kind == "prism" or not places:
+            self.legacy.hide()
+            return
+        key = self.app.settings.last_launcher if self.app.settings.last_launcher in places else next(iter(places))
+        self.legacy_label.setText(f"⚠ This instance only exists in Craftd, so it can't be launched yet. Move it to "
+                                  f"{LAUNCHERS[key]} to play it. Its mods, settings and worlds come along.")
+        self.legacy_btn.setText(f"Move to {LAUNCHERS[key]}")
+        self.legacy_btn.setProperty("launcher", key)
+        self.legacy.show()
+
+    def unlink_instance(self) -> None:
+        inst = self.current()
+        if inst and QMessageBox.question(
+                self, "Craftd", f"Unlink {inst.name} from Craftd?\n\nIt stays in {inst.launcher_label}, "
+                "untouched.") == QMessageBox.StandardButton.Yes:
+            self.app.manager.remove(inst)
+            self.refresh_instances()
+
+    def delete_instance(self) -> None:
+        inst = self.current()
+        if not inst:
+            return
+        where = f" It disappears from {inst.launcher_label} too." if inst.kind == "prism" else ""
+        if QMessageBox.question(
+                self, "Delete instance",
+                f"Delete {inst.name} and everything in it (mods, settings, worlds)?{where}\n\n{inst.root}\n\n"
+                "It goes to the Recycle Bin, so you can still get it back from there.") \
+                != QMessageBox.StandardButton.Yes or not self._launcher_closed(inst, "delete it"):
+            return
+        try:
+            self.app.manager.delete(inst, remove_folder=lambda path: QFile.moveToTrash(str(path)))
+        except OSError as exc:
+            self._error(f"Couldn't delete it: {exc}")
+        self.refresh_instances()
 
     def remove_instance(self) -> None:
+        """The Unlink / Delete button in the header."""
         inst = self.current()
         if not inst:
             return
         if inst.kind == "prism":
-            question = f"Unlink {inst.name} from Craftd?\n\nIts files stay in {inst.launcher_label} untouched."
+            self.unlink_instance()
         else:
-            question = f"Delete {inst.name} and all of its files?\n\n{inst.root}\n\nThis can't be undone."
-        if QMessageBox.question(self, "Craftd", question) == QMessageBox.StandardButton.Yes:
-            self.app.manager.remove(inst)
-            self.refresh_instances()
+            self.delete_instance()
 
     def open_folder(self) -> None:
         inst = self.current()
@@ -295,6 +487,7 @@ class MainWindow(QMainWindow):
 
     def open_settings(self) -> None:
         if SettingsDialog(self.app, self.themer, self).exec():
+            self._update_legacy(self.current())
             self.carry_tab.set_instance(self.current())  # new Carry Over defaults show right away
             self.carry_tab.detected_for = None
             if self.tabs.currentWidget() is self.carry_tab:
@@ -341,6 +534,9 @@ def run() -> int:
             pass
     if ICON_FILE.is_file():
         qt_app.setWindowIcon(QIcon(str(ICON_FILE)))
+    from ..log import setup
+    from ..paths import data_dir
+    setup(data_dir())
     core = Craftd()
     themer = ThemeManager(qt_app, core.settings)
     themer.apply()

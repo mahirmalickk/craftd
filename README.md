@@ -4,9 +4,9 @@ A personal Minecraft launcher in the spirit of Prism and MultiMC. Its main featu
 Craftd detects the mods you use in one instance and finds the matching build of each one for another
 instance, such as going from 26.2 to 26.3.
 
-**Craftd 1.0** covers instances, the mod manager, the Modrinth browser, and Carry Over. Launching the game
-(Microsoft login, Java and game files) is planned for v2. Until then you link your Prism or MultiMC instances,
-manage their mods in Craftd, and keep launching them from Prism or MultiMC.
+**Craftd 1.1** covers instances, the mod manager, the Modrinth browser, modpacks, sharing instances with friends,
+and Carry Over (mods, packs, settings and worlds). Launching the game (Microsoft login, Java and game files) is
+planned for v2. Until then Craftd makes and manages instances inside Prism or MultiMC, and you launch them from there.
 
 ## Just want to use it? (Windows)
 
@@ -15,8 +15,8 @@ manage their mods in Craftd, and keep launching them from Prism or MultiMC.
 2. Double-click `Craftd\Craftd.exe`. No Python needed. Keep it next to its `_internal` folder.
    If Windows SmartScreen says "Windows protected your PC", click **More info → Run anyway** (Craftd isn't
    code-signed).
-3. Click **Import from Prism…** (found automatically) or **Import from MultiMC…** (choose its `instances` folder),
-   and link your instances.
+3. Click **Import from**, pick **Prism Launcher** (found automatically) or **MultiMC** (choose its `instances` folder
+   once), then tick the instances to link.
 
 You need Prism Launcher or MultiMC to play, and an internet connection for Modrinth. To update Craftd, delete the
 old `Craftd` folder and extract the new zip in its place: your instances and settings live in `%APPDATA%\Craftd`,
@@ -45,7 +45,7 @@ py -m venv .venv
 ```
 ✅ *Checkpoint:* ends with `Successfully installed ...`, no red `ERROR`.
 
-**4. (Optional) Run the tests:** `.venv\Scripts\python -m pytest -q` → `94 passed`.
+**4. (Optional) Run the tests:** `.venv\Scripts\python -m pytest -q` → `120 passed`.
 
 **5. Start Craftd:** `.venv\Scripts\python -m craftd` — afterwards just double-click `Craftd.bat`.
 If SmartScreen warns, click **More info → Run anyway**.
@@ -99,7 +99,7 @@ pip install -r requirements.txt
 ```bash
 pytest -q
 ```
-✅ *Checkpoint:* `94 passed`. The tests use a fake Modrinth, so they don't need internet.
+✅ *Checkpoint:* `120 passed`. The tests use a fake Modrinth, so they don't need internet.
 
 **5. Start Craftd**
 ```bash
@@ -113,17 +113,19 @@ right-click it, choose **Open**, and if that doesn't work, run `chmod +x Craftd.
 
 ## Using Carry Over (the 26.2 → 26.3 example)
 
-1. **Import your existing instances.** Click **Import from Prism…**. Craftd finds Prism's instances folder on its own
-   (`%APPDATA%\PrismLauncher\instances` on Windows). Tick your 26.2 instance and click **Link Selected**.
-   **Using MultiMC?** Click **Import from MultiMC…** instead. MultiMC runs from wherever you unzipped it, so choose its
-   `instances` folder once (in MultiMC: **Folders → View Instance Folder**); Craftd remembers it in
-   **Settings → General**. MultiMC instances work exactly like Prism ones and are labeled "MultiMC".
-   Linked instances stay where they are. Craftd only adds or removes files in their `mods` folder, and
-   **Unlink** never deletes anything.
-2. **Make the new instance.** For now, create it in Prism (an empty 26.3 Fabric instance) and import it the same way,
-   so you can launch it from Prism. You can also use **+ New Instance** in Craftd, but Craftd can't launch it until v2.
-   In the New Instance dialog, Craftd **pre-selects the best source on its own**: same loader, closest older
-   Minecraft version, and it has mods.
+1. **Import your existing instances.** Click **Import from** and pick your launcher:
+   - **Prism Launcher:** Craftd finds its instances folder on its own (`%APPDATA%\PrismLauncher\instances` on Windows).
+   - **MultiMC:** it runs from wherever you unzipped it, so choose its `instances` folder once (in MultiMC:
+     **Folders → View Instance Folder**). Craftd remembers it in **Settings → General**.
+   - **Modpack file (.mrpack):** a file from **Share Instance** or Modrinth (see below).
+   - The Official Minecraft Launcher, Modrinth App and CurseForge App are listed as *Coming soon*.
+
+   Click **Next**, tick your 26.2 instance and click **Link Selected**. Linked instances stay where they are, and
+   **Unlink from Craftd** never deletes anything.
+2. **Make the new instance.** Click **+ New Instance**, pick 26.3 and Fabric, and choose **Create in** Prism or MultiMC.
+   Craftd makes the instance *inside* that launcher (with the recommended loader version), so it shows up there ready
+   to launch. Craftd **pre-selects the best source to carry over from**: same loader, closest older Minecraft
+   version, and it has mods.
 3. **Review.** Open the 26.3 instance's **Carry Over** tab. Detection runs as soon as the tab opens. Each mod is marked:
    | Status | Meaning | Default |
    |---|---|---|
@@ -148,6 +150,7 @@ Under the mod list, **Also bring from <source>** offers the rest of what makes a
 | **Mod settings** | the `config` folder | ticked if it has new files (“3 new of 40 files”) |
 | **Options & keybinds** | `options.txt` (graphics, controls, selected packs) | ticked only if the new instance has none yet* |
 | **Server list** | `servers.dat` | ticked only if the new instance has none yet |
+| **Worlds** | worlds from `saves`. **Choose Worlds…** shows each world's version and size | never ticked for you |
 | **Replace what's already there** | overwrite settings the new instance already has | off |
 
 \*Not ticked if the source is a **newer** Minecraft version, because older versions can misread newer option files.
@@ -157,6 +160,12 @@ missing config files and skips `options.txt` / `servers.dat` if they exist. With
 what it's about to overwrite to `config.craftd-backup-<date>` (or `options.txt.craftd-backup-<date>`). You can carry
 packs and settings even with no mods ticked. With **All my other instances**, they come from the newest one.
 Change what's ticked by default in **Settings → Carry Over**.
+
+**Worlds** are always copied, never moved, so the original stays playable in the old instance. A world can only go
+to the **same or a newer** Minecraft version (e.g. 1.21 → 26.1): Craftd reads the version each world was last played
+in from its `level.dat`, and greys out worlds from a newer version, since opening those in an older one can corrupt
+them. If the old instance has mods the new one won't have, Craftd warns you first: blocks and items from missing
+mods disappear from a world when it's opened without them.
 
 ### Command line (same engine)
 ```bash
@@ -180,9 +189,39 @@ On an instance's **Mods** tab, click **Add from Modrinth…**:
   (the recommended one is the newest stable release).
 - **Install N mods** installs the queue plus anything those mods require.
 
+**Mods that aren't on Modrinth** (e.g. from CurseForge): click **Add File…**, or drag `.jar` files onto the mod list.
+
+**Right-click a mod** (or several) for: **Enable / Disable** (renames the jar to `.jar.disabled`, like Prism and
+MultiMC), **Update to …** (after **Check for Updates**), **Change Version…** (pick any build, including older ones),
+**View on Modrinth ↗**, **Show in Folder**, **Copy Name**, and **Remove…**.
+
+## Modpacks
+
+Click **Browse Modpacks** in the sidebar to search Modrinth's modpacks (filter by loader and Minecraft version, sort
+by downloads, follows, updates). Pick a version, a name and **Create in** Prism or MultiMC, then **Install**: Craftd
+downloads the pack, every mod in it (each checked against its SHA-1), and its settings into a new instance.
+
+## Sharing an instance
+
+Right-click an instance → **Share Instance…** saves it as a small `.mrpack` file to send to a friend. Mods go in as
+Modrinth links rather than files, so the file is usually a few KB and your friend gets exactly the same builds.
+Choose what else to include: mod settings, resource and shader packs, options & keybinds, the server list (off by
+default), jars that aren't on Modrinth (put in as files), and worlds (off unless you tick them). Turned-off mods,
+logs and screenshots are left out. Your friend opens it with **Import from → Modpack file (.mrpack)**, or in Prism or
+the Modrinth App.
+
 ## Editing an instance
 
-Right-click an instance in the sidebar → **Edit Instance…** to change its name, Minecraft version, loader
+Right-click an instance in the sidebar for **Edit Instance…**, **Rename…**, **Open Folder**, **Copy Instance…**,
+**Share Instance…**, **Unlink from Craftd** and **Delete…** (sends it to the Recycle Bin, and it disappears from
+Prism/MultiMC too). Renaming keeps the folder name, like Prism and MultiMC do. Close Prism/MultiMC first when
+renaming or deleting: Craftd checks and asks.
+
+**Instances made with + New Instance before 1.1** only existed in Craftd, so they couldn't be launched. They show a
+yellow banner with **Move to Prism** / **Move to MultiMC**, which makes the same instance there and moves its mods,
+settings, worlds and waitlist into it.
+
+**Edit Instance…** changes its name, Minecraft version, loader
 (Vanilla, Fabric, Quilt, NeoForge, Forge) or loader version, e.g. turn **26.3 Vanilla** into **26.3 Fabric**.
 
 - Loader versions come from the launcher's own version list (Prism's for Prism and Craftd instances, MultiMC's
@@ -195,21 +234,19 @@ Right-click an instance in the sidebar → **Edit Instance…** to change its na
   warning first; afterwards, the compatibility check marks mods that won't load, and Carry Over or **Check for
   Updates** gets the right builds.
 
-The right-click menu will get more options over time.
-
 ## Settings
 
 Click **⚙ Settings** at the bottom of the sidebar. Pages are listed on the left, like Prism's settings:
 
 | Page | What's there |
 |---|---|
-| **General** | Check the waitlist when Craftd starts · Prism's instances folder (for portable Prism or a moved folder; used by **Import from Prism…**) · MultiMC's instances folder (used by **Import from MultiMC…**) · Open Craftd's data folder |
+| **General** | Check the waitlist when Craftd starts · Prism's instances folder (for portable Prism or a moved folder) · MultiMC's instances folder · Open Craftd's data folder. Both folders are used by **Import from**, **+ New Instance** and modpacks |
 | **Appearance** | Match Windows (default; "Match system" on macOS), Light (styled after the block of iron) or Dark (the block of netherite) · Text size Default or Large. Previews instantly |
 | **Mods** | Stable builds first (recommended) or newest even if beta · Install required dependencies automatically · Hide installed mods in **Add from Modrinth** |
 | **Carry Over** | What the Carry Over tab ticks by default: jars not on Modrinth, packs, mod settings, options & server list |
 | **Storage** | What the cache holds and how big it is · **Clear Cache** (instances, mods, settings and waitlists are never touched) |
 | **Network** | Proxy: system settings (default), none, or an HTTP proxy · request timeout · **Test Connection**. Only Craftd's own Modrinth downloads use these |
-| **About** | Version, credits and the font license |
+| **About** | Version, credits, the font license, and **Open Log Folder** (`craftd.log`, to attach to bug reports) |
 
 **Save** applies everything; **Cancel** reverts (including the live theme preview). Clearing the cache happens right
 away. Settings are saved to `settings.json` in Craftd's data folder; files from older versions load fine.
@@ -244,6 +281,8 @@ whole-number sizes so every pixel stays sharp. After editing the logo, rebuild t
   it: mods that conflict, missing or wrong-version dependencies, mods built for another loader version (failed mixin
   hooks), out of memory, wrong Java. A ● on the tab means there's a crash you haven't looked at.
 - **Waitlisted:** mods already on the waitlist show as *Waitlisted* in Carry Over instead of being offered again.
+- **Log file:** Craftd writes what it does, and any error, to `craftd.log` in its data folder (1 MB, plus two older
+  copies). **Settings → About → Open Log Folder** opens it.
 
 Limits: mods that don't declare their rules (Sodium 0.9.2 didn't) can't be checked ahead of time. The Crash Help tab
 explains those after the fact.
@@ -267,7 +306,11 @@ explains those after the fact.
 ```
 craftd/
   modrinth.py     Modrinth API client (User-Agent, rate-limit handling, verified downloads)
-  instances.py    Craftd instances + linked Prism instances (reads mmc-pack.json / instance.cfg)
+  instances.py    Linked Prism/MultiMC instances (+ Craftd-only ones from before 1.1): rename, copy, delete, move
+  launchers.py    Prism/MultiMC on disk: each launcher's game-folder rule, creating instances inside them
+  mrpack.py       Modrinth modpacks (.mrpack): installing, and Share Instance
+  worlds.py       Worlds for Carry Over: reads level.dat (NBT), same-or-newer rule, copying
+  log.py          craftd.log
   mods.py         Mod folder scanning, jar fingerprinting, the hash cache, jar metadata
   installer.py    Install with dependencies, update, remove, enable/disable
   sync.py         Carry Over: source suggestion, detection, waitlist  ← the core feature
@@ -280,7 +323,7 @@ craftd/
   fonts/          Monocraft (SIL OFL) + Craftd's pixel symbols font
   assets/         Craftd's official logo (16×16) and the icons built from it (.png, .ico)
   gui/            PySide6 window, tabs, dialogs, theme (palettes + type scale), sidebar rows, workers
-tests/            Fake Modrinth + 94 tests (engine and GUI)
+tests/            Fake Modrinth + 120 tests (engine and GUI)
 ```
 Craftd's data (instances list, settings, cache, waitlists) lives in `%APPDATA%\Craftd` on Windows and
 `~/Library/Application Support/Craftd` on macOS. Set `CRAFTD_HOME` to use a different folder.
@@ -289,10 +332,6 @@ Build tooling: `build_exe.bat` + `requirements-build.txt` (PyInstaller) and `too
 point); `tools/make_icon.py` and `tools/make_pixel_extras.py` rebuild the icons and the symbols font.
 
 ## Roadmap
-**1.1**
-- Modrinth modpacks: browse and install whole packs
-- More right-click options on instances (rename, open folders, copy, delete)
-
 **v2**
 - Launching: Microsoft account sign-in, game file and asset download, a Java runtime per version, and loader installation
 - Settings pages for Java, memory (RAM) and accounts
@@ -300,7 +339,8 @@ point); `tools/make_icon.py` and `tools/make_pixel_extras.py` rebuild the icons 
 - Update notifications for new Craftd versions
 
 **Later**
-- CurseForge as a second source
+- Import from the Official Minecraft Launcher, the Modrinth App and the CurseForge App (*Coming soon* in Import from)
+- CurseForge as a second source (needs an approved CurseForge API key)
 - An optional auto mode: carry over without asking whenever every mod is Ready
 - A macOS app (`Craftd.app`); for now macOS runs from source
 

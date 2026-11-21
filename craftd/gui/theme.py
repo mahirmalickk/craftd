@@ -248,6 +248,23 @@ QSpinBox:focus {{ border-color: {p['accent']}; }}
 QLineEdit:disabled, QSpinBox:disabled {{ color: {p['faint']}; }}
 QScrollArea {{ background: transparent; }}
 QScrollArea > QWidget > QWidget {{ background: transparent; }}
+QListWidget#PackResults {{ background: {p['surface']}; border: 1px solid {p['border']}; border-radius: 10px;
+                          padding: 4px; }}
+QListWidget#PackResults::item {{ padding: 8px 6px; border-radius: 7px; color: {p['text']}; }}
+QListWidget#PackResults::item:hover {{ background: {p['hover']}; }}
+QListWidget#PackResults::item:selected {{ background: {p['selected']}; color: {p['text']}; }}
+#OptionRow {{ background: {p['surface']}; border: 1px solid {p['border']}; border-radius: 8px; }}
+#OptionRow[selected="true"] {{ background: {p['selected']}; border-color: {p['accent']}; }}
+#OptionRow:disabled {{ background: {p['bg']}; }}
+#OptionRow QLabel, #OptionRow QRadioButton {{ background: transparent; }}
+#OptionRow QLabel:disabled, #OptionRow QRadioButton:disabled {{ color: {p['faint']}; }}
+#OptionFound {{ color: {p['accent']}; font-size: {px('small')}; }}
+#SoonTag {{ color: {p['faint']}; border: 1px solid {p['border']}; border-radius: 9px; padding: 1px 8px;
+            font-size: {px('small')}; }}
+#FolderBox {{ background: {p['surface']}; border: 1px solid {p['border']}; border-radius: 8px; }}
+#FolderBox QLabel {{ background: transparent; }}
+#LegacyBanner {{ background: {p['warning_bg']}; border: 1px solid {p['unavailable']}; border-radius: 8px; }}
+#LegacyBanner QLabel {{ background: transparent; }}
 """
     if pixel:  # Regular only, no letter-spacing: the pixel font stays plain and crisp
         css = re.sub(r"font-weight: \d+;", "font-weight: 400;", css)

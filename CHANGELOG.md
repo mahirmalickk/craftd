@@ -2,6 +2,35 @@
 
 All notable changes to Craftd. Newest first.
 
+## [1.1.0] - 2026-11-20 · Import from, modpacks, worlds and sharing
+
+### Added
+- **Import from**: one button that asks which launcher your instances are in. Prism is found automatically, MultiMC's
+  folder is picked once and remembered, and the Official Launcher, Modrinth App and CurseForge App are marked
+  *Coming soon*
+- **Browse Modpacks**: search Modrinth's modpacks and install one as a new Prism or MultiMC instance
+- **Share Instance** (right-click): saves a small `.mrpack` to send to a friend; mods go in as Modrinth links. Open
+  one with **Import from → Modpack file (.mrpack)**
+- **Worlds in Carry Over**: copy worlds to the same or a newer Minecraft version only, with each world's version and
+  size shown, and a warning when the new instance is missing mods the world uses. Never ticked for you
+- **Instance right-click menu**: Rename, Open Folder, Copy Instance, Share Instance, Unlink from Craftd, Delete (to
+  the Recycle Bin)
+- **Mod right-click menu**: Enable/Disable, Update, Change Version, View on Modrinth, Show in Folder, Copy Name,
+  Remove. Works on several mods at once
+- **Add File…** and drag-and-drop for `.jar` files that aren't on Modrinth (e.g. from CurseForge)
+- **craftd.log** in Craftd's data folder, plus **Settings → About → Open Log Folder** for bug reports
+
+### Changed
+- **+ New Instance creates the instance inside Prism or MultiMC** (**Create in**), with the recommended loader version,
+  so it can be launched right away. Instances made with it before 1.1 show a **Move to Prism/MultiMC** banner
+- The sidebar has **+ New Instance**, **Browse Modpacks**, **Import from** and **Settings**
+
+### Fixed
+- Mods carried into a MultiMC instance that had never been launched went into a folder MultiMC doesn't read
+  (`minecraft` instead of `.minecraft`). Craftd now follows each launcher's own folder rule
+- Errors in background tasks are logged instead of printed to a console Craftd.exe doesn't have
+- Instance names with commas saved by Prism are read correctly
+
 ## [1.0.0] - 2026-11-18 · First full release
 
 Craftd now comes as a regular Windows app: no Python or setup needed.

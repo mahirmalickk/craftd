@@ -1,4 +1,4 @@
-"""New Instance, Import from Prism, Settings, Issues and Choose Packs dialogs."""
+"""New Instance, Import from, Settings, Issues, Choose Packs/Worlds, Share and Change Version dialogs."""
 
 from __future__ import annotations
 
@@ -27,15 +27,35 @@ def _muted(text: str) -> QLabel:
     return label
 
 
+def launcher_combo(app: Craftd) -> tuple[QComboBox, QLabel]:
+    """"Create in: Prism / MultiMC" (only the ones Craftd can find), plus a note when there's none."""
+    from ..launchers import LAUNCHERS, available
+    combo = QComboBox()
+    found = available(app.settings)
+    for key, folder in found.items():
+        combo.addItem(f"{LAUNCHERS[key]}  ({folder})" if len(found) > 1 else LAUNCHERS[key], key)
+    note = _muted("")
+    if not found:
+        combo.addItem("No launcher found", None)
+        combo.setEnabled(False)
+        note.setText("Craftd makes new instances in Prism Launcher or MultiMC, which launch the game. Install "
+                     "Prism, or set MultiMC's instances folder in Settings → General.")
+    else:
+        combo.setCurrentIndex(max(0, combo.findData(app.settings.last_launcher)))
+        note.setText("Craftd can't launch Minecraft yet, so the instance is made there, ready to play.")
+    note.setVisible(True)
+    return combo, note
+
+
 # ---------------------------------------------------------------------------------------
 class NewInstanceDialog(QDialog):
-    """Name, Minecraft version, loader — and which instance to carry mods over from."""
+    """Name, Minecraft version, loader, which launcher to make it in, and where to carry mods over from."""
 
     def __init__(self, app: Craftd, parent=None):
         super().__init__(parent)
         self.app = app
         self.setWindowTitle("New Instance")
-        self.setMinimumWidth(440)
+        self.setMinimumWidth(600)
         self._name_edited = False
         self.instances = app.manager.list()
 
@@ -49,6 +69,8 @@ class NewInstanceDialog(QDialog):
         for key in LOADERS:
             self.loader.addItem(LOADER_LABELS[key], key)
 
+        self.launcher, self.launcher_note = launcher_combo(app)
+
         self.carry_box = QCheckBox("Carry over mods from")
         self.carry_box.setChecked(True)
         self.source = QComboBox()
@@ -61,6 +83,7 @@ class NewInstanceDialog(QDialog):
         form.addRow("Name", self.name)
         form.addRow("Minecraft", version_row)
         form.addRow("Mod loader", self.loader)
+        form.addRow("Create in", self.launcher)
 
         carry_row = QHBoxLayout()
         carry_row.addWidget(self.carry_box)
@@ -69,11 +92,13 @@ class NewInstanceDialog(QDialog):
         buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         buttons.button(QDialogButtonBox.StandardButton.Ok).setText("Create")
         buttons.button(QDialogButtonBox.StandardButton.Ok).setProperty("primary", True)
+        buttons.button(QDialogButtonBox.StandardButton.Ok).setEnabled(self.launcher.currentData() is not None)
         buttons.accepted.connect(self._accept)
         buttons.rejected.connect(self.reject)
 
         layout = QVBoxLayout(self)
         layout.addLayout(form)
+        layout.addWidget(self.launcher_note)
         layout.addSpacing(8)
         layout.addLayout(carry_row)
         layout.addWidget(self.carry_hint)
@@ -139,7 +164,12 @@ class NewInstanceDialog(QDialog):
         if not self.version.currentText().strip():
             QMessageBox.warning(self, "Craftd", "Pick a Minecraft version.")
             return
+        if self.launcher.currentData() is None:
+            return
         self.accept()
+
+    def launcher_key(self) -> str | None:
+        return self.launcher.currentData()
 
     def values(self) -> tuple[str, str, str, list[Instance]]:
         sources: list[Instance] = []
@@ -182,8 +212,8 @@ class ImportPrismDialog(QDialog):
         top.addWidget(change)
 
         self.list = QListWidget()
-        info = _muted("Instances are linked in place: Craftd reads them where they are and only ever adds or "
-                      "removes files in their mods folder. Removing one from Craftd never deletes it.")
+        info = _muted("Instances are linked in place: Craftd reads them where they are and only changes their "
+                      "files when you ask it to. Unlinking one from Craftd never deletes it.")
         buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         buttons.button(QDialogButtonBox.StandardButton.Ok).setText("Link Selected")
         buttons.button(QDialogButtonBox.StandardButton.Ok).setProperty("primary", True)
@@ -222,10 +252,10 @@ class ImportPrismDialog(QDialog):
             return
         self.folder_label.setText(str(self.folder))
         if (self.folder / "mmc-pack.json").is_file():
-            found = self.app.manager.discover_prism(self.folder.parent)
+            found = self.app.manager.discover_prism(self.folder.parent, self.launcher)
             found = [(p, i) for p, i in found if p.resolve() == self.folder.resolve()]
         else:
-            found = self.app.manager.discover_prism(self.folder)
+            found = self.app.manager.discover_prism(self.folder, self.launcher)
         for path, info in found:
             item = QListWidgetItem(f"{info['name']}    {info['game_version']} · {LOADER_LABELS[info['loader']]}")
             item.setData(Qt.ItemDataRole.UserRole, str(path))
@@ -241,6 +271,149 @@ class ImportPrismDialog(QDialog):
             path = item.data(Qt.ItemDataRole.UserRole)
             if path and item.checkState() == Qt.CheckState.Checked:
                 self.linked.append(self.app.manager.link_prism(Path(path), self.launcher))
+        self.accept()
+
+
+# ---------------------------------------------------------------------------------------
+class _OptionRow(QFrame):
+    """One launcher in the Import from list: a radio button, a short line under it, maybe a tag."""
+
+    def __init__(self, title: str, detail: str = "", soon: bool = False, found: bool = False):
+        super().__init__()
+        self.setObjectName("OptionRow")
+        self.radio = QRadioButton(title)
+        lay = QHBoxLayout(self)
+        lay.setContentsMargins(12, 8, 12, 8)
+        col = QVBoxLayout()
+        col.setSpacing(2)
+        col.addWidget(self.radio)
+        self.detail = QLabel(("● " if found else "") + detail)
+        self.detail.setObjectName("OptionFound" if found else "Muted")
+        self.detail.setWordWrap(True)
+        self.detail.setContentsMargins(26, 0, 0, 0)  # lines up under the radio's text
+        if detail:
+            col.addWidget(self.detail)
+        lay.addLayout(col, 1)
+        if soon:
+            tag = QLabel("Coming soon")
+            tag.setObjectName("SoonTag")
+            lay.addWidget(tag, 0, Qt.AlignmentFlag.AlignVCenter)
+            self.setEnabled(False)
+        self.radio.toggled.connect(self._mark)
+
+    def _mark(self, on: bool) -> None:
+        self.setProperty("selected", on)
+        self.style().unpolish(self)
+        self.style().polish(self)
+
+    def mousePressEvent(self, event) -> None:  # the whole row is clickable, not just the dot
+        if self.isEnabled():
+            self.radio.setChecked(True)
+        super().mousePressEvent(event)
+
+
+class ImportDialog(QDialog):
+    """Import from: pick the launcher (or a modpack file), then Next.
+
+    Prism is found automatically; MultiMC's folder is picked once and remembered. Other launchers
+    are listed as coming soon."""
+
+    SOON = ("Official Minecraft Launcher", "Modrinth App", "CurseForge App")
+
+    def __init__(self, app: Craftd, parent=None):
+        super().__init__(parent)
+        self.app = app
+        self.choice: str | None = None
+        self.setWindowTitle("Import Instances")
+        self.setMinimumWidth(640)
+        heading = QLabel("Import from")
+        heading.setObjectName("DialogTitle")
+        question = QLabel("Which launcher are your instances in?")
+
+        prism = prism_instance_dirs(app.settings.prism_folder)
+        self.rows = {
+            "prism": _OptionRow("Prism Launcher", "Found automatically" if prism else
+                                "Not found automatically: you'll choose its folder next", found=bool(prism)),
+            "multimc": _OptionRow("MultiMC", "Craftd remembers the folder you pick"),
+            "mrpack": _OptionRow("Modpack file (.mrpack)", "From Share Instance, or downloaded from Modrinth"),
+        }
+        group = QButtonGroup(self)
+        for row in self.rows.values():
+            group.addButton(row.radio)
+        soon_rows = [_OptionRow(name, soon=True) for name in self.SOON]
+
+        # MultiMC's folder, shown while MultiMC is picked
+        self.folder_box = QFrame()
+        self.folder_box.setObjectName("FolderBox")
+        fb = QVBoxLayout(self.folder_box)
+        fb.setContentsMargins(12, 10, 12, 10)
+        title = QLabel("MULTIMC INSTANCES FOLDER")
+        title.setObjectName("SectionLabel")
+        self.mmc_folder = QLineEdit(app.settings.multimc_folder)
+        self.mmc_folder.setPlaceholderText(r"e.g. C:\MultiMC\instances")
+        browse = QPushButton("Browse")
+        browse.clicked.connect(self._browse)
+        frow = QHBoxLayout()
+        frow.addWidget(self.mmc_folder, 1)
+        frow.addWidget(browse)
+        fb.addWidget(title)
+        fb.addLayout(frow)
+        fb.addWidget(_muted("In MultiMC: Folders → View Instance Folder. It's the “instances” folder next to "
+                            "MultiMC.exe."))
+
+        self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        self.next_btn = self.buttons.button(QDialogButtonBox.StandardButton.Ok)
+        self.next_btn.setText("Next")
+        self.next_btn.setProperty("primary", True)
+        self.buttons.accepted.connect(self._next)
+        self.buttons.rejected.connect(self.reject)
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(heading)
+        layout.addWidget(question)
+        for row in list(self.rows.values()) + soon_rows:
+            layout.addWidget(row)
+        layout.addWidget(self.folder_box)
+        layout.addStretch(1)
+        layout.addWidget(self.buttons)
+
+        for row in self.rows.values():
+            row.radio.toggled.connect(lambda _on: self._changed())
+        self.mmc_folder.textChanged.connect(lambda _t: self._changed())
+        self.rows["prism" if prism or not app.settings.multimc_folder else "multimc"].radio.setChecked(True)
+        self._changed()
+
+    def selected(self) -> str:
+        return next(key for key, row in self.rows.items() if row.radio.isChecked())
+
+    def _changed(self) -> None:
+        key = self.selected()
+        self.folder_box.setVisible(key == "multimc")
+        folder = self.mmc_folder.text().strip()
+        self.next_btn.setEnabled(key != "multimc" or bool(folder and Path(folder).is_dir()))
+        lay = self.layout()
+        if lay:  # wrapped text needs its height at this exact width, or the folder box gets squashed
+            lay.invalidate()
+            lay.activate()
+            need = lay.totalHeightForWidth(self.width()) if lay.hasHeightForWidth() else lay.totalSizeHint().height()
+            need = max(need, lay.totalMinimumSize().height())
+            self.setMinimumHeight(need)
+            self.resize(self.width(), need)
+
+    def _browse(self) -> None:
+        start = self.mmc_folder.text().strip() or str(Path.home())
+        path = QFileDialog.getExistingDirectory(self, "MultiMC's instances folder", start)
+        if path:
+            folder = Path(path)
+            if (folder / "mmc-pack.json").is_file():  # picked one instance: use the folder it's in
+                folder = folder.parent
+            self.mmc_folder.setText(str(folder))
+
+    def _next(self) -> None:
+        self.choice = self.selected()
+        if self.choice == "multimc":
+            self.app.settings.multimc_folder = self.mmc_folder.text().strip()
+            self.app.settings.save(self.app.home)
         self.accept()
 
 
@@ -355,11 +528,11 @@ class SettingsDialog(QDialog):
         prism_row.addWidget(self.prism_folder, 1)
         prism_row.addWidget(browse)
         prism_row.addWidget(reset)
-        prism_note = _muted("Used by “Import from Prism…”. Set this if you use a portable Prism or moved "
-                            "its instances folder.")
+        prism_note = _muted("Used by Import from, + New Instance and modpacks. Set this if you use a portable "
+                            "Prism or moved its instances folder.")
 
         self.multimc_folder = QLineEdit(s.multimc_folder)
-        self.multimc_folder.setPlaceholderText("Not set: needed for “Import from MultiMC…”")
+        self.multimc_folder.setPlaceholderText("Not set: needed to import or create MultiMC instances")
         mmc_browse = QPushButton("Browse…")
         mmc_browse.clicked.connect(self._browse_multimc)
         mmc_clear = QPushButton("Clear")
@@ -567,10 +740,15 @@ class SettingsDialog(QDialog):
         credits.setTextFormat(Qt.TextFormat.RichText)
         credits.setOpenExternalLinks(True)
         credits.setWordWrap(True)
+        from ..log import log_file
         from .theme import FONTS_DIR
         license_btn = QPushButton("Font License")
         license_btn.clicked.connect(lambda: self._open(FONTS_DIR / "monocraft" / "OFL.txt"))
-        return self._column(title_row, tagline, "gap", credits, "gap", flow_row(license_btn))
+        log_btn = QPushButton("Open Log Folder")
+        log_btn.clicked.connect(lambda: self._open(self.app.home))
+        log_note = _muted(f"Reporting a bug? Attach {log_file(self.app.home).name} from the log folder: it shows "
+                          "what Craftd was doing when something went wrong.")
+        return self._column(title_row, tagline, "gap", credits, "gap", flow_row(log_btn, license_btn), log_note)
 
     # ---- saving ----------------------------------------------------------------------------------
     def current(self):
@@ -584,7 +762,8 @@ class SettingsDialog(QDialog):
             carry_copy_local=self.c_local.isChecked(), carry_packs=self.c_packs.isChecked(),
             carry_config=self.c_config.isChecked(), carry_options_servers=self.c_opts.isChecked(),
             proxy=self._proxy_mode(), proxy_host=self.proxy_host.text().strip(),
-            proxy_port=self.proxy_port.value(), timeout=self.timeout.value())
+            proxy_port=self.proxy_port.value(), timeout=self.timeout.value(),
+            last_launcher=self.app.settings.last_launcher)
 
     def _preview(self, *_):
         from dataclasses import replace
@@ -859,4 +1038,270 @@ class EditInstanceDialog(QDialog):
         except (OSError, ValueError) as exc:
             QMessageBox.warning(self, "Craftd", f"Couldn't save the change: {exc}")
             return
+        self.accept()
+
+
+# ---------------------------------------------------------------------------------------
+class ChooseWorldsDialog(QDialog):
+    """Pick worlds to copy over. Ones that can't go to this instance are shown, greyed out, with why."""
+
+    def __init__(self, found: list, target: Instance, order, chosen: set, parent=None, missing_mods=()):
+        super().__init__(parent)
+        from ..extras import human_size
+        from ..worlds import why_not
+        self.setWindowTitle(f"Worlds for {target.name}")
+        self.resize(700, 440)
+        heading = QLabel("Tick the worlds to copy")
+        heading.setObjectName("SectionLabel")
+        self.list = QListWidget()
+        self.list.setObjectName("Plain")
+        for w in found:
+            reason = why_not(w, target, order)
+            played = f"Minecraft {w.version}" if w.version else "an old version (before 1.9)"
+            text = f"{w.name}    {played} · {human_size(w.size)}"
+            if reason:
+                text += f"\n    {reason}"
+            item = QListWidgetItem(text)
+            item.setData(Qt.ItemDataRole.UserRole, str(w.path))
+            if reason:
+                item.setFlags(Qt.ItemFlag.NoItemFlags)
+            else:
+                item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+                item.setCheckState(Qt.CheckState.Checked if w.path in chosen else Qt.CheckState.Unchecked)
+            self.list.addItem(item)
+        notes = [f"Worlds are copied: the originals stay playable in the old instance. Minecraft upgrades a copied "
+                 f"world to {target.game_version} the first time you open it there."]
+        if missing_mods:
+            names = ", ".join(list(missing_mods)[:6]) + ("…" if len(missing_mods) > 6 else "")
+            notes.append(f"⚠ The old instance has mods this one won't have yet ({names}). Blocks and items from "
+                         "those mods disappear from a world when it's opened without them.")
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.button(QDialogButtonBox.StandardButton.Ok).setProperty("primary", True)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout = QVBoxLayout(self)
+        layout.addWidget(heading)
+        layout.addWidget(self.list, 1)
+        for n in notes:
+            layout.addWidget(_muted(n))
+        layout.addWidget(buttons)
+
+    def chosen(self) -> set:
+        out = set()
+        for row in range(self.list.count()):
+            item = self.list.item(row)
+            if item.flags() & Qt.ItemFlag.ItemIsUserCheckable and item.checkState() == Qt.CheckState.Checked:
+                out.add(Path(item.data(Qt.ItemDataRole.UserRole)))
+        return out
+
+
+# ---------------------------------------------------------------------------------------
+class ShareDialog(QDialog):
+    """Share Instance: save the instance as a small .mrpack file to send to a friend."""
+
+    def __init__(self, app: Craftd, inst: Instance, runner: Runner, parent=None):
+        super().__init__(parent)
+        from ..extras import human_size
+        from ..worlds import scan
+        self.app, self.inst, self.runner = app, inst, runner
+        self.saved: Path | None = None
+        self.setWindowTitle(f"Share Instance: {inst.name}")
+        self.setMinimumWidth(640)
+        heading = QLabel("Share Instance")
+        heading.setObjectName("DialogTitle")
+        intro = _muted("Saves a small .mrpack file you can send to a friend. Mods go in as Modrinth links, so the "
+                       "file stays tiny and they get exactly the same builds. They open it in Craftd with "
+                       "Import from → Modpack file, or in Prism or the Modrinth App.")
+        gd = inst.game_dir
+        self.config = QCheckBox("Mod settings (config folder)")
+        self.resourcepacks = QCheckBox("Resource packs")
+        self.shaderpacks = QCheckBox("Shader packs")
+        self.options = QCheckBox("Options && keybinds")
+        self.servers = QCheckBox("Server list")
+        self.local_jars = QCheckBox("Jars not on Modrinth (put in as files)")
+        for box, there, on in ((self.config, (gd / "config").is_dir(), True),
+                               (self.resourcepacks, (gd / "resourcepacks").is_dir(), True),
+                               (self.shaderpacks, (gd / "shaderpacks").is_dir(), True),
+                               (self.options, (gd / "options.txt").is_file(), True),
+                               (self.servers, (gd / "servers.dat").is_file(), False),
+                               (self.local_jars, True, True)):
+            box.setChecked(on and there)
+            box.setEnabled(there)
+        self.worlds = QListWidget()
+        self.worlds.setObjectName("Plain")
+        self.worlds.setMaximumHeight(130)
+        found = scan(inst)
+        for w in found:
+            item = QListWidgetItem(f"{w.name}    {human_size(w.size)}")
+            item.setData(Qt.ItemDataRole.UserRole, w.folder)
+            item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+            item.setCheckState(Qt.CheckState.Unchecked)
+            self.worlds.addItem(item)
+        self.status = _muted("")
+        self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Save | QDialogButtonBox.StandardButton.Cancel)
+        self.save_btn = self.buttons.button(QDialogButtonBox.StandardButton.Save)
+        self.save_btn.setText("Save .mrpack…")
+        self.save_btn.setProperty("primary", True)
+        self.buttons.accepted.connect(self._save)
+        self.buttons.rejected.connect(self.reject)
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(heading)
+        layout.addWidget(intro)
+        layout.addWidget(SettingsDialog._section("Include"))
+        for box in (self.config, self.resourcepacks, self.shaderpacks, self.options, self.servers, self.local_jars):
+            layout.addWidget(box)
+        layout.addWidget(SettingsDialog._section("Worlds (big: off unless you tick them)"))
+        if found:
+            layout.addWidget(self.worlds)
+        else:
+            layout.addWidget(_muted("This instance has no worlds."))
+        layout.addWidget(self.status)
+        layout.addWidget(self.buttons)
+
+    def options_chosen(self):
+        from ..mrpack import ShareOptions
+        worlds = [self.worlds.item(r).data(Qt.ItemDataRole.UserRole) for r in range(self.worlds.count())
+                  if self.worlds.item(r).checkState() == Qt.CheckState.Checked]
+        return ShareOptions(config=self.config.isChecked(), resourcepacks=self.resourcepacks.isChecked(),
+                            shaderpacks=self.shaderpacks.isChecked(), options=self.options.isChecked(),
+                            servers=self.servers.isChecked(), local_jars=self.local_jars.isChecked(), worlds=worlds)
+
+    def _save(self, dest: Path | None = None) -> None:
+        from ..launchers import folder_name
+        from ..mrpack import export
+        if dest is None:
+            start = Path.home() / "Desktop"
+            start = start if start.is_dir() else Path.home()
+            path, _ = QFileDialog.getSaveFileName(self, "Save the shared instance",
+                                                  str(start / f"{folder_name(self.inst.name, Path('/nonexistent'))}.mrpack"),
+                                                  "Modrinth modpack (*.mrpack)")
+            if not path:
+                return
+            dest = Path(path if path.lower().endswith(".mrpack") else path + ".mrpack")
+        app, inst, options = self.app, self.inst, self.options_chosen()
+        self.save_btn.setEnabled(False)
+
+        def work(progress):
+            version = inst.loader_version
+            if inst.loader != "vanilla" and not version:
+                version = app.default_loader_version(inst.loader, inst.game_version,
+                                                     inst.launcher if inst.kind == "prism" else "prism")
+            return export(app.scanner, app.client, inst, dest, options, version, progress)
+
+        def done(report):
+            self.saved = dest
+            self.save_btn.setEnabled(True)
+            box = QMessageBox(self)
+            box.setWindowTitle("Shared")
+            box.setText(report.summary() + "\n\nSend this file to your friend.")
+            show = box.addButton("Show in Folder", QMessageBox.ButtonRole.ActionRole)
+            box.addButton(QMessageBox.StandardButton.Ok)
+            box.exec()
+            if box.clickedButton() is show:
+                QDesktopServices.openUrl(QUrl.fromLocalFile(str(dest.parent)))
+            self.accept()
+
+        def failed(msg):
+            self.save_btn.setEnabled(True)
+            self.status.setText(f"Couldn't save it: {msg}")
+
+        self.runner.run(work, on_done=done, on_error=failed, progress=self.status.setText)
+
+
+# ---------------------------------------------------------------------------------------
+class InstallPackDialog(QDialog):
+    """Before installing a modpack file: what it is, its name, and which launcher to make it in."""
+
+    def __init__(self, app: Craftd, index, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(f"Install {index.name}")
+        self.setMinimumWidth(500)
+        heading = QLabel(index.name)
+        heading.setObjectName("DialogTitle")
+        heading.setWordWrap(True)
+        what = _muted(f"Minecraft {index.game_version} · {index.loader_text} · {len(index.files)} file(s) to "
+                      "download" + (f"\n{index.summary}" if index.summary else ""))
+        self.name = QLineEdit(index.name)
+        self.launcher, note = launcher_combo(app)
+        form = QFormLayout()
+        form.addRow("Name", self.name)
+        form.addRow("Create in", self.launcher)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        ok = buttons.button(QDialogButtonBox.StandardButton.Ok)
+        ok.setText("Install")
+        ok.setProperty("primary", True)
+        ok.setEnabled(self.launcher.currentData() is not None)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout = QVBoxLayout(self)
+        layout.addWidget(heading)
+        layout.addWidget(what)
+        layout.addLayout(form)
+        layout.addWidget(note)
+        layout.addWidget(buttons)
+
+    def values(self) -> tuple[str, str]:
+        return self.name.text().strip(), self.launcher.currentData()
+
+
+# ---------------------------------------------------------------------------------------
+class ChangeVersionDialog(QDialog):
+    """Right-click a mod → Change Version: pick any build of it for this instance (older ones too)."""
+
+    def __init__(self, app: Craftd, runner: Runner, inst: Instance, mod, parent=None):
+        super().__init__(parent)
+        from ..instances import compatible_loaders
+        self.app, self.inst, self.mod = app, inst, mod
+        self.chosen_version: dict | None = None
+        self.setWindowTitle(f"Change Version: {mod.title}")
+        self.resize(560, 420)
+        heading = QLabel(f"Builds of {mod.title} for {inst.summary}")
+        heading.setObjectName("SectionLabel")
+        heading.setWordWrap(True)
+        self.list = QListWidget()
+        self.list.setObjectName("Plain")
+        self.status = _muted("Loading versions from Modrinth…")
+        self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        self.ok = self.buttons.button(QDialogButtonBox.StandardButton.Ok)
+        self.ok.setText("Install This Version")
+        self.ok.setProperty("primary", True)
+        self.ok.setEnabled(False)
+        self.buttons.accepted.connect(self._pick)
+        self.buttons.rejected.connect(self.reject)
+        self.list.currentRowChanged.connect(self._row)
+        self.list.itemDoubleClicked.connect(lambda _i: self._pick())
+        layout = QVBoxLayout(self)
+        layout.addWidget(heading)
+        layout.addWidget(self.list, 1)
+        layout.addWidget(self.status)
+        layout.addWidget(self.buttons)
+        pid = mod.project_id
+        runner.run(lambda p: app.client.project_versions(pid, compatible_loaders(inst.loader), [inst.game_version]),
+                   on_done=self._fill, on_error=lambda msg: self.status.setText(f"Couldn't load versions: {msg}"),
+                   progress=lambda _m: None)
+
+    def _fill(self, versions: list[dict]) -> None:
+        self.versions = versions
+        for v in versions:
+            kind = v.get("version_type", "release")
+            date = (v.get("date_published") or "")[:10]
+            text = f"{v.get('version_number')}    {'' if kind == 'release' else kind + ' · '}{date}"
+            if v.get("id") == self.mod.version_id:
+                text += "    (installed)"
+            item = QListWidgetItem(text)
+            item.setData(Qt.ItemDataRole.UserRole, v.get("id"))
+            self.list.addItem(item)
+        self.status.setText(f"{len(versions)} build(s). The one you pick replaces the jar you have now."
+                            if versions else f"Modrinth has no builds of {self.mod.title} for {self.inst.summary}.")
+
+    def _row(self, row: int) -> None:
+        ok = 0 <= row < len(getattr(self, "versions", [])) and self.versions[row].get("id") != self.mod.version_id
+        self.ok.setEnabled(ok)
+
+    def _pick(self) -> None:
+        row = self.list.currentRow()
+        if not self.ok.isEnabled() or row < 0:
+            return
+        self.chosen_version = self.versions[row]
         self.accept()

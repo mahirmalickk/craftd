@@ -49,7 +49,7 @@ class FakeModrinth:
         self._tick += 1
         content = content if content is not None else make_jar(pid, title, number, loaders[0])
         sha1 = hashlib.sha1(content).hexdigest()
-        url = f"https://cdn.fake/{pid}/{number}.jar"
+        url = f"https://cdn.modrinth.com/data/{pid}/versions/{number}/{pid}-{number}.jar"
         self.blobs[url] = content
         version = {
             "id": f"{pid}-{number}",
@@ -86,7 +86,8 @@ class FakeModrinth:
 
     def _newest(self, pid, loaders, gvs):
         matches = [v for v in self.versions if v["project_id"] == pid
-                   and set(v["loaders"]) & set(loaders) and set(v["game_versions"]) & set(gvs)]
+                   and (not loaders or set(v["loaders"]) & set(loaders))
+                   and (not gvs or set(v["game_versions"]) & set(gvs))]
         return sorted(matches, key=lambda v: v["date_published"], reverse=True)
 
     def game_versions(self):
@@ -116,7 +117,7 @@ class FakeModrinth:
         self._check("version")
         return next((v for v in self.versions if v["id"] == version_id), None)
 
-    def project_versions(self, project_id, loaders, game_versions):
+    def project_versions(self, project_id, loaders=None, game_versions=None):
         self._check("project_versions")
         return self._newest(project_id, loaders, game_versions)
 
@@ -124,14 +125,18 @@ class FakeModrinth:
         self._check("project")
         return self.projects_db.get(project_id)
 
-    def search(self, query, loaders, game_version, limit=30, offset=0, index=None, category=None):
+    def search(self, query, loaders, game_version, limit=30, offset=0, index=None, category=None,
+               project_type="mod"):
         self._check("search")
-        self.last_search = {"query": query, "index": index, "category": category, "offset": offset}
+        self.last_search = {"query": query, "index": index, "category": category, "offset": offset,
+                            "project_type": project_type}
         hits = []
         for pid, p in self.projects_db.items():
             if category and category not in p["categories"]:
                 continue
-            if query.lower() in p["title"].lower() and self._newest(pid, loaders, [game_version]):
+            if p.get("project_type", "mod") != project_type:
+                continue
+            if query.lower() in p["title"].lower() and self._newest(pid, loaders, [game_version] if game_version else []):
                 hits.append({"project_id": pid, "slug": pid, "title": p["title"], "author": "dev",
                              "downloads": p["downloads"], "follows": p["follows"], "description": p["description"],
                              "icon_url": None, "display_categories": p["categories"],
@@ -146,3 +151,12 @@ class FakeModrinth:
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(data)
         return dest
+
+    def add_modpack(self, pid: str, title: str, number: str, pack: bytes, game_versions: list[str],
+                    loaders: list[str]) -> dict:
+        """A modpack project whose version's file is the given .mrpack bytes."""
+        version, _ = self.add_version(pid, title, number, game_versions, loaders, content=pack)
+        self.projects_db[pid]["project_type"] = "modpack"
+        f = version["files"][0]
+        f["filename"] = f"{pid}-{number}.mrpack"
+        return version

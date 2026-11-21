@@ -56,11 +56,45 @@ class Craftd:
                                                             timeout=self.settings.timeout)
         return self._loader_cache[key]
 
+    def default_loader_version(self, loader: str, game_version: str, launcher: str = "prism") -> str | None:
+        """The loader build the launcher itself would pick (recommended, else newest stable)."""
+        from .loaders import default_version
+        if loader == "vanilla":
+            return None
+        try:
+            versions = self.loader_versions(loader, game_version, launcher)
+        except Exception as exc:  # network or a launcher that doesn't list this loader
+            raise ValueError(f"Couldn't get the {loader} versions for Minecraft {game_version}: {exc}") from exc
+        pick = default_version(versions)
+        if not pick:
+            raise ValueError(f"There's no {loader} build for Minecraft {game_version} yet")
+        return pick.version
+
+    def new_instance(self, launcher: str, name: str, game_version: str, loader: str):
+        """+ New Instance: create it inside Prism or MultiMC (Craftd can't launch games until v2)."""
+        from .launchers import LAUNCHERS, instances_dir
+        parent = instances_dir(self.settings, launcher)
+        if not parent:
+            raise ValueError(f"Craftd doesn't know where {LAUNCHERS.get(launcher, launcher)}'s instances are. "
+                             "Set the folder in Settings → General.")
+        version = self.default_loader_version(loader, game_version, launcher)
+        return self.manager.create_in_launcher(launcher, parent, name, game_version, loader, version)
+
+    def move_to_launcher(self, inst, launcher: str):
+        """Move a Craftd-only instance (from before 1.1) into Prism or MultiMC."""
+        from .launchers import LAUNCHERS, instances_dir
+        parent = instances_dir(self.settings, launcher)
+        if not parent:
+            raise ValueError(f"Craftd doesn't know where {LAUNCHERS.get(launcher, launcher)}'s instances are.")
+        version = inst.loader_version or self.default_loader_version(inst.loader, inst.game_version, launcher)
+        return self.manager.move_to_launcher(inst, launcher, parent, version)
+
     # ---- storage ---------------------------------------------------------------------------------
     CACHE_ITEMS = {"modrinth.json": "Mod lookups (which jar is which Modrinth mod)",
                    "icons": "Mod icons from Add from Modrinth",
                    "game_versions.json": "Minecraft version list",
-                   "fit-check": "Leftover build checks"}
+                   "fit-check": "Leftover build checks",
+                   "modpacks": "Downloaded modpack files"}
 
     def cache_usage(self) -> list[tuple[str, int]]:
         """(description, bytes) for each thing in the cache folder that exists."""

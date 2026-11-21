@@ -100,13 +100,24 @@ def test_new_instance_dialog_suggests_source(qapp, app, setup_262):
     assert not dlg.carry_box.isEnabled() and dlg.values()[3] == []
 
 
-def test_new_instance_jumps_to_carry_over(qapp, app, setup_262, boxes, monkeypatch):
+def test_new_instance_jumps_to_carry_over(qapp, app, setup_262, boxes, monkeypatch, tmp_path):
+    """1.1: the new instance is made inside MultiMC/Prism (so it can be launched), then Carry Over opens."""
+    from craftd.loaders import LoaderVersion
     monkeypatch.setattr(NewInstanceDialog, "exec", lambda self: (self.version.setCurrentText("26.3"), 1)[1])
+    monkeypatch.setattr(app, "loader_versions", lambda *a, **k: [LoaderVersion("0.17.2", recommended=True)])
     win = MainWindow(app)
     settle(qapp, win)
+    win.new_instance()  # no launcher found: nothing is created
+    settle(qapp, win)
+    assert win.current().name == "Survival 26.2"
+    mmc = tmp_path / "MultiMC" / "instances"
+    mmc.mkdir(parents=True)
+    app.settings.multimc_folder = str(mmc)
     win.new_instance()
     settle(qapp, win)
-    assert win.current().name == "Fabric 26.3"
+    assert win.current().name == "Fabric 26.3" and win.current().launcher == "multimc"
+    assert win.current().mods_dir == mmc / "Fabric 26.3" / ".minecraft" / "mods"
+    assert "Linked MultiMC instance" in win.subtitle.fullText() and win.legacy.isHidden()
     assert win.tabs.currentWidget() is win.carry_tab
     assert win.carry_tab.table.rowCount() == 5
 

@@ -267,6 +267,26 @@ class Installer:
         return f"{mod.title} → {version.get('version_number')}"
 
     @staticmethod
+    def add_files(inst: Instance, paths) -> tuple[list[str], list[str]]:
+        """Add File / drag and drop: copy jars into the mods folder. Returns (added, skipped with why)."""
+        from pathlib import Path
+        added, skipped = [], []
+        inst.mods_dir.mkdir(parents=True, exist_ok=True)
+        for p in map(Path, paths):
+            if not p.is_file() or not p.name.lower().endswith(".jar"):
+                skipped.append(f"{p.name} (not a .jar file)")
+                continue
+            dest = inst.mods_dir / p.name
+            if dest.exists() or dest.with_name(dest.name + ".disabled").exists():
+                skipped.append(f"{p.name} (already there)")
+                continue
+            if p.resolve().parent == inst.mods_dir.resolve():
+                continue
+            shutil.copy2(p, dest)
+            added.append(p.name)
+        return added, skipped
+
+    @staticmethod
     def remove(mod: LocalMod) -> None:
         mod.path.unlink(missing_ok=True)
 
