@@ -2,6 +2,21 @@
 
 All notable changes to Craftd. Newest first.
 
+## [1.1.2] - 2026-11-21
+
+### Changed
+- Browse Modpacks: pick the **Minecraft** version first, then the pack **Version** for it (newest first, the newest
+  full release picked for you, betas and alphas labeled). No more giant list of every build ever made
+- Drop-down lists open as a short scrolling list under the box (12 items at a time) instead of filling the screen
+
+## [1.1.1] - 2026-11-20
+
+### Fixed
+- Browse Modpacks: the right side no longer runs past the window when both Prism and MultiMC are set up (the
+  **Create in** box showed Prism's whole folder path). The divider between the list and the details now drags freely,
+  and everything fits at any window size
+- **Create in** boxes show just "Prism" or "MultiMC"; hover an item to see its folder
+
 ## [1.1.0] - 2026-11-20 · Import from, modpacks, worlds and sharing
 
 ### Added

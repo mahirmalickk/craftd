@@ -9,7 +9,7 @@ from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QButtonGroup, QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QFormLayout, QFrame,
     QHBoxLayout, QLabel, QLineEdit, QListWidget, QListWidgetItem, QMessageBox, QPushButton, QRadioButton,
-    QScrollArea, QSpinBox, QStackedWidget, QVBoxLayout, QWidget,
+    QScrollArea, QSizePolicy, QSpinBox, QStackedWidget, QVBoxLayout, QWidget,
 )
 
 from ..core import Craftd
@@ -27,13 +27,24 @@ def _muted(text: str) -> QLabel:
     return label
 
 
+def fit_combo(combo: QComboBox, chars: int = 10) -> QComboBox:
+    """Let a combo box shrink with its window instead of growing to its longest item (long items are cut
+    off with … and shown in full in the open list)."""
+    combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
+    combo.setMinimumContentsLength(chars)
+    combo.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+    return combo
+
+
 def launcher_combo(app: Craftd) -> tuple[QComboBox, QLabel]:
     """"Create in: Prism / MultiMC" (only the ones Craftd can find), plus a note when there's none."""
     from ..launchers import LAUNCHERS, available
     combo = QComboBox()
     found = available(app.settings)
     for key, folder in found.items():
-        combo.addItem(f"{LAUNCHERS[key]}  ({folder})" if len(found) > 1 else LAUNCHERS[key], key)
+        combo.addItem(LAUNCHERS[key], key)
+        combo.setItemData(combo.count() - 1, str(folder), Qt.ItemDataRole.ToolTipRole)  # the folder, on hover
+    fit_combo(combo)
     note = _muted("")
     if not found:
         combo.addItem("No launcher found", None)

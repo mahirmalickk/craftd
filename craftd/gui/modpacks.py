@@ -14,7 +14,7 @@ from ..core import Craftd
 from ..instances import LOADER_LABELS
 from ..modrinth import primary_file
 from .browser import SORTS, IconLoader, short_number
-from .dialogs import _muted, launcher_combo
+from .dialogs import _muted, fit_combo, launcher_combo
 from .workers import Runner
 
 HIT_ROLE = Qt.ItemDataRole.UserRole + 20
@@ -34,8 +34,10 @@ class ModpacksDialog(QDialog):
         self._detail_token = 0
         self.versions: list[dict] = []
         self.setWindowTitle("Browse Modpacks")
-        self.resize(1040, 660)
-        self.setMinimumSize(800, 500)
+        self.setMinimumSize(720, 480)
+        screen = (parent.screen() if parent else None) or self.screen()
+        room = screen.availableGeometry() if screen else None
+        self.resize(min(1100, room.width() - 40) if room else 1040, min(700, room.height() - 60) if room else 660)
         self.icons = IconLoader(app.home / "cache" / "icons", getattr(app.client, "session", None))
         self.icons.loaded.connect(self._icon_arrived)
 
@@ -59,6 +61,8 @@ class ModpacksDialog(QDialog):
         for label, key in SORTS:
             self.sort.addItem(label, key)
         self.sort.setCurrentIndex(self.sort.findData("downloads"))
+        for combo in (self.loader, self.mc, self.sort):
+            combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToContents)
         toolbar = QHBoxLayout()
         toolbar.addWidget(self.search, 1)
         toolbar.addWidget(self.loader)
@@ -69,6 +73,7 @@ class ModpacksDialog(QDialog):
         self.list.setObjectName("PackResults")
         self.list.setIconSize(QSize(48, 48))
         self.list.setWordWrap(True)
+        self.list.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # text wraps instead
         self.list.setSpacing(3)
         self.list.currentRowChanged.connect(self._selected)
         self.more_btn = QPushButton("Load More")
@@ -76,6 +81,7 @@ class ModpacksDialog(QDialog):
         self.more_btn.hide()
         self.status = _muted("")
         left = QWidget()
+        left.setMinimumWidth(260)
         ll = QVBoxLayout(left)
         ll.setContentsMargins(0, 0, 0, 0)
         ll.addWidget(self.list, 1)
@@ -85,15 +91,23 @@ class ModpacksDialog(QDialog):
         # details + install
         self.detail = QFrame()
         self.detail.setObjectName("DetailPanel")
+        self.detail.setMinimumWidth(400)  # room for both buttons and the form
         self.d_title = QLabel("Pick a modpack")
         self.d_title.setObjectName("DetailTitle")
         self.d_title.setWordWrap(True)
+        self.d_title.setMinimumWidth(1)
         self.d_desc = _muted("Its versions and an Install button show up here.")
-        self.version = QComboBox()
+        self.d_desc.setMinimumWidth(1)  # wrap to the panel's width instead of widening it
+        # pick the Minecraft version first, then the pack's builds for it: a short list instead of every build ever
+        self.pack_mc = fit_combo(QComboBox(), 6)
+        self.pack_mc.currentIndexChanged.connect(lambda _i: self._fill_versions())
+        self.version = fit_combo(QComboBox())
         self.version.currentIndexChanged.connect(lambda _i: self._version_changed())
+        self.shown_versions: list[dict] = []
         self.name = QLineEdit()
         self.launcher, self.launcher_note = launcher_combo(app)
         form = QFormLayout()
+        form.addRow("Minecraft", self.pack_mc)
         form.addRow("Version", self.version)
         form.addRow("Name", self.name)
         form.addRow("Create in", self.launcher)
@@ -122,8 +136,10 @@ class ModpacksDialog(QDialog):
         split = QSplitter()
         split.addWidget(left)
         split.addWidget(self.detail)
-        split.setSizes([600, 420])
         split.setChildrenCollapsible(False)
+        split.setStretchFactor(0, 3)  # extra room goes mostly to the list
+        split.setStretchFactor(1, 2)
+        split.setSizes([560, 460])
 
         layout = QVBoxLayout(self)
         layout.addWidget(title)
@@ -207,7 +223,7 @@ class ModpacksDialog(QDialog):
 
     def _show_detail(self, hit: dict | None) -> None:
         on = hit is not None
-        for w in (self.version, self.name, self.link_btn):
+        for w in (self.pack_mc, self.version, self.name, self.link_btn):
             w.setEnabled(on)
         self.install_btn.setEnabled(False)
         if not on:
@@ -215,12 +231,16 @@ class ModpacksDialog(QDialog):
         self.d_title.setText(hit.get("title", ""))
         self.d_desc.setText(hit.get("description", ""))
         self.name.setText(hit.get("title", ""))
+        self.name.setCursorPosition(0)  # show the start of a long name
 
     def _selected(self, _row: int) -> None:
         hit = self.current_hit()
         self._show_detail(hit)
+        self.pack_mc.blockSignals(True)
+        self.pack_mc.clear()
+        self.pack_mc.blockSignals(False)
         self.version.clear()
-        self.versions = []
+        self.versions, self.shown_versions = [], []
         if not hit:
             return
         self._detail_token += 1
@@ -232,20 +252,47 @@ class ModpacksDialog(QDialog):
             if token != self._detail_token:
                 return
             self.versions = versions
-            for v in versions:
-                loaders = ", ".join(LOADER_LABELS.get(x, x) for x in v.get("loaders", []))
-                games = ", ".join(v.get("game_versions", [])[:3])
-                self.version.addItem(f"{v.get('version_number')} · Minecraft {games} · {loaders}", v.get("id"))
+            games = {g for v in versions for g in v.get("game_versions", [])}
+            order = sorted(games, key=self.app.order.key, reverse=True)
+            self.pack_mc.blockSignals(True)
+            for g in order:
+                self.pack_mc.addItem(g, g)
+            want = mc if mc in games else (order[0] if order else None)
+            if want:
+                self.pack_mc.setCurrentIndex(self.pack_mc.findData(want))
+            self.pack_mc.blockSignals(False)
             self.progress.setText("" if versions else "This modpack has no versions to install.")
-            self._version_changed()
+            self._fill_versions()
 
         self.runner.run(lambda p: self.app.client.project_versions(pid, [loader] if loader else None,
                                                                    [mc] if mc else None),
                         on_done=done, on_error=lambda msg: self.progress.setText(f"Couldn't load versions: {msg}"),
                         progress=lambda _m: None)
 
+    def _fill_versions(self) -> None:
+        """The pack's builds for the picked Minecraft version, newest first, the newest full release picked."""
+        game = self.pack_mc.currentData()
+        self.shown_versions = sorted((v for v in self.versions if game in v.get("game_versions", [])),
+                                     key=lambda v: v.get("date_published") or "", reverse=True)
+        several_loaders = len({tuple(v.get("loaders", [])) for v in self.versions}) > 1
+        self.version.blockSignals(True)
+        self.version.clear()
+        for v in self.shown_versions:
+            text = v.get("version_number") or "?"
+            kind = v.get("version_type", "release")
+            if kind != "release":
+                text += f"  ({kind})"
+            if several_loaders:
+                text += "  · " + ", ".join(LOADER_LABELS.get(x, x) for x in v.get("loaders", []))
+            self.version.addItem(text, v.get("id"))
+        best = next((i for i, v in enumerate(self.shown_versions) if v.get("version_type") == "release"), 0)
+        if self.shown_versions:
+            self.version.setCurrentIndex(best)
+        self.version.blockSignals(False)
+        self._version_changed()
+
     def _version_changed(self) -> None:
-        self.install_btn.setEnabled(bool(self.versions) and self.version.currentIndex() >= 0
+        self.install_btn.setEnabled(bool(self.shown_versions) and self.version.currentIndex() >= 0
                                     and self.launcher.currentData() is not None)
 
     def _open_link(self) -> None:
@@ -258,9 +305,9 @@ class ModpacksDialog(QDialog):
         from .. import mrpack
         from ..launchers import instances_dir
         row = self.version.currentIndex()
-        if row < 0 or row >= len(self.versions):
+        if row < 0 or row >= len(self.shown_versions):
             return
-        version, launcher, name = self.versions[row], self.launcher.currentData(), self.name.text().strip()
+        version, launcher, name = self.shown_versions[row], self.launcher.currentData(), self.name.text().strip()
         parent = instances_dir(self.app.settings, launcher)
         if not parent:
             return

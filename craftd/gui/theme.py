@@ -180,6 +180,7 @@ QPushButton[primary="true"]:disabled {{ background: {p['raised']}; border-color:
 QLineEdit, QComboBox {{ background: {p['input']}; border: 1px solid {p['border']}; border-radius: 7px;
                         padding: 5px 8px; selection-background-color: {p['accent']}; }}
 QLineEdit:focus, QComboBox:focus {{ border-color: {p['accent']}; }}
+QComboBox {{ combobox-popup: 0; qproperty-maxVisibleItems: 12; }}  /* a scrolling list below the box, not a full-screen one */
 QComboBox QAbstractItemView {{ background: {p['surface']}; border: 1px solid {p['border']};
                                selection-background-color: {p['selected']}; selection-color: {p['text']}; }}
 QTableWidget, QListWidget#Plain {{ background: {p['surface']}; gridline-color: {p['grid']};

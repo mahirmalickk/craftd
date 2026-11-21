@@ -217,7 +217,7 @@ def test_browse_and_install_modpack(qapp, app, fake, setup_262, mmc, boxes, tmp_
     assert dlg.list.item(0).text().startswith("Cozy Pack")
     dlg.list.setCurrentRow(0)
     settle(qapp, win)
-    assert dlg.version.count() == 1 and dlg.install_btn.isEnabled()
+    assert dlg.pack_mc.currentText() == "26.2" and dlg.version.count() == 1 and dlg.install_btn.isEnabled()
     dlg.name.setText("Cozy")
     dlg.install()
     settle(qapp, win)
