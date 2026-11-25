@@ -254,6 +254,9 @@ QListWidget#PackResults {{ background: {p['surface']}; border: 1px solid {p['bor
 QListWidget#PackResults::item {{ padding: 8px 6px; border-radius: 7px; color: {p['text']}; }}
 QListWidget#PackResults::item:hover {{ background: {p['hover']}; }}
 QListWidget#PackResults::item:selected {{ background: {p['selected']}; color: {p['text']}; }}
+#SignInCode {{ color: {p['accent']}; font-size: {px('title')}; padding: 10px; letter-spacing: 3px;
+               background: {p['surface']}; border: 1px solid {p['border']}; border-radius: 10px; }}
+#AccountButton {{ text-align: left; padding: 6px 8px; }}
 #OptionRow {{ background: {p['surface']}; border: 1px solid {p['border']}; border-radius: 8px; }}
 #OptionRow[selected="true"] {{ background: {p['selected']}; border-color: {p['accent']}; }}
 #OptionRow:disabled {{ background: {p['bg']}; }}

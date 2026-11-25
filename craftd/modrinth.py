@@ -30,6 +30,18 @@ def _chunks(items: list[str], size: int) -> Iterable[list[str]]:
         yield items[i : i + size]
 
 
+def apply_proxy(session: requests.Session, proxy: str = "system", host: str = "", port: int = 8080) -> None:
+    """Settings → Network for any session (Modrinth, sign-in): "system", "none", or "http" (host:port)."""
+    session.proxies.clear()
+    if proxy == "http" and host:
+        url = host if "://" in host else f"http://{host}"
+        url = f"{url}:{port}" if url.count(":") < 2 else url
+        session.proxies.update({"http": url, "https": url})
+        session.trust_env = False  # the proxy set here wins over environment variables
+    else:
+        session.trust_env = proxy != "none"
+
+
 class ModrinthClient:
     def __init__(self, session: requests.Session | None = None, base_url: str = API_BASE, timeout: float = 20):
         self.base_url = base_url.rstrip("/")
@@ -40,14 +52,7 @@ class ModrinthClient:
     def configure_network(self, proxy: str = "system", host: str = "", port: int = 8080, timeout: float = 20) -> None:
         """proxy: "system" (Windows/macOS proxy settings), "none", or "http" (host:port)."""
         self.timeout = timeout
-        self.session.proxies.clear()
-        if proxy == "http" and host:
-            url = host if "://" in host else f"http://{host}"
-            url = f"{url}:{port}" if url.count(":") < 2 else url
-            self.session.proxies.update({"http": url, "https": url})
-            self.session.trust_env = False  # the proxy set here wins over environment variables
-        else:
-            self.session.trust_env = proxy != "none"
+        apply_proxy(self.session, proxy, host, port)
 
     def ping(self) -> str:
         """A tiny request to check that Modrinth can be reached with the current network settings."""

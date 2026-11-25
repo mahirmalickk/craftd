@@ -45,7 +45,7 @@ py -m venv .venv
 ```
 ✅ *Checkpoint:* ends with `Successfully installed ...`, no red `ERROR`.
 
-**4. (Optional) Run the tests:** `.venv\Scripts\python -m pytest -q` → `120 passed`.
+**4. (Optional) Run the tests:** `.venv\Scripts\python -m pytest -q` → `140 passed`.
 
 **5. Start Craftd:** `.venv\Scripts\python -m craftd` — afterwards just double-click `Craftd.bat`.
 If SmartScreen warns, click **More info → Run anyway**.
@@ -99,7 +99,7 @@ pip install -r requirements.txt
 ```bash
 pytest -q
 ```
-✅ *Checkpoint:* `120 passed`. The tests use a fake Modrinth, so they don't need internet.
+✅ *Checkpoint:* `140 passed`. The tests use a fake Modrinth and fake Microsoft/Xbox/Minecraft servers, so they don't need internet.
 
 **5. Start Craftd**
 ```bash
@@ -234,6 +234,24 @@ settings, worlds and waitlist into it.
   warning first; afterwards, the compatibility check marks mods that won't load, and Carry Over or **Check for
   Updates** gets the right builds.
 
+## Accounts
+
+**Settings → Accounts → Add Account…** (or click **Sign In** at the bottom of the sidebar):
+
+1. Craftd shows a code like `ABCD-EFGH`. Click **Open Sign-In Page**: the code is copied for you.
+2. Paste it at microsoft.com/link and sign in with the Microsoft account that owns Minecraft: Java Edition.
+3. Come back to Craftd. It signs in to Xbox Live and Minecraft on its own and shows your name and skin.
+
+You sign in on Microsoft's own page, so Craftd never sees your password. Sign-ins are saved in `accounts.json` in
+Craftd's data folder, encrypted with your Windows user account, and tokens are never written to the log. Add as many
+accounts as you like; **Play as This Account** picks which one Craftd uses, **Refresh** checks a sign-in still works
+(and picks up a new name or skin), and **Remove** signs one out. Your face and name show at the bottom of the sidebar.
+
+If sign-in can't finish, Craftd says why: e.g. the account has no Xbox profile yet, it's a child account that needs a
+Microsoft Family group, or it doesn't own Minecraft: Java Edition.
+
+Launching the game with your account comes in the next v2 steps.
+
 ## Settings
 
 Click **⚙ Settings** at the bottom of the sidebar. Pages are listed on the left, like Prism's settings:
@@ -311,6 +329,8 @@ craftd/
   mrpack.py       Modrinth modpacks (.mrpack): installing, and Share Instance
   worlds.py       Worlds for Carry Over: reads level.dat (NBT), same-or-newer rule, copying
   log.py          craftd.log
+  auth.py         Microsoft sign-in: device code → Xbox Live → XSTS → Minecraft token and profile
+  accounts.py     Saved accounts (accounts.json; tokens encrypted with Windows DPAPI)
   mods.py         Mod folder scanning, jar fingerprinting, the hash cache, jar metadata
   installer.py    Install with dependencies, update, remove, enable/disable
   sync.py         Carry Over: source suggestion, detection, waitlist  ← the core feature
@@ -323,7 +343,7 @@ craftd/
   fonts/          Monocraft (SIL OFL) + Craftd's pixel symbols font
   assets/         Craftd's official logo (16×16) and the icons built from it (.png, .ico)
   gui/            PySide6 window, tabs, dialogs, theme (palettes + type scale), sidebar rows, workers
-tests/            Fake Modrinth + 120 tests (engine and GUI)
+tests/            Fake Modrinth + fake sign-in servers + 140 tests (engine and GUI)
 ```
 Craftd's data (instances list, settings, cache, waitlists) lives in `%APPDATA%\Craftd` on Windows and
 `~/Library/Application Support/Craftd` on macOS. Set `CRAFTD_HOME` to use a different folder.
@@ -333,8 +353,9 @@ point); `tools/make_icon.py` and `tools/make_pixel_extras.py` rebuild the icons 
 
 ## Roadmap
 **v2**
-- Launching: Microsoft account sign-in, game file and asset download, a Java runtime per version, and loader installation
-- Settings pages for Java, memory (RAM) and accounts
+- ✅ Microsoft account sign-in and Settings → Accounts (1.2)
+- Launching: game file and asset download, a Java runtime per version, and loader installation
+- Settings pages for Java and memory (RAM)
 - Instances as an icon grid, like Prism and MultiMC
 - Update notifications for new Craftd versions
 

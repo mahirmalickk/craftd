@@ -2,6 +2,22 @@
 
 All notable changes to Craftd. Newest first.
 
+## [1.2.0] - 2026-11-25 · Accounts (v2, step 1)
+
+### Added
+- **Sign in with Microsoft**: **Settings → Accounts → Add Account…** shows a code; click **Open Sign-In Page** (the
+  code is copied for you), sign in on Microsoft's own page, and Craftd finishes signing in to Xbox Live and
+  Minecraft. Craftd never sees your password. Mojang approved Craftd's app for this in November 2026
+- **Settings → Accounts**: everyone signed in, with their skin's face. **Play as This Account**, **Refresh** (checks the
+  sign-in still works and picks up a new name or skin) and **Remove**
+- **Your face and name in the sidebar**, under Settings. Click it to switch accounts or sign in
+- Clear messages for sign-in problems: no Xbox profile yet, child accounts, Xbox not available in your country,
+  doesn't own Minecraft: Java Edition, hasn't picked a Minecraft name, code expired, cancelled
+- Sign-ins are saved in `accounts.json`, encrypted with your Windows user account (DPAPI), so a copied file is no
+  use to anyone else. Tokens are never written to `craftd.log`
+
+Launching the game with your account comes in the next v2 steps (game files, Java, Launch button).
+
 ## [1.1.2] - 2026-11-21
 
 ### Changed

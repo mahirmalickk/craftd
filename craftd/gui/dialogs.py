@@ -435,9 +435,9 @@ class SettingsDialog(QDialog):
     Appearance previews live; everything else applies on Save. Cancel puts everything back.
     Clearing the cache (Storage) happens right away, since it can't be "un-saved"."""
 
-    PAGES = ["General", "Appearance", "Mods", "Carry Over", "Storage", "Network", "About"]
+    PAGES = ["General", "Accounts", "Appearance", "Mods", "Carry Over", "Storage", "Network", "About"]
 
-    def __init__(self, app: Craftd, themer, parent=None):
+    def __init__(self, app: Craftd, themer, parent=None, page: str = "General"):
         super().__init__(parent)
         from dataclasses import replace
 
@@ -453,13 +453,13 @@ class SettingsDialog(QDialog):
         self.nav.setObjectName("SettingsNav")
         self.nav.setFixedWidth(190)
         self.pages = QStackedWidget()
-        builders = [self._general, self._appearance, self._mods, self._carry, self._storage, self._network,
-                    self._about]
+        builders = [self._general, self._accounts, self._appearance, self._mods, self._carry, self._storage,
+                    self._network, self._about]
         for name, build in zip(self.PAGES, builders):
             self.nav.addItem(name)
             self.pages.addWidget(self._page(name, build()))
         self.nav.currentRowChanged.connect(self.pages.setCurrentIndex)
-        self.nav.setCurrentRow(0)
+        self.nav.setCurrentRow(self.PAGES.index(page) if page in self.PAGES else 0)
 
         buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         buttons.button(QDialogButtonBox.StandardButton.Ok).setText("Save")
@@ -521,6 +521,11 @@ class SettingsDialog(QDialog):
         QDesktopServices.openUrl(QUrl.fromLocalFile(str(path)))
 
     # ---- pages -----------------------------------------------------------------------------------
+    def _accounts(self) -> QWidget:
+        from .accounts import AccountsPanel
+        self.accounts_panel = AccountsPanel(self.app, self.runner, self)  # changes apply right away
+        return self.accounts_panel
+
     def _general(self) -> QWidget:
         s = self.original
         self.check_waitlist = QCheckBox("Check the waitlist when Craftd starts")

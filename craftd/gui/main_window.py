@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from PySide6.QtCore import QFile, Qt, QUrl
+from PySide6.QtCore import QFile, QSize, Qt, QUrl
 from PySide6.QtGui import QDesktopServices, QIcon
 from PySide6.QtWidgets import (
     QApplication, QFileDialog, QFrame, QHBoxLayout, QInputDialog, QLabel, QLineEdit, QListView, QListWidget,
@@ -84,6 +84,10 @@ class MainWindow(QMainWindow):
         side.setContentsMargins(12, 12, 12, 12)
         settings_btn = QPushButton("⚙  Settings")
         settings_btn.clicked.connect(self.open_settings)
+        # who Craftd plays as: click to sign in or switch accounts (Settings → Accounts)
+        self.account_btn = QPushButton()
+        self.account_btn.setObjectName("AccountButton")
+        self.account_btn.clicked.connect(lambda: self.open_settings("Accounts"))
         side.addWidget(brand)
         side.addWidget(section)
         side.addWidget(self.list, 1)
@@ -91,6 +95,7 @@ class MainWindow(QMainWindow):
         side.addWidget(packs_btn)
         side.addWidget(import_btn)
         side.addWidget(settings_btn)
+        side.addWidget(self.account_btn)
 
         # ---- detail -----------------------------------------------------------------------------
         self.title = QLabel()
@@ -163,6 +168,7 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage(f"Craftd {__version__}")
 
         self.refresh_instances()
+        self.update_account_button()
         self.runner.run(lambda p: app.refresh_game_versions(), on_error=lambda _: None)
         if app.settings.check_waitlist_on_start:
             self._check_waitlists()
@@ -411,6 +417,19 @@ class MainWindow(QMainWindow):
         self.runner.run(lambda p: self.app.move_to_launcher(inst, launcher), on_done=done,
                         on_error=lambda msg: self._error(f"Couldn't move it: {msg}"))
 
+    def update_account_button(self) -> None:
+        from .accounts import face_icon
+        acc = self.app.accounts.active()
+        self.account_btn.setIcon(face_icon(self.app, acc, 24))
+        self.account_btn.setIconSize(QSize(24, 24))
+        if not acc:
+            self.account_btn.setText("Sign In")
+            self.account_btn.setToolTip("Sign in with the Microsoft account that owns Minecraft")
+        else:
+            self.account_btn.setText(acc.name + ("  ⚠" if acc.needs_sign_in else ""))
+            self.account_btn.setToolTip("Needs signing in again" if acc.needs_sign_in
+                                        else f"Playing as {acc.name}. Click to switch accounts.")
+
     def _update_legacy(self, inst: Instance | None) -> None:
         places = available(self.app.settings)
         if not inst or inst.kind == "prism" or not places:
@@ -485,13 +504,14 @@ class MainWindow(QMainWindow):
             self.ready_counts.pop(cur.id)
             self.refresh_instances()
 
-    def open_settings(self) -> None:
-        if SettingsDialog(self.app, self.themer, self).exec():
+    def open_settings(self, page: str = "General") -> None:
+        if SettingsDialog(self.app, self.themer, self, page=page).exec():
             self._update_legacy(self.current())
             self.carry_tab.set_instance(self.current())  # new Carry Over defaults show right away
             self.carry_tab.detected_for = None
             if self.tabs.currentWidget() is self.carry_tab:
                 self.carry_tab.ensure_detected()
+        self.update_account_button()
 
     def _set_brand_logo(self) -> None:
         from . import theme

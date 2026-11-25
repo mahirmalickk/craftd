@@ -8,6 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from fake_modrinth import FakeModrinth, make_jar  # noqa: E402
 
+from craftd.auth import MicrosoftAuth
 from craftd.core import Craftd  # noqa: E402
 
 
@@ -21,6 +22,13 @@ def no_real_launchers(tmp_path_factory, monkeypatch):
     for var in ("APPDATA", "LOCALAPPDATA", "USERPROFILE", "HOME", "XDG_DATA_HOME"):
         monkeypatch.setenv(var, str(fake_home))
     monkeypatch.setattr(Path, "home", classmethod(lambda cls: fake_home))
+
+
+@pytest.fixture
+def servers():
+    """Fake Microsoft / Xbox Live / Minecraft sign-in servers: tests never touch the real ones."""
+    from fake_auth import FakeAuthServers
+    return FakeAuthServers()
 
 
 @pytest.fixture
@@ -41,8 +49,8 @@ def fake():
 
 
 @pytest.fixture
-def app(tmp_path, fake):
-    a = Craftd(home=tmp_path / "home", client=fake)
+def app(tmp_path, fake, servers):
+    a = Craftd(home=tmp_path / "home", client=fake, auth=MicrosoftAuth(session=servers))
     a.refresh_game_versions()
     return a
 

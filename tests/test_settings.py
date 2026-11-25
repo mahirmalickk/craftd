@@ -91,9 +91,9 @@ def test_settings_window_pages_save_and_apply(app, setup_262, monkeypatch):
     win = MainWindow(app)
     dlg = SettingsDialog(app, win.themer, win)
     assert [dlg.nav.item(i).text() for i in range(dlg.nav.count())] == \
-        ["General", "Appearance", "Mods", "Carry Over", "Storage", "Network", "About"]
-    dlg.nav.setCurrentRow(5)
-    assert dlg.pages.currentIndex() == 5
+        ["General", "Accounts", "Appearance", "Mods", "Carry Over", "Storage", "Network", "About"]
+    dlg.nav.setCurrentRow(6)
+    assert dlg.pages.currentIndex() == 6
     assert not dlg.proxy_host.isEnabled()
     next(b for b in dlg.proxy_group.buttons() if b.property("mode") == "http").setChecked(True)
     assert dlg.proxy_host.isEnabled()

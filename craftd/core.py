@@ -17,7 +17,7 @@ from .versions import VersionOrder
 
 
 class Craftd:
-    def __init__(self, home: Path | None = None, client=None):
+    def __init__(self, home: Path | None = None, client=None, auth=None):
         self.home = home or data_dir()
         self.client = client or ModrinthClient()
         self.manager = InstanceManager(self.home)
@@ -30,6 +30,10 @@ class Craftd:
         self._load_cached_versions()
         self.settings = Settings.load(self.home)
         self._loader_cache: dict = {}
+        from .accounts import AccountStore
+        from .auth import MicrosoftAuth
+        self.accounts = AccountStore(self.home)
+        self.auth = auth or MicrosoftAuth()
         self.apply_settings()
 
     def apply_settings(self, settings: Settings | None = None) -> None:
@@ -41,6 +45,14 @@ class Craftd:
         self.installer.auto_dependencies = s.auto_dependencies
         if hasattr(self.client, "configure_network"):
             self.client.configure_network(s.proxy, s.proxy_host, s.proxy_port, s.timeout)
+        if hasattr(self, "auth") and hasattr(self.auth, "configure_network"):
+            self.auth.configure_network(s.proxy, s.proxy_host, s.proxy_port, s.timeout)
+
+    def skin_file(self, account) -> Path:
+        """Where an account's skin PNG is cached (named after the skin, so a new skin is a new file)."""
+        import hashlib
+        tag = hashlib.sha1(account.skin_url.encode()).hexdigest()[:12] if account.skin_url else "none"
+        return self.home / "cache" / "skins" / f"{account.uuid}-{tag}.png"
 
     # ---- Edit Instance ----------------------------------------------------------------------------
     def loader_versions(self, loader: str, game_version: str, launcher: str = "prism"):
@@ -94,7 +106,8 @@ class Craftd:
                    "icons": "Mod icons from Add from Modrinth",
                    "game_versions.json": "Minecraft version list",
                    "fit-check": "Leftover build checks",
-                   "modpacks": "Downloaded modpack files"}
+                   "modpacks": "Downloaded modpack files",
+                   "skins": "Account skins (for the face icons)"}
 
     def cache_usage(self) -> list[tuple[str, int]]:
         """(description, bytes) for each thing in the cache folder that exists."""

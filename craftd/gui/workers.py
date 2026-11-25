@@ -27,7 +27,10 @@ class _Task(QRunnable):
             result = self.fn(self.signals.progress.emit, *self.args)
         except Exception as exc:  # report every failure to the UI instead of crashing
             # into craftd.log, not the console: Craftd.exe has none (printing there could even fail)
-            log.exception("Background task failed: %s", getattr(self.fn, "__qualname__", self.fn))
+            if getattr(exc, "expected", False):  # e.g. sign-in declined: one line, no traceback
+                log.warning("%s", exc)
+            else:
+                log.exception("Background task failed: %s", getattr(self.fn, "__qualname__", self.fn))
             self.signals.failed.emit(str(exc) or exc.__class__.__name__)
         else:
             self.signals.done.emit(result)
